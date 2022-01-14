@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:habit_master/shared/features/routine/models/routine.dart';
@@ -19,110 +20,152 @@ class _PrebuiltCardState extends State<PrebuiltCard> {
       itemBuilder: (BuildContext context, int index) {
         final routine = routines[index];
         final cardPositionIsOdd = routines.indexOf(routine).isEven;
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Container(
-              width: 190.0,
-              padding:
-                  const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(20.0),
-                ),
-                gradient: LinearGradient(
-                    colors: cardPositionIsOdd
-                        ? [
-                            const Color(0xB0246776),
-                            const Color(0xFF8044A3),
-                          ]
-                        : [const Color(0xFF207580), const Color(0xFF2E75A9)],
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    stops: const [0.0, 0.8],
-                    tileMode: TileMode.clamp),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    height: 140.0,
-                    width: 200.0,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15.0),
-                      ),
+        return Stack(
+          children: [
+            Positioned(
+              bottom: 25.0,
+              left: 15.0,
+              child: Transform.rotate(
+                angle: -math.pi / -20,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: cardPositionIsOdd
+                        ? const Color(0xFF8044A3).withOpacity(0.2)
+                        : const Color(0xFF2E75A9).withOpacity(0.2),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(20.0),
                     ),
-                    child: Center(
-                      child: Stack(
-                        alignment: Alignment.topCenter,
-                        children: [
-                          const Circle(),
-                          Positioned(
-                            bottom: -5.0,
-                            child: Container(
-                              height: 130.0,
-                              width: 130.0,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(routine.ownerImage!),
+                  ),
+                  height: 100.0,
+                  width: 170.0,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Container(
+                width: 190.0,
+                height: 300.0,
+                padding: const EdgeInsets.only(
+                    left: 10.0, right: 10.0, bottom: 10.0),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: const Color(0xFF747474),
+                      style: BorderStyle.solid,
+                      width: 0.3),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(20.0),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: cardPositionIsOdd
+                          ? const Color(0xFF8044A3).withOpacity(0.2)
+                          : const Color(0xFF2E75A9).withOpacity(0.2),
+                      spreadRadius: 6,
+                      blurRadius: 8,
+                      offset: const Offset(2, 9), // changes position of shadow
+                    ),
+                  ],
+                  gradient: LinearGradient(
+                      colors: cardPositionIsOdd
+                          ? [
+                              const Color(0xB0246776).withOpacity(0.4),
+                              const Color(0xFF8044A3).withOpacity(0.9),
+                            ]
+                          : [
+                              const Color(0xFF207580).withOpacity(0.4),
+                              const Color(0xFF2E75A9).withOpacity(0.9)
+                            ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      stops: const [0.0, 0.8],
+                      tileMode: TileMode.clamp),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      height: 140.0,
+                      width: 200.0,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15.0),
+                        ),
+                      ),
+                      child: Center(
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            const Circle(),
+                            Positioned(
+                              bottom: -5.0,
+                              child: Container(
+                                height: 130.0,
+                                width: 130.0,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(routine.ownerImage!),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Text(
-                    "${routine.ownerName!}'s Daily Routine",
-                    style: GoogleFonts.roboto(
-                      textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17.0),
-                    ),
-                  ),
-                  const SizedBox(height: 12.0),
-                  Text(
-                    "Used by 700+ people",
-                    style: GoogleFonts.roboto(
-                      textStyle: const TextStyle(
-                        color: Color(0xB7FFFFFF),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 10.0,
+                    Text(
+                      "Start ${routine.ownerName!}'s Daily Routine",
+                      style: GoogleFonts.roboto(
+                        textStyle: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17.0),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 10.0),
-                  Text(
-                    "This is an advanced time management technique, recomended for people that work 80+ hours a week.",
-                    style: GoogleFonts.roboto(
-                      textStyle: const TextStyle(
+                    const SizedBox(height: 12.0),
+                    Text(
+                      "Used by 700+ people",
+                      style: GoogleFonts.roboto(
+                        textStyle: const TextStyle(
                           color: Color(0xB7FFFFFF),
                           fontWeight: FontWeight.bold,
-                          fontSize: 10.0),
-                    ),
-                  ),
-                  const SizedBox(height: 10.0),
-                  Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(40.0),
+                          fontSize: 10.0,
+                        ),
                       ),
                     ),
-                    child: const ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      child: LinearProgressIndicator(
-                        minHeight: 5.0,
-                        value: 0.2,
-                        color: Colors.white,
-                        backgroundColor: Color(0xFF3B2D73),
+                    const SizedBox(height: 10.0),
+                    Text(
+                      "This is an advanced time management technique, recomended for people that work 80+ hours a week.",
+                      style: GoogleFonts.roboto(
+                        textStyle: const TextStyle(
+                            color: Color(0xB7FFFFFF),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10.0),
                       ),
                     ),
-                  )
-                ],
-              )),
+                    const SizedBox(height: 10.0),
+                    Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(40.0),
+                        ),
+                      ),
+                      child: const ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        child: LinearProgressIndicator(
+                          minHeight: 5.0,
+                          value: 0.2,
+                          color: Colors.white,
+                          backgroundColor: Color(0xFF3B2D73),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
         );
       },
     );
