@@ -1,16 +1,15 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:habit_master/shared/features/routine/models/routine.dart';
 import 'package:habit_master/shared/features/routine/widgets/circle.dart';
 
-class PrebuiltCard extends StatefulWidget {
-  const PrebuiltCard({Key? key}) : super(key: key);
+class LargCard extends StatefulWidget {
+  const LargCard({Key? key}) : super(key: key);
   @override
   _PrebuiltCardState createState() => _PrebuiltCardState();
 }
 
-class _PrebuiltCardState extends State<PrebuiltCard> {
+class _PrebuiltCardState extends State<LargCard> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -23,7 +22,7 @@ class _PrebuiltCardState extends State<PrebuiltCard> {
         return Stack(
           children: [
             Positioned(
-              bottom: 25.0,
+              bottom: 14.0,
               left: 15.0,
               child: Transform.rotate(
                 angle: -math.pi / -20,
@@ -37,15 +36,15 @@ class _PrebuiltCardState extends State<PrebuiltCard> {
                     ),
                   ),
                   height: 100.0,
-                  width: 170.0,
+                  width: 155.0,
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Container(
-                width: 190.0,
-                height: 300.0,
+                width: 170.0,
+                height: 270.0,
                 padding: const EdgeInsets.only(
                     left: 10.0, right: 10.0, bottom: 10.0),
                 decoration: BoxDecoration(
@@ -116,33 +115,30 @@ class _PrebuiltCardState extends State<PrebuiltCard> {
                     ),
                     Text(
                       "Start ${routine.ownerName!}'s Daily Routine",
-                      style: GoogleFonts.roboto(
-                        textStyle: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17.0),
-                      ),
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: "Twitterchirp_Bold",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17.0),
                     ),
                     const SizedBox(height: 12.0),
-                    Text(
+                    const Text(
                       "Used by 700+ people",
-                      style: GoogleFonts.roboto(
-                        textStyle: const TextStyle(
-                          color: Color(0xB7FFFFFF),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10.0,
-                        ),
+                      style: TextStyle(
+                        fontFamily: "Twitterchirp",
+                        color: Color(0xB7FFFFFF),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10.0,
                       ),
                     ),
                     const SizedBox(height: 10.0),
-                    Text(
-                      "This is an advanced time management technique, recomended for people that work 80+ hours a week.",
-                      style: GoogleFonts.roboto(
-                        textStyle: const TextStyle(
-                            color: Color(0xB7FFFFFF),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10.0),
-                      ),
+                    const Text(
+                      "Recomended for people that work 80+ hours a week.",
+                      style: TextStyle(
+                          color: Color(0xB7FFFFFF),
+                          fontFamily: "Twitterchirp",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10.0),
                     ),
                     const SizedBox(height: 10.0),
                     Container(
