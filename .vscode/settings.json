@@ -2,5 +2,7 @@
     "cSpell.words": [
         "elon",
         "Twitterchirp"
-    ]
+    ],
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs":"active"
 }

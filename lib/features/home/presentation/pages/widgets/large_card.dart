@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:habit_master/shared/features/routine/models/routine.dart';
-import 'package:habit_master/shared/features/routine/widgets/circle.dart';
 
 class LargCard extends StatefulWidget {
   const LargCard({Key? key}) : super(key: key);
@@ -30,7 +29,7 @@ class _PrebuiltCardState extends State<LargCard> {
                   decoration: BoxDecoration(
                     color: cardPositionIsOdd
                         ? const Color(0xFF8044A3).withOpacity(0.2)
-                        : const Color(0xFF2E75A9).withOpacity(0.2),
+                        : const Color(0xFF60A9B3).withOpacity(0.2),
                     borderRadius: const BorderRadius.all(
                       Radius.circular(20.0),
                     ),
@@ -59,7 +58,7 @@ class _PrebuiltCardState extends State<LargCard> {
                     BoxShadow(
                       color: cardPositionIsOdd
                           ? const Color(0xFF8044A3).withOpacity(0.2)
-                          : const Color(0xFF2E75A9).withOpacity(0.2),
+                          : const Color(0xFF1D9296).withOpacity(0.2),
                       spreadRadius: 6,
                       blurRadius: 8,
                       offset: const Offset(2, 9), // changes position of shadow
@@ -96,12 +95,21 @@ class _PrebuiltCardState extends State<LargCard> {
                         child: Stack(
                           alignment: Alignment.topCenter,
                           children: [
-                            const Circle(),
+                            Container(
+                              height: 180.0,
+                              width: 180.0,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/3d objects/Ball-2.png"),
+                                ),
+                              ),
+                            ),
                             Positioned(
                               bottom: -5.0,
                               child: Container(
-                                height: 130.0,
-                                width: 130.0,
+                                height: 110.0,
+                                width: 110.0,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                     image: AssetImage(routine.ownerImage!),

@@ -30,4 +30,14 @@ List<RoutineModel> celebritiesRoutines = [
     ownerImage: "assets/images/joey_schweitzer.png",
     ownerType: "Celebrity",
   ),
+  RoutineModel(
+    ownerName: "Thomas Franks",
+    ownerImage: "assets/images/thomas_frank.png",
+    ownerType: "Celebrity",
+  ),
+  RoutineModel(
+    ownerName: "Joey Schweitzer",
+    ownerImage: "assets/images/joey_schweitzer.png",
+    ownerType: "Celebrity",
+  ),
 ];
