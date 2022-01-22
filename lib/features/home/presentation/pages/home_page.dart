@@ -1,12 +1,12 @@
 import 'dart:ui';
-import 'package:habit_master/features/home/presentation/pages/widgets/small_card.dart';
+import 'package:habit_master/features/home/presentation/widgets/small_card.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:habit_master/shared/features/routine/widgets/circle.dart';
 import 'package:intl/intl.dart';
 
-import 'package:habit_master/features/home/presentation/pages/widgets/large_card.dart';
+import 'package:habit_master/features/home/presentation/widgets/large_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -104,12 +104,9 @@ class _HomePageState extends State<HomePage> {
             floating: true,
             snap: true,
             toolbarHeight: 100.0,
-            // elevation: 0.0,
             actions: <Widget>[
               SizedBox(
-                // color: Colors.green,
                 width: MediaQuery.of(context).size.width,
-                // height: 100.0,
                 child: Stack(
                   children: [
                     Positioned(
@@ -163,7 +160,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                               SizedBox(
                                 width: 200.0,
-                                // color: Colors.e
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
