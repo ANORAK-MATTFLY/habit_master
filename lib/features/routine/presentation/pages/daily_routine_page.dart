@@ -118,12 +118,21 @@ class _DailyRoutineState extends State<DailyRoutine> {
                   ),
                   const Positioned(top: 50, child: StackedChart()),
                   Positioned(
+                    top: 50,
+                    child: Container(
+                      color: Colors.white.withOpacity(0.0),
+                      width: 250.0,
+                      height: 250.0,
+                    ),
+                  ),
+                  Positioned(
                     bottom: 0,
                     child: Container(
                       padding: const EdgeInsets.all(0.2),
                       decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(30.0)),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(30.0),
+                        ),
                         border: Border.all(
                             color: const Color(0xFFBDBDBD),
                             style: BorderStyle.solid,
@@ -144,31 +153,6 @@ class _DailyRoutineState extends State<DailyRoutine> {
                       ),
                     ),
                   ),
-                  Positioned(
-                      top: 60,
-                      left: 60,
-                      child: SizedBox(
-                          height: 20.0,
-                          width: 100.0,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Blur(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(10.0),
-                                ),
-                                blur: 10,
-                                colorOpacity: 0.3,
-                                blurColor: const Color(0xFFFFFFFF),
-                                child: const Center(),
-                              ),
-                              const Text("See more",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: "Twitterchirp",
-                                      fontSize: 10.0))
-                            ],
-                          ))),
                 ],
               ),
             ),

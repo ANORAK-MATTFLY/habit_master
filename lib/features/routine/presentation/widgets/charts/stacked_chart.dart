@@ -27,7 +27,6 @@ class _StackedChartState extends State<StackedChart> {
       child: SfCartesianChart(
         title: ChartTitle(
           text: 'Your weelky progress',
-          alignment: ChartAlignment.far,
           textStyle: const TextStyle(
             color: Colors.white,
             fontFamily: "Twitterchirp",
