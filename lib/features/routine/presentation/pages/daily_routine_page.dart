@@ -1,5 +1,8 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
+import 'package:outline_gradient_button/outline_gradient_button.dart';
+
+import 'package:habit_master/features/routine/models/task_model.dart';
 import 'package:habit_master/features/routine/presentation/widgets/charts/stacked_chart.dart';
 
 class DailyRoutine extends StatefulWidget {
@@ -9,7 +12,19 @@ class DailyRoutine extends StatefulWidget {
   _DailyRoutineState createState() => _DailyRoutineState();
 }
 
-class _DailyRoutineState extends State<DailyRoutine> {
+class _DailyRoutineState extends State<DailyRoutine>
+    with SingleTickerProviderStateMixin {
+  double _height = 0.0;
+  double _width = 0.0;
+  AnimationController? controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1000));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +92,7 @@ class _DailyRoutineState extends State<DailyRoutine> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: const Color(0xFF03020C),
+        color: const Color(0xFF0C051D),
         child: Column(
           children: [
             Container(
@@ -153,9 +168,208 @@ class _DailyRoutineState extends State<DailyRoutine> {
                       ),
                     ),
                   ),
+                  Positioned(
+                    bottom: 0,
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(30.0),
+                        ),
+                        border: Border.all(
+                            color: const Color(0xFFBDBDBD),
+                            style: BorderStyle.solid,
+                            width: 0.1),
+                      ),
+                      height: 100.0,
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          Text(
+                            "Elon musk's daily routine",
+                            style: TextStyle(
+                              color: Color(0xFFDADADA),
+                              fontFamily: "Twitterchirp_Bold",
+                              fontSize: 15.0,
+                            ),
+                          ),
+                          Text(
+                            "With success rate of 20% this routine will drastically increase your productivity, but remember concistency is the key, so good look!",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "Twitterchirp",
+                                fontSize: 12.0),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
+            Expanded(
+              child: ListView.builder(
+                  shrinkWrap: false,
+                  itemCount: tasks.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final TaskModel task = tasks[index];
+                    return Column(
+                      children: [
+                        ListTile(
+                          leading: task.taskType != "chrono"
+                              ? Stack(
+                                  alignment: AlignmentDirectional.center,
+                                  children: [
+                                    AnimatedContainer(
+                                      key: Key(task.taskID!),
+                                      height: _height,
+                                      width: _width,
+                                      duration: const Duration(seconds: 1),
+                                      curve: Curves.fastOutSlowIn,
+                                      decoration: const BoxDecoration(
+                                        gradient: LinearGradient(
+                                            colors: [
+                                              Color(0xFFFA41BC),
+                                              Color(0xCBA8B2EE),
+                                            ],
+                                            begin: Alignment.topRight,
+                                            end: Alignment.bottomLeft,
+                                            stops: [0.0, 0.9],
+                                            tileMode: TileMode.clamp),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(5),
+                                        ),
+                                      ),
+                                      child: _width > 0
+                                          ? const Center(
+                                              child: Icon(
+                                                Icons.check,
+                                                color: Colors.white,
+                                                size: 15.0,
+                                              ),
+                                            )
+                                          : const Center(),
+                                    ),
+                                    SizedBox(
+                                      height: 25,
+                                      width: 25,
+                                      child: OutlineGradientButton(
+                                        onTap: () {
+                                          setState(() {
+                                            {
+                                              task.isDone = !task.isDone!;
+                                              _width = task.isDone == true
+                                                  ? 20.0
+                                                  : 0.0;
+                                              _height = task.isDone == true
+                                                  ? 20.0
+                                                  : 0.0;
+                                            }
+                                          });
+                                        },
+                                        strokeWidth: 1,
+                                        radius: const Radius.circular(5),
+                                        gradient: const LinearGradient(
+                                            colors: [
+                                              Color(0xFF9F56DA),
+                                              Color(0xCBA8B2EE),
+                                            ],
+                                            begin: Alignment.topRight,
+                                            end: Alignment.bottomLeft,
+                                            stops: [0.0, 0.9],
+                                            tileMode: TileMode.clamp),
+                                        child: const Center(),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(
+                                  height: 30,
+                                  width: 30,
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Container(
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(360),
+                                          ),
+                                          gradient: LinearGradient(
+                                              colors: [
+                                                Color(0xFFF7438E),
+                                                Color(0xCBA8EEEE),
+                                              ],
+                                              begin: Alignment.topRight,
+                                              end: Alignment.bottomLeft,
+                                              stops: [0.0, 0.9],
+                                              tileMode: TileMode.clamp),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 40,
+                                        width: 40,
+                                        child: Blur(
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(20.0),
+                                          ),
+                                          blur: 5,
+                                          colorOpacity: 0.1,
+                                          blurColor: Colors.white,
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                          ),
+                                        ),
+                                      ),
+                                      const Icon(
+                                        Icons.play_arrow,
+                                        color: Color(0xB9221235),
+                                        size: 25.0,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                          title: Text(
+                            task.taskName!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Twitterchirp_Bold",
+                              fontSize: 15.0,
+                            ),
+                          ),
+                          subtitle: Text(
+                            task.taskDescription!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Twitterchirp",
+                              fontSize: 12.0,
+                            ),
+                          ),
+                          trailing: Container(
+                            height: 20,
+                            width: 50,
+                            color: Colors.black,
+                            child: Center(
+                              child: Text(
+                                task.dueTime!,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "Twitterchirp",
+                                  fontSize: 12.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 50.0, right: 50.0),
+                          child: Divider(height: 0.5, color: Colors.grey),
+                        )
+                      ],
+                    );
+                  }),
+            )
           ],
         ),
       ),
