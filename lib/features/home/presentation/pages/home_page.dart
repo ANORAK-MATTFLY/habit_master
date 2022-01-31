@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:habit_master/features/auth/pages/login_page.dart';
 import 'package:habit_master/features/home/presentation/widgets/small_card.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
         floatHeaderSlivers: true,
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            backgroundColor: const Color(0xFF03020C),
+            backgroundColor: const Color(0xFF0C051D),
             floating: true,
             snap: true,
             toolbarHeight: 100.0,
@@ -185,20 +186,31 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                     ),
-                                    ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(360.0)),
-                                      child: Container(
-                                        height: 30.0,
-                                        width: 30.0,
-                                        color: const Color(0xFF393939)
-                                            .withOpacity(0.9),
-                                        child: Center(
-                                          child: SvgPicture.asset(
-                                              "assets/svg/user-profile-icon.svg",
-                                              // color: Colors.red,
-                                              height: 12,
-                                              semanticsLabel: 'A red up arrow'),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const LoginPage()),
+                                        );
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(360.0)),
+                                        child: Container(
+                                          height: 30.0,
+                                          width: 30.0,
+                                          color: const Color(0xFF393939)
+                                              .withOpacity(0.9),
+                                          child: Center(
+                                            child: SvgPicture.asset(
+                                                "assets/svg/user-profile-icon.svg",
+                                                // color: Colors.red,
+                                                height: 12,
+                                                semanticsLabel:
+                                                    'A red up arrow'),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -219,7 +231,7 @@ class _HomePageState extends State<HomePage> {
         body: Container(
           height: height,
           width: double.infinity,
-          decoration: const BoxDecoration(color: Color(0xFF03020C)),
+          decoration: const BoxDecoration(color: Color(0xFF0C051D)),
           child: ListView.separated(
             itemCount: listOfCard.length,
             itemBuilder: (BuildContext context, int index) {
