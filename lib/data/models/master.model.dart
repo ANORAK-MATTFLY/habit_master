@@ -1,0 +1,5 @@
+Map masterModel() {
+  return {
+    'masterList': [],
+  };
+}
