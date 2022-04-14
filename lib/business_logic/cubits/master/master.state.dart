@@ -1,4 +1,4 @@
-part of 'master_cubit.dart';
+part of 'master.cubit.dart';
 
 class MasterState {
   Map? master;

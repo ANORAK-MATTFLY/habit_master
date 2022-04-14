@@ -1,4 +1,4 @@
-part of 'authentication_cubit.dart';
+part of 'authentication.cubit.dart';
 
 class AuthenticationState {
   Map? user;

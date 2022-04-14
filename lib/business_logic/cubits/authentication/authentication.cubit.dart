@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:habit_master/data/models/autentication.model.dart';
 import 'package:meta/meta.dart';
-part 'authentication_state.dart';
+part 'authentication.state.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
   AuthenticationCubit()

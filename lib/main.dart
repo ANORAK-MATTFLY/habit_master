@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/business_logic/cubits/authentication/authentication_cubit.dart';
+import 'package:habit_master/business_logic/cubits/authentication/authentication.cubit.dart';
 import 'features/home/presentation/pages/home_page.dart';
 
 void main() {
