@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:habit_master/features/routine/models/weekly_progress_chart_model.dart';
+import 'package:habit_master/data/models/weekly_progress_chart_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StackedChart extends StatefulWidget {

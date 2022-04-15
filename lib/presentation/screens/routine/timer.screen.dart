@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class TimerPage extends StatefulWidget {
-  const TimerPage({Key? key}) : super(key: key);
+class TimerScreen extends StatefulWidget {
+  const TimerScreen({Key? key}) : super(key: key);
 
   @override
-  _TimerPageState createState() => _TimerPageState();
+  _TimerScreenState createState() => _TimerScreenState();
 }
 
-class _TimerPageState extends State<TimerPage> {
+class _TimerScreenState extends State<TimerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

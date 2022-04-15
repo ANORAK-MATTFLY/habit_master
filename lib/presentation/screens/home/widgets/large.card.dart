@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine_page.dart';
+import 'package:habit_master/presentation/screens/routine/daily.routine.screen.dart';
 import 'package:habit_master/shared/features/routine/models/routine.dart';
 
 class LargCard extends StatefulWidget {
