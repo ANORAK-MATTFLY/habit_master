@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:habit_master/common/config/router.dart';
+import 'package:habit_master/common/config/themedata.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,13 +19,12 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => AuthenticationCubit(),
         ),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Habits Master',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const HomeScreen(),
+        getPages: getPages(),
+        theme: theme,
+        initialRoute: '/route-stack',
       ),
     );
   }
