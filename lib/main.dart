@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Habits Master',
         getPages: getPages(),
-        theme: theme,
+        theme: themeData(),
         initialRoute: '/route-stack',
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:habit_master/routine/presentation/routine-list/routine_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,6 +11,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const RoutineListScreen();
   }
 }

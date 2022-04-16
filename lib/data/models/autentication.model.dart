@@ -1,3 +1,7 @@
 Map authenticationModel() {
-  return {};
+  return {
+    'userAuth': {
+      'code': 404,
+    },
+  };
 }
