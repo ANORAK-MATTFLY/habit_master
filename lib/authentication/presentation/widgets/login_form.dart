@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:outline_gradient_button/outline_gradient_button.dart';
 
 class LoginForm extends StatelessWidget {
@@ -130,6 +131,7 @@ class LoginForm extends StatelessWidget {
                 stops: [0.0, 0.6],
                 tileMode: TileMode.clamp,
               ),
+              onTap: () => Get.offAllNamed('/'),
               child: Container(
                   height: 50.0,
                   width: double.infinity,
