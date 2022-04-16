@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/business_logic/cubits/authentication/authentication.cubit.dart';
-import 'package:habit_master/presentation/screens/home/home.screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

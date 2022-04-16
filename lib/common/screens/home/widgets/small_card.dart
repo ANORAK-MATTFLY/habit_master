@@ -1,8 +1,8 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-
 import 'package:habit_master/data/models/routine.model.dart';
+
 
 class SmallCard extends StatefulWidget {
   const SmallCard({Key? key}) : super(key: key);
