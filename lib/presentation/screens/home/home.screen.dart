@@ -1,13 +1,13 @@
 import 'dart:ui';
-import 'package:habit_master/features/auth/pages/login_page.dart';
-import 'package:habit_master/features/home/presentation/widgets/small_card.dart';
+import 'package:habit_master/presentation/screens/auth/login.screen.dart';
+import 'package:habit_master/presentation/screens/home/widgets/large.card.dart';
+import 'package:habit_master/presentation/screens/home/widgets/small.card.dart';
+import 'package:habit_master/presentation/screens/shared/circle.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:habit_master/shared/features/routine/widgets/circle.dart';
 import 'package:intl/intl.dart';
 
-import 'package:habit_master/features/home/presentation/widgets/large_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -192,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const LoginPage()),
+                                                  const LoginScreen()),
                                         );
                                       },
                                       child: ClipRRect(

@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:habit_master/data/models/routine.model.dart';
 import 'package:habit_master/presentation/screens/routine/daily.routine.screen.dart';
-import 'package:habit_master/shared/features/routine/models/routine.dart';
 
 class LargCard extends StatefulWidget {
   const LargCard({Key? key}) : super(key: key);
