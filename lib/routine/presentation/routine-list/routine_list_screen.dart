@@ -1,21 +1,24 @@
 import 'dart:ui';
 import 'package:habit_master/authentication/presentation/login/login_screen.dart';
-import 'package:habit_master/common/screens/home/widgets/large_card.dart';
-import 'package:habit_master/common/screens/home/widgets/small_card.dart';
+import 'package:habit_master/routine/presentation/routine-list/widgets/large_card.dart';
+import 'package:habit_master/routine/presentation/routine-list/widgets/small_card.dart';
 import 'package:habit_master/shared/presentation/circle.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+
+// TODO: Separate RoutineListScreen with HomeScreen
+
+class RoutineListScreen extends StatefulWidget {
+  const RoutineListScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _RoutineListScreenState createState() => _RoutineListScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _RoutineListScreenState extends State<RoutineListScreen> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;

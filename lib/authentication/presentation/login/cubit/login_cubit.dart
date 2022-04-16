@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:habit_master/data/models/autentication.model.dart';
 import 'package:meta/meta.dart';
-part 'authentication.state.dart';
+part 'login_state.dart';
 
-class AuthenticationCubit extends Cubit<AuthenticationState> {
-  AuthenticationCubit()
-      : super(AuthenticationState(user: authenticationModel()));
+class LoginCubit extends Cubit<LoginState> {
+  LoginCubit()
+      : super(LoginState(user: authenticationModel()));
 
   void onCheckUserAuth() async {}
   void onLoginWithGoogle() async {}

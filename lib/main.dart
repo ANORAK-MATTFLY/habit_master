@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:habit_master/authentication/presentation/login/cubit/login_cubit.dart';
 import 'package:habit_master/common/config/router.dart';
 import 'package:habit_master/common/config/themedata.dart';
 
@@ -15,8 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AuthenticationCubit>(
-          create: (BuildContext context) => AuthenticationCubit(),
+        BlocProvider<LoginCubit>(
+          create: (BuildContext context) => LoginCubit(),
         ),
       ],
       child: GetMaterialApp(
