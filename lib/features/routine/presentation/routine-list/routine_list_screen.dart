@@ -1,12 +1,12 @@
 import 'dart:ui';
-import 'package:habit_master/authentication/presentation/login/login_screen.dart';
-import 'package:habit_master/routine/presentation/routine-list/widgets/large_card.dart';
-import 'package:habit_master/routine/presentation/routine-list/widgets/small_card.dart';
-import 'package:habit_master/shared/presentation/circle.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import '../../../authentication/presentation/login/login_screen.dart';
+import '../../../shared/presentation/circle.dart';
+import 'widgets/large_card.dart';
+import 'widgets/small_card.dart';
 
 
 // TODO: Separate RoutineListScreen with HomeScreen

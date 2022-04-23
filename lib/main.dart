@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:habit_master/authentication/presentation/login/cubit/login_cubit.dart';
 import 'package:habit_master/common/config/router.dart';
 import 'package:habit_master/common/config/themedata.dart';
+import 'package:habit_master/features/authentication/presentation/login/cubit/login_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

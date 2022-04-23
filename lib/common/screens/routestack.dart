@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/authentication/presentation/login/cubit/login_cubit.dart';
-import 'package:habit_master/authentication/presentation/login/login_screen.dart';
 import 'package:habit_master/common/screens/home-screen/homescreen.dart';
+import 'package:habit_master/features/authentication/presentation/login/cubit/login_cubit.dart';
+import 'package:habit_master/features/authentication/presentation/login/login_screen.dart';
 
 class RouteStack extends StatelessWidget {
   const RouteStack({Key? key}) : super(key: key);
