@@ -98,7 +98,6 @@ class _SmallCardState extends State<SmallCard> {
                       height: 100.0,
                       width: 200.0,
                       decoration: const BoxDecoration(
-                        // color: Colors.green,
                         borderRadius: BorderRadius.all(
                           Radius.circular(15.0),
                         ),

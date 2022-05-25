@@ -14,35 +14,6 @@ class _TimerPageState extends State<TimerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: const Color(0x00000000),
-        elevation: 0,
-        leading: Container(
-          height: 50,
-          width: 50,
-          margin: const EdgeInsets.all(10.0),
-          decoration: BoxDecoration(
-            color: const Color(0x42FFFFFF),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(360),
-            ),
-            border: Border.all(
-                color: const Color(0xFFFFFFFF),
-                style: BorderStyle.solid,
-                width: 0.4),
-          ),
-          child: Center(
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              color: Colors.white,
-              iconSize: 12.0,
-            ),
-          ),
-        ),
-      ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -121,20 +92,31 @@ class _TimerPageState extends State<TimerPage> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 40.0,
-              width: 120.0,
-              child: Text(
-                "Done: 3 / 8",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: "Twitterchirp_Bold",
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.none,
-                ),
-              ),
-            )
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                  height: 40.0,
+                  width: 100.0,
+                  decoration: const BoxDecoration(
+                    color: Colors.pink,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20.0),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "Go back",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: "Twitterchirp_Bold",
+                        fontSize: 12.0,
+                        decoration: TextDecoration.none,
+                      ),
+                    ),
+                  )),
+            ),
           ],
         ),
       ),

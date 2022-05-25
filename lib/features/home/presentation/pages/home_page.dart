@@ -1,5 +1,4 @@
-import 'dart:ui';
-import 'package:habit_master/features/auth/pages/login_page.dart';
+import 'package:habit_master/features/auth/pages/profile_page.dart';
 import 'package:habit_master/features/home/presentation/widgets/small_card.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       Container(
         height: 310.0,
         padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: const LargCard(),
+        child: const LargeCard(),
       ),
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -93,7 +92,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      const Flexible(flex: 2, child: SmallCard()),
+      const SmallCard(),
     ];
 
     return Scaffold(
@@ -110,24 +109,6 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width,
                 child: Stack(
                   children: [
-                    Positioned(
-                      right: 80.0,
-                      top: 40.0,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(360),
-                          child: Container(
-                              color: const Color(0x2F88DA88).withOpacity(0.1),
-                              height: 50.0,
-                              width: 50.0)),
-                    ),
-                    BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                      child: Container(
-                        color: const Color(0xFF32333B).withOpacity(0.1),
-                        height: 50.0,
-                        width: 50.0,
-                      ),
-                    ),
                     const Positioned(
                         right: 35.0,
                         top: 55.0,
@@ -192,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const LoginPage()),
+                                                  const ProfilePage()),
                                         );
                                       },
                                       child: ClipRRect(
@@ -205,11 +186,11 @@ class _HomePageState extends State<HomePage> {
                                               .withOpacity(0.9),
                                           child: Center(
                                             child: SvgPicture.asset(
-                                                "assets/svg/user-profile-icon.svg",
-                                                // color: Colors.red,
-                                                height: 12,
-                                                semanticsLabel:
-                                                    'A red up arrow'),
+                                              "assets/svg/user-profile-icon.svg",
+                                              height: 12,
+                                              semanticsLabel:
+                                                  'User profile icon',
+                                            ),
                                           ),
                                         ),
                                       ),

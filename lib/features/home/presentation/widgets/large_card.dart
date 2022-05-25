@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine_page.dart';
 import 'package:habit_master/shared/features/routine/models/routine.dart';
 
-class LargCard extends StatefulWidget {
-  const LargCard({Key? key}) : super(key: key);
+class LargeCard extends StatefulWidget {
+  const LargeCard({Key? key}) : super(key: key);
   @override
   _PrebuiltCardState createState() => _PrebuiltCardState();
 }
 
-class _PrebuiltCardState extends State<LargCard> {
+class _PrebuiltCardState extends State<LargeCard> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -150,7 +150,7 @@ class _PrebuiltCardState extends State<LargCard> {
                       ),
                       const SizedBox(height: 10.0),
                       const Text(
-                        "Recomended for people that work 80+ hours a week.",
+                        "Recommended for people that work 80+ hours a week.",
                         style: TextStyle(
                             color: Color(0xB7FFFFFF),
                             fontFamily: "Twitterchirp",
