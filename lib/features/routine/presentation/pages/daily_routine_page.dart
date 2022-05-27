@@ -425,7 +425,7 @@ class _DailyRoutineState extends State<DailyRoutine>
                             ),
                           ),
                           Text(
-                            "With success rate of 20% this routine will drastically increase your productivity, but remember concistency is the key, so good look!",
+                            "With success rate of 20% this routine will drastically increase your productivity, but remember consistency is the key, so good look!",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: "Twitterchirp",
