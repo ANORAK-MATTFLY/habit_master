@@ -2,6 +2,7 @@ import 'package:blur/blur.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:habit_master/features/routine/presentation/pages/timer_page.dart';
+import 'package:lottie/lottie.dart';
 import 'package:outline_gradient_button/outline_gradient_button.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:show_up_animation/show_up_animation.dart';
@@ -320,7 +321,10 @@ class _DailyRoutineState extends State<DailyRoutine>
                     bottomLeft: Radius.circular(30.0),
                     bottomRight: Radius.circular(30.0)),
                 gradient: LinearGradient(
-                    colors: [Color(0xFF11BDAF), Color(0xFF057996)],
+                    colors: [
+                      Color.fromARGB(82, 53, 2, 44),
+                      Color.fromARGB(95, 71, 2, 25)
+                    ],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
                     stops: [0.0, 0.8],
@@ -330,6 +334,15 @@ class _DailyRoutineState extends State<DailyRoutine>
                 alignment: Alignment.center,
                 children: [
                   Positioned(
+                      child: SizedBox(
+                    width: 150.0,
+                    height: 150.0,
+                    child: Center(
+                      child: Lottie.asset(
+                          "assets/animations/fire animations/fire2.json"),
+                    ),
+                  )),
+                  Positioned(
                     top: 50,
                     child: SizedBox(
                       width: 250.0,
@@ -338,7 +351,7 @@ class _DailyRoutineState extends State<DailyRoutine>
                         borderRadius: const BorderRadius.all(
                           Radius.circular(20.0),
                         ),
-                        blur: 10,
+                        blur: 20,
                         colorOpacity: 0.1,
                         blurColor: Colors.white,
                         child: const Padding(

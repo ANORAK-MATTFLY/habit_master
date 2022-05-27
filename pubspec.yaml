@@ -89,6 +89,10 @@ flutter:
     - assets/svg/link.svg
     - assets/svg/play.svg
     - assets/animations/done_animation.json
+    - assets/animations/fire animations/fire1.json
+    - assets/animations/fire animations/fire2.json
+    - assets/animations/fire animations/fire3.json
+    - assets/animations/fire animations/fire4.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

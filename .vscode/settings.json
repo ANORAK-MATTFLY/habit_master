@@ -1,7 +1,8 @@
 {
     "cSpell.words": [
         "elon",
-        "Twitterchirp"
+        "Twitterchirp",
+        "vsync"
     ],
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs":"active"
