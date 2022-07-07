@@ -85,9 +85,6 @@ flutter:
     - assets/images/3d objects/Polyhedron.png
     - assets/images/3d objects/Cones.png
     - assets/images/google.png
-    - assets/images/tooth.png
-    - assets/images/working.png
-    - assets/images/login_bg.png
     - assets/svg/search-icon.svg
     - assets/svg/user-profile-icon.svg
     - assets/svg/link.svg
