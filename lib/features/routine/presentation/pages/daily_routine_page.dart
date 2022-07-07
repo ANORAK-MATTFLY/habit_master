@@ -442,7 +442,7 @@ class _DailyRoutineState extends State<DailyRoutine>
                         ? ShowUpAnimation(
                             animationDuration:
                                 const Duration(milliseconds: 190),
-                            curve: Curves.bounceIn,
+                            curve: Curves.decelerate,
                             direction: Direction.vertical,
                             offset: 0.6,
                             child: SizedBox(

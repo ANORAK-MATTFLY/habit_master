@@ -40,6 +40,9 @@ dependencies:
   syncfusion_flutter_charts: ^19.4.43
   outline_gradient_button: ^2.0.0+1
   show_up_animation: ^2.0.0
+
+  #UI
+  rive: ^0.9.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -81,6 +84,7 @@ flutter:
     - assets/images/3d objects/Cube-2.png
     - assets/images/3d objects/Polyhedron.png
     - assets/images/3d objects/Cones.png
+    - assets/images/google.png
     - assets/images/tooth.png
     - assets/images/working.png
     - assets/images/login_bg.png
@@ -93,6 +97,8 @@ flutter:
     - assets/animations/fire animations/fire2.json
     - assets/animations/fire animations/fire3.json
     - assets/animations/fire animations/fire4.json
+    - assets/rive_assets/shapes.riv
+    - assets/rive_assets/button.riv
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
