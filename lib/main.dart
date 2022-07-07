@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
+import 'features/auth/presentaation/bloc/sign_in_popup_cubit.dart';
 import 'features/home/presentation/pages/home_page.dart';
-import 'features/routine/presentation/bloc/cubit.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,8 +18,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:
-          BlocProvider(create: (_) => CounterCubit(), child: const HomePage()),
+      home: MultiBlocProvider(providers: [
+        BlocProvider(
+          create: (_) => OnboardingCubit(),
+        ),
+        BlocProvider(
+          create: (_) => SignInPopupCubit(),
+        ),
+      ], child: const HomePage()),
     );
   }
 }

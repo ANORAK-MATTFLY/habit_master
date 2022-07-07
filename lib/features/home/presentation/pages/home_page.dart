@@ -10,8 +10,8 @@ import 'package:intl/intl.dart';
 
 import 'package:habit_master/features/home/presentation/widgets/large_card.dart';
 
+import '../../../../shared/bloc/onboarding_cubit.dart';
 import '../../../auth/presentaation/pages/onboarding_screen.dart';
-import '../../../routine/presentation/bloc/cubit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
     ];
 
     return Scaffold(
-      body: BlocBuilder<CounterCubit, bool>(
+      body: BlocBuilder<OnboardingCubit, bool>(
         builder: (context, canDisplayOnboardingScreen) => Stack(
           children: [
             NestedScrollView(
@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                               child: GestureDetector(
                                                 onTap: () => context
-                                                    .read<CounterCubit>()
+                                                    .read<OnboardingCubit>()
                                                     .updateState(),
                                                 child: Container(
                                                   height: 30.0,

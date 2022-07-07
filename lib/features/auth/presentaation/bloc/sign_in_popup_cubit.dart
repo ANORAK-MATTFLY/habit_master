@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CounterCubit extends Cubit<bool> {
-  CounterCubit() : super(false);
+class SignInPopupCubit extends Cubit<bool> {
+  SignInPopupCubit() : super(false);
 
   void updateState() => emit(!state);
 }
