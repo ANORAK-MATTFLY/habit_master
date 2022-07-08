@@ -48,6 +48,8 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        buildToolsVersion "23.0.1"
+        multiDexEnabled true
     }
 
     buildTypes {
