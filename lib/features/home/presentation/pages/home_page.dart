@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:habit_master/features/home/presentation/widgets/large_card.dart';
 
 import '../../../auth/presentaation/pages/onboarding_screen.dart';
+import '../widgets/bottom_app_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -230,19 +231,23 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ],
-              body: Container(
-                height: height,
-                width: double.infinity,
-                decoration: const BoxDecoration(color: Color(0xFF0C051D)),
-                child: ListView.separated(
-                  itemCount: listOfCard.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final section = listOfCard[index];
-                    return section;
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(height: 10.0),
-                ),
+              body: Stack(
+                children: [
+                  Container(
+                    height: height,
+                    width: double.infinity,
+                    decoration: const BoxDecoration(color: Color(0xFF0C051D)),
+                    child: ListView.separated(
+                      itemCount: listOfCard.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final section = listOfCard[index];
+                        return section;
+                      },
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const SizedBox(height: 10.0),
+                    ),
+                  ),
+                ],
               ),
             ),
             BlocBuilder<OnboardingCubit, bool>(
@@ -251,13 +256,11 @@ class _HomePageState extends State<HomePage> {
                 top: 0.0,
                 child: Visibility(
                   visible: canDisplayOnboardingScreen,
-                  child: ShowUpAnimation(
-                    animationDuration: const Duration(milliseconds: 300),
-                    delayStart: const Duration(milliseconds: 0),
-                    curve: Curves.bounceIn,
-                    direction: Direction.vertical,
-                    offset: 0.2,
-                    child: const OnboardingScreen(
+                  child: const AnimatedAlign(
+                    alignment: Alignment.topCenter,
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.decelerate,
+                    child: OnboardingScreen(
                       key: Key('e'),
                     ),
                   ),
