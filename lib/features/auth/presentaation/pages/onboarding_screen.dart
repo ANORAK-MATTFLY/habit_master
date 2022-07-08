@@ -6,7 +6,7 @@ import 'package:show_up_animation/show_up_animation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 import '../../../../shared/bloc/onboarding_cubit.dart';
-import '../bloc/sign_in_popup_cubit.dart';
+// import '../bloc/sign_in_popup_cubit.dart';
 import '../widgets/sign_in_popup.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -155,60 +155,53 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ],
                               ),
                             ),
-                            BlocBuilder<SignInPopupCubit, bool>(
-                              builder: (context, canDisplaySignInPopUp) =>
-                                  (SizedBox(
-                                height: 200.0,
-                                width: 300.0,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () => context
-                                          .read<SignInPopupCubit>()
-                                          .updateState(),
-                                      child: SizedBox(
-                                        height: 150.0,
-                                        width: 200.0,
-                                        child: Stack(
-                                          children: const [
-                                            RiveAnimation.asset(
-                                              'assets/rive_assets/button.riv',
-                                              fit: BoxFit.fitWidth,
-                                            ),
-                                            Positioned(
-                                              bottom: 65.0,
-                                              right: 40.0,
-                                              child: Text(
-                                                "> Start using the app",
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      "Twitterchirp_Bold",
-                                                  fontSize: 13.0,
-                                                  decoration:
-                                                      TextDecoration.none,
-                                                ),
+                            SizedBox(
+                              height: 200.0,
+                              width: 300.0,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {},
+                                    child: SizedBox(
+                                      height: 150.0,
+                                      width: 200.0,
+                                      child: Stack(
+                                        children: const [
+                                          RiveAnimation.asset(
+                                            'assets/rive_assets/button.riv',
+                                            fit: BoxFit.fitWidth,
+                                          ),
+                                          Positioned(
+                                            bottom: 65.0,
+                                            right: 40.0,
+                                            child: Text(
+                                              "> Start using the app",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontFamily: "Twitterchirp_Bold",
+                                                fontSize: 13.0,
+                                                decoration: TextDecoration.none,
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const Text(
-                                      "Join other users now, to compete, learn\n and share a very unique experience.",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: "Twitterchirp_Bold",
-                                        fontSize: 12.0,
-                                        decoration: TextDecoration.none,
-                                      ),
+                                  ),
+                                  const Text(
+                                    "Join other users now, to compete, learn\n and share a very unique experience.",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "Twitterchirp_Bold",
+                                      fontSize: 12.0,
+                                      decoration: TextDecoration.none,
                                     ),
-                                  ],
-                                ),
-                              )),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

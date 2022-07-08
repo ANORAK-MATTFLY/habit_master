@@ -20,9 +20,9 @@ class _SignInPopupState extends State<SignInPopup> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    return BlocBuilder<SignInPopupCubit, bool>(
-      builder: (context, canDisplaySignInPopUp) => Visibility(
-        visible: canDisplaySignInPopUp,
+    return Scaffold(
+      body: Visibility(
+        visible: false,
         child: ShowUpAnimation(
           animationDuration: const Duration(milliseconds: 200),
           delayStart: const Duration(milliseconds: 0),
@@ -309,9 +309,7 @@ class _SignInPopupState extends State<SignInPopup> {
                           ),
                           Center(
                             child: IconButton(
-                              onPressed: () => context
-                                  .read<SignInPopupCubit>()
-                                  .updateState(),
+                              onPressed: () {},
                               icon: const Icon(
                                 Icons.cancel_rounded,
                                 size: 35.0,
