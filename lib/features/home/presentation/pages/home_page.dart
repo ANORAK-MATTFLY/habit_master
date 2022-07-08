@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/auth/presentaation/pages/profile_page.dart';
 import 'package:habit_master/features/home/presentation/widgets/small_card.dart';
+import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import 'package:intl/intl.dart';
 
 import 'package:habit_master/features/home/presentation/widgets/large_card.dart';
 
-import '../../../../shared/bloc/onboarding_cubit.dart';
 import '../../../auth/presentaation/pages/onboarding_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -99,10 +99,12 @@ class _HomePageState extends State<HomePage> {
       ),
       const SmallCard(),
     ];
-
+    final _canDisplayOnboardingScreen =
+        BlocProvider.of<OnboardingCubit>(context);
     return Scaffold(
-      body: BlocBuilder<OnboardingCubit, bool>(
-        builder: (context, canDisplayOnboardingScreen) => Stack(
+      body: BlocBuilder(
+        bloc: _canDisplayOnboardingScreen,
+        builder: (context, state) => Stack(
           children: [
             NestedScrollView(
               floatHeaderSlivers: true,
@@ -165,11 +167,10 @@ class _HomePageState extends State<HomePage> {
                                                 Radius.circular(360.0),
                                               ),
                                               child: GestureDetector(
-                                                onTap: () {
-                                                  context
-                                                      .read<OnboardingCubit>()
-                                                      .updateState();
-                                                },
+                                                key: const Key('K'),
+                                                onTap: () => context
+                                                    .read<OnboardingCubit>()
+                                                    .updateState(),
                                                 child: Container(
                                                   height: 30.0,
                                                   width: 30.0,
@@ -244,17 +245,22 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Positioned(
-              top: 0.0,
-              child: Visibility(
-                visible: canDisplayOnboardingScreen,
-                child: ShowUpAnimation(
-                  animationDuration: const Duration(milliseconds: 300),
-                  delayStart: const Duration(milliseconds: 0),
-                  curve: Curves.bounceIn,
-                  direction: Direction.vertical,
-                  offset: 0.2,
-                  child: const OnboardingScreen(),
+            BlocBuilder<OnboardingCubit, bool>(
+              bloc: _canDisplayOnboardingScreen,
+              builder: (context, canDisplayOnboardingScreen) => Positioned(
+                top: 0.0,
+                child: Visibility(
+                  visible: canDisplayOnboardingScreen,
+                  child: ShowUpAnimation(
+                    animationDuration: const Duration(milliseconds: 300),
+                    delayStart: const Duration(milliseconds: 0),
+                    curve: Curves.bounceIn,
+                    direction: Direction.vertical,
+                    offset: 0.2,
+                    child: const OnboardingScreen(
+                      key: Key('e'),
+                    ),
+                  ),
                 ),
               ),
             ),

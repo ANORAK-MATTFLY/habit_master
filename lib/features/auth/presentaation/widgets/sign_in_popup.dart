@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/auth/presentaation/widgets/sign_in_button.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 
-import '../bloc/sign_in_popup_cubit.dart';
-
 class SignInPopup extends StatefulWidget {
   const SignInPopup({Key? key}) : super(key: key);
 

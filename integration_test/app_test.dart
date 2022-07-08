@@ -19,6 +19,10 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify the counter increments by 1.
-    expect(find.byKey(const Key('e'), skipOffstage: false), findsOneWidget);
+    expect(
+        find.text(
+            "Practice daily habits made by\nhighly productive\npeople like Elon Musk and more!"),
+        findsOneWidget);
+    // skipOffstage: false,
   });
 }
