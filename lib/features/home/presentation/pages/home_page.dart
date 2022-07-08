@@ -165,9 +165,11 @@ class _HomePageState extends State<HomePage> {
                                                 Radius.circular(360.0),
                                               ),
                                               child: GestureDetector(
-                                                onTap: () => context
-                                                    .read<OnboardingCubit>()
-                                                    .updateState(),
+                                                onTap: () {
+                                                  context
+                                                      .read<OnboardingCubit>()
+                                                      .updateState();
+                                                },
                                                 child: Container(
                                                   height: 30.0,
                                                   width: 30.0,
