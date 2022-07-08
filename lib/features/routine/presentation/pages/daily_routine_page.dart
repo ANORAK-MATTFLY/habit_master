@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:habit_master/features/routine/presentation/pages/timer_page.dart';
 import 'package:lottie/lottie.dart';
 import 'package:outline_gradient_button/outline_gradient_button.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+// import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 import 'package:habit_master/features/routine/models/task_model.dart';
 import 'package:habit_master/features/routine/presentation/widgets/charts/stacked_chart.dart';
@@ -202,103 +202,79 @@ class _DailyRoutineState extends State<DailyRoutine>
                                     child: SizedBox(
                                       height: 40,
                                       width: 40,
-                                      child: CircularPercentIndicator(
-                                        arcType: ArcType.FULL,
-                                        radius: 20.0,
-                                        animation: true,
-                                        animationDuration: 1200,
-                                        lineWidth: 2.0,
-                                        circularStrokeCap:
-                                            CircularStrokeCap.round,
-                                        arcBackgroundColor: Colors.black,
-                                        percent: 0.5,
-                                        linearGradient: LinearGradient(
-                                          colors: [
-                                            const Color(0xFFF100DD)
-                                                .withOpacity(0.4),
-                                            const Color(0xFF6C53FA)
-                                                .withOpacity(0.9),
-                                          ],
-                                          begin: Alignment.topRight,
-                                          end: Alignment.bottomLeft,
-                                          stops: const [0.0, 0.8],
-                                          tileMode: TileMode.clamp,
-                                        ),
-                                        center: Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            Container(
-                                              height: 30.0,
-                                              width: 30.0,
-                                              decoration: const BoxDecoration(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(360),
-                                                ),
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      Color(0xFFF7438E),
-                                                      Color(0xCBA8EEEE),
-                                                    ],
-                                                    begin: Alignment.topRight,
-                                                    end: Alignment.bottomLeft,
-                                                    stops: [0.0, 0.9],
-                                                    tileMode: TileMode.clamp),
+                                      child: Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          Container(
+                                            height: 30.0,
+                                            width: 30.0,
+                                            decoration: const BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(360),
+                                              ),
+                                              gradient: LinearGradient(
+                                                  colors: [
+                                                    Color(0xFFF7438E),
+                                                    Color(0xCBA8EEEE),
+                                                  ],
+                                                  begin: Alignment.topRight,
+                                                  end: Alignment.bottomLeft,
+                                                  stops: [0.0, 0.9],
+                                                  tileMode: TileMode.clamp),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 30,
+                                            width: 30,
+                                            child: Blur(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(20.0),
+                                              ),
+                                              blur: 5,
+                                              colorOpacity: 0.1,
+                                              blurColor: Colors.white,
+                                              child: Padding(
+                                                padding: EdgeInsets.all(8.0),
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: 30,
-                                              width: 30,
-                                              child: Blur(
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(20.0),
-                                                ),
-                                                blur: 5,
-                                                colorOpacity: 0.1,
-                                                blurColor: Colors.white,
-                                                child: const Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                ),
-                                              ),
-                                            ),
-                                            const Icon(
-                                              Icons.play_arrow,
-                                              color: Color(0xB9221235),
-                                              size: 25.0,
-                                            )
-                                          ],
-                                        ),
+                                          ),
+                                          const Icon(
+                                            Icons.play_arrow,
+                                            color: Color(0xB9221235),
+                                            size: 25.0,
+                                          )
+                                        ],
                                       ),
                                     ),
                                   ),
-                            title: Text(
-                              task.taskName!,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: "Twitterchirp_Bold",
-                                fontSize: 15.0,
-                              ),
+                          ),
+                          Text(
+                            task.taskName!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Twitterchirp_Bold",
+                              fontSize: 15.0,
                             ),
-                            subtitle: Text(
-                              task.taskDescription!,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: "Twitterchirp",
-                                fontSize: 12.0,
-                              ),
+                          ),
+                          Text(
+                            task.taskDescription!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Twitterchirp",
+                              fontSize: 12.0,
                             ),
-                            trailing: Container(
-                              height: 20,
-                              width: 50,
-                              color: Colors.black,
-                              child: Center(
-                                child: Text(
-                                  task.dueTime!,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "Twitterchirp",
-                                    fontSize: 12.0,
-                                  ),
+                          ),
+                          Container(
+                            height: 20,
+                            width: 50,
+                            color: Colors.black,
+                            child: Center(
+                              child: Text(
+                                task.dueTime!,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "Twitterchirp",
+                                  fontSize: 12.0,
                                 ),
                               ),
                             ),
@@ -342,19 +318,19 @@ class _DailyRoutineState extends State<DailyRoutine>
                           "assets/animations/fire animations/fire2.json"),
                     ),
                   )),
-                  Positioned(
+                  const Positioned(
                     top: 50,
                     child: SizedBox(
                       width: 250.0,
                       height: 250.0,
                       child: Blur(
-                        borderRadius: const BorderRadius.all(
+                        borderRadius: BorderRadius.all(
                           Radius.circular(20.0),
                         ),
                         blur: 20,
                         colorOpacity: 0.1,
                         blurColor: Colors.white,
-                        child: const Padding(
+                        child: Padding(
                           padding: EdgeInsets.all(8.0),
                         ),
                       ),
@@ -384,14 +360,14 @@ class _DailyRoutineState extends State<DailyRoutine>
                       ),
                       height: 100.0,
                       width: MediaQuery.of(context).size.width,
-                      child: Blur(
-                        borderRadius: const BorderRadius.all(
+                      child: const Blur(
+                        borderRadius: BorderRadius.all(
                           Radius.circular(30.0),
                         ),
                         blur: 10,
                         colorOpacity: 0.3,
-                        blurColor: const Color(0xFF104141),
-                        child: const Padding(
+                        blurColor: Color(0xFF104141),
+                        child: Padding(
                           padding: EdgeInsets.all(8.0),
                         ),
                       ),
@@ -442,7 +418,7 @@ class _DailyRoutineState extends State<DailyRoutine>
                         ? ShowUpAnimation(
                             animationDuration:
                                 const Duration(milliseconds: 190),
-                            curve: Curves.bounceIn,
+                            curve: Curves.decelerate,
                             direction: Direction.vertical,
                             offset: 0.6,
                             child: SizedBox(

@@ -1,5 +1,8 @@
-import 'package:habit_master/features/auth/pages/profile_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/features/auth/presentaation/pages/profile_page.dart';
 import 'package:habit_master/features/home/presentation/widgets/small_card.dart';
+import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
+import 'package:show_up_animation/show_up_animation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +10,8 @@ import 'package:habit_master/shared/features/routine/widgets/circle.dart';
 import 'package:intl/intl.dart';
 
 import 'package:habit_master/features/home/presentation/widgets/large_card.dart';
+
+import '../../../auth/presentaation/pages/onboarding_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -94,134 +99,172 @@ class _HomePageState extends State<HomePage> {
       ),
       const SmallCard(),
     ];
-
+    final _canDisplayOnboardingScreen =
+        BlocProvider.of<OnboardingCubit>(context);
     return Scaffold(
-      body: NestedScrollView(
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverAppBar(
-            backgroundColor: const Color(0xFF0C051D),
-            floating: true,
-            snap: true,
-            toolbarHeight: 100.0,
-            actions: <Widget>[
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Stack(
-                  children: [
-                    const Positioned(
-                        right: 35.0,
-                        top: 55.0,
-                        child:
-                            SizedBox(height: 30, width: 30, child: Circle())),
-                    Container(
-                      padding: const EdgeInsets.only(top: 50.0, left: 10.0),
-                      width: double.infinity,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "$day, $month $dayNumber",
-                            style: const TextStyle(
-                              color: Color(0xB7FFFFFF),
-                              fontFamily: "Twitterchirp",
-                              fontSize: 12.0,
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "Habit Masters",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "Twitterchirp_Bold",
-                                  fontSize: 20.0,
+      body: BlocBuilder(
+        bloc: _canDisplayOnboardingScreen,
+        builder: (context, state) => Stack(
+          children: [
+            NestedScrollView(
+              floatHeaderSlivers: true,
+              headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                SliverAppBar(
+                  backgroundColor: const Color(0xFF0C051D),
+                  floating: true,
+                  snap: true,
+                  toolbarHeight: 100.0,
+                  actions: <Widget>[
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Stack(
+                        children: [
+                          const Positioned(
+                              right: 35.0,
+                              top: 55.0,
+                              child: SizedBox(
+                                  height: 30, width: 30, child: Circle())),
+                          Container(
+                            padding:
+                                const EdgeInsets.only(top: 50.0, left: 10.0),
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "$day, $month $dayNumber",
+                                  style: const TextStyle(
+                                    color: Color(0xB7FFFFFF),
+                                    fontFamily: "Twitterchirp",
+                                    fontSize: 12.0,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 200.0,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 30.0),
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(360.0),
-                                        ),
-                                        child: Container(
-                                          height: 30.0,
-                                          width: 30.0,
-                                          color: const Color(0xFF393939)
-                                              .withOpacity(0.9),
-                                          child: Center(
-                                            child: SvgPicture.asset(
-                                                "assets/svg/search-icon.svg",
-                                                height: 12,
-                                                semanticsLabel:
-                                                    'A red up arrow'),
-                                          ),
-                                        ),
+                                    const Text(
+                                      "Habit Masters",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "Twitterchirp_Bold",
+                                        fontSize: 20.0,
                                       ),
                                     ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const ProfilePage()),
-                                        );
-                                      },
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(360.0)),
-                                        child: Container(
-                                          height: 30.0,
-                                          width: 30.0,
-                                          color: const Color(0xFF393939)
-                                              .withOpacity(0.9),
-                                          child: Center(
-                                            child: SvgPicture.asset(
-                                              "assets/svg/user-profile-icon.svg",
-                                              height: 12,
-                                              semanticsLabel:
-                                                  'User profile icon',
+                                    SizedBox(
+                                      width: 200.0,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 30.0),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(360.0),
+                                              ),
+                                              child: GestureDetector(
+                                                key: const Key('K'),
+                                                onTap: () => context
+                                                    .read<OnboardingCubit>()
+                                                    .updateState(),
+                                                child: Container(
+                                                  height: 30.0,
+                                                  width: 30.0,
+                                                  color: const Color(0xFF393939)
+                                                      .withOpacity(0.9),
+                                                  child: Center(
+                                                    child: SvgPicture.asset(
+                                                        "assets/svg/search-icon.svg",
+                                                        height: 12,
+                                                        semanticsLabel:
+                                                            'A red up arrow'),
+                                                  ),
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const ProfilePage()),
+                                              );
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(360.0)),
+                                              child: Container(
+                                                height: 30.0,
+                                                width: 30.0,
+                                                color: const Color(0xFF393939)
+                                                    .withOpacity(0.9),
+                                                child: Center(
+                                                  child: SvgPicture.asset(
+                                                    "assets/svg/user-profile-icon.svg",
+                                                    height: 12,
+                                                    semanticsLabel:
+                                                        'User profile icon',
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
+                                    )
                                   ],
                                 ),
-                              )
-                            ],
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ],
                 ),
+              ],
+              body: Container(
+                height: height,
+                width: double.infinity,
+                decoration: const BoxDecoration(color: Color(0xFF0C051D)),
+                child: ListView.separated(
+                  itemCount: listOfCard.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final section = listOfCard[index];
+                    return section;
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const SizedBox(height: 10.0),
+                ),
               ),
-            ],
-          ),
-        ],
-        body: Container(
-          height: height,
-          width: double.infinity,
-          decoration: const BoxDecoration(color: Color(0xFF0C051D)),
-          child: ListView.separated(
-            itemCount: listOfCard.length,
-            itemBuilder: (BuildContext context, int index) {
-              final section = listOfCard[index];
-              return section;
-            },
-            separatorBuilder: (BuildContext context, int index) =>
-                const SizedBox(height: 10.0),
-          ),
+            ),
+            BlocBuilder<OnboardingCubit, bool>(
+              bloc: _canDisplayOnboardingScreen,
+              builder: (context, canDisplayOnboardingScreen) => Positioned(
+                top: 0.0,
+                child: Visibility(
+                  visible: canDisplayOnboardingScreen,
+                  child: ShowUpAnimation(
+                    animationDuration: const Duration(milliseconds: 300),
+                    delayStart: const Duration(milliseconds: 0),
+                    curve: Curves.bounceIn,
+                    direction: Direction.vertical,
+                    offset: 0.2,
+                    child: const OnboardingScreen(
+                      key: Key('e'),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
