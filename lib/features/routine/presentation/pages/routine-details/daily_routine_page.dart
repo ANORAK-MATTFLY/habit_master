@@ -1,7 +1,6 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:habit_master/features/routine/presentation/pages/timer_page.dart';
 import 'package:lottie/lottie.dart';
 import 'package:outline_gradient_button/outline_gradient_button.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -10,14 +9,14 @@ import 'package:show_up_animation/show_up_animation.dart';
 import 'package:habit_master/features/routine/models/task_model.dart';
 import 'package:habit_master/features/routine/presentation/widgets/charts/stacked_chart.dart';
 
-class DailyRoutine extends StatefulWidget {
-  const DailyRoutine({Key? key}) : super(key: key);
+class DailyRoutinePage extends StatefulWidget {
+  const DailyRoutinePage({Key? key}) : super(key: key);
 
   @override
-  _DailyRoutineState createState() => _DailyRoutineState();
+  _DailyRoutinePageState createState() => _DailyRoutinePageState();
 }
 
-class _DailyRoutineState extends State<DailyRoutine>
+class _DailyRoutinePageState extends State<DailyRoutinePage>
     with SingleTickerProviderStateMixin {
   AnimationController? controller;
 

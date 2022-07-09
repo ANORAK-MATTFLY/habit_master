@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:habit_master/features/home/presentation/pages/home_page.dart';
 
-import '../../../routine/presentation/pages/daily_routine_page.dart';
+import '../../../routine/presentation/pages/routine-details/navigation.dart';
 
 class SuspendedBottomAppBar extends StatefulWidget {
   const SuspendedBottomAppBar({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    final screens = [const HomePage(), const DailyRoutine()];
+    final screens = [const HomePage(), const RoutineNavigation()];
     return Material(
       child: SizedBox(
         height: height,

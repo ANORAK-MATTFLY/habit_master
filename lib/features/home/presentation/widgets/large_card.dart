@@ -1,7 +1,8 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine_page.dart';
 import 'package:habit_master/shared/features/routine/models/routine.dart';
+
+import '../../../routine/presentation/pages/routine-details/navigation.dart';
 
 class LargeCard extends StatefulWidget {
   const LargeCard({Key? key}) : super(key: key);
@@ -23,7 +24,8 @@ class _PrebuiltCardState extends State<LargeCard> {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const DailyRoutine()),
+              MaterialPageRoute(
+                  builder: (context) => const RoutineNavigation()),
             );
           },
           child: Stack(
