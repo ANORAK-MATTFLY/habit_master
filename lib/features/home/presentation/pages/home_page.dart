@@ -256,13 +256,8 @@ class _HomePageState extends State<HomePage> {
                 top: 0.0,
                 child: Visibility(
                   visible: canDisplayOnboardingScreen,
-                  child: const AnimatedAlign(
-                    alignment: Alignment.topCenter,
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.decelerate,
-                    child: OnboardingScreen(
-                      key: Key('e'),
-                    ),
+                  child: const OnboardingScreen(
+                    key: Key('e'),
                   ),
                 ),
               ),
