@@ -37,6 +37,12 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   }
 
   @override
+  dispose() {
+    _animationController.dispose(); // you need this
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;

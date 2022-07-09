@@ -193,13 +193,13 @@ class _DailyRoutineState extends State<DailyRoutine>
                                   )
                                 : GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const TimerPage(),
-                                        ),
-                                      );
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) =>
+                                      //         const TimerPage(),
+                                      //   ),
+                                      // );
                                     },
                                     child: SizedBox(
                                       height: 40,
@@ -247,18 +247,17 @@ class _DailyRoutineState extends State<DailyRoutine>
                                                     tileMode: TileMode.clamp),
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 30,
                                               width: 30,
                                               child: Blur(
-                                                borderRadius:
-                                                    const BorderRadius.all(
+                                                borderRadius: BorderRadius.all(
                                                   Radius.circular(20.0),
                                                 ),
                                                 blur: 5,
                                                 colorOpacity: 0.1,
                                                 blurColor: Colors.white,
-                                                child: const Padding(
+                                                child: Padding(
                                                   padding: EdgeInsets.all(8.0),
                                                 ),
                                               ),
@@ -457,17 +456,17 @@ class _DailyRoutineState extends State<DailyRoutine>
                                 child: Stack(
                                   alignment: Alignment.center,
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 50.0,
                                       width: 150.0,
                                       child: Blur(
-                                        borderRadius: const BorderRadius.all(
+                                        borderRadius: BorderRadius.all(
                                           Radius.circular(10.0),
                                         ),
                                         blur: 5,
                                         colorOpacity: 0.5,
-                                        blurColor: const Color(0xFF696969),
-                                        child: const Padding(
+                                        blurColor: Color(0xFF696969),
+                                        child: Padding(
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),

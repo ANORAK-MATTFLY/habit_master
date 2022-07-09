@@ -1,8 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/auth/presentaation/pages/profile_page.dart';
 import 'package:habit_master/features/home/presentation/widgets/small_card.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
-import 'package:show_up_animation/show_up_animation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,8 +9,7 @@ import 'package:intl/intl.dart';
 
 import 'package:habit_master/features/home/presentation/widgets/large_card.dart';
 
-import '../../../auth/presentaation/pages/onboarding_screen.dart';
-import '../widgets/bottom_app_bar.dart';
+import '../../../auth/presentation/pages/onboarding_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -189,14 +186,7 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ),
                                           GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ProfilePage()),
-                                              );
-                                            },
+                                            onTap: () {},
                                             child: ClipRRect(
                                               borderRadius:
                                                   const BorderRadius.all(

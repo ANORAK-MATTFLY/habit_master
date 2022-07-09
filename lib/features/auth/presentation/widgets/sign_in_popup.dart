@@ -1,7 +1,7 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/auth/presentaation/widgets/sign_in_button.dart';
+import 'package:habit_master/features/auth/presentation/widgets/sign_in_button.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 
 import '../bloc/sign_in_cubit.dart';
@@ -32,6 +32,12 @@ class _SignInPopupState extends State<SignInPopup>
         Tween<Offset>(begin: Offset.zero, end: const Offset(0.0, 0.5)).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.elasticIn),
     );
+  }
+
+  @override
+  dispose() {
+    _animationController.dispose(); // you need this
+    super.dispose();
   }
 
   @override

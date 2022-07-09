@@ -66,19 +66,19 @@ class _SmallCardState extends State<SmallCard> {
                       tileMode: TileMode.clamp),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 right: 0.0,
                 child: SizedBox(
                   width: 140.0,
                   height: 200.0,
                   child: Blur(
-                    borderRadius: const BorderRadius.all(
+                    borderRadius: BorderRadius.all(
                       Radius.circular(20.0),
                     ),
                     blur: 10,
                     colorOpacity: 0.1,
                     blurColor: Colors.white,
-                    child: const Padding(
+                    child: Padding(
                       padding: EdgeInsets.all(8.0),
                     ),
                   ),

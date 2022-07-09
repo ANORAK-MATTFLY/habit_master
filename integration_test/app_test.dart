@@ -1,12 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:habit_master/features/auth/presentaation/pages/onboarding_screen.dart';
-import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
+import 'package:habit_master/features/auth/presentation/pages/onboarding_screen.dart';
 import 'package:integration_test/integration_test.dart';
 
+// ignore: avoid_relative_lib_imports
 import './../lib/main.dart' as app;
-import './../lib/features/auth/presentaation/pages/onboarding_screen.dart'
-    as onBoardingScreen;
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
