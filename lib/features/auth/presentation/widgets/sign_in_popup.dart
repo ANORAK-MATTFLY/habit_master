@@ -8,7 +8,6 @@ import '../bloc/sign_in_cubit.dart';
 
 class SignInPopup extends StatefulWidget {
   const SignInPopup({Key? key}) : super(key: key);
-
   @override
   State<SignInPopup> createState() => _SignInPopupState();
 }
