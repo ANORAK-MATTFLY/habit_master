@@ -2,7 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:habit_master/shared/features/routine/models/routine.dart';
 
-import '../../../routine/presentation/pages/routine-details/navigation.dart';
+import '../../../routine/presentation/pages/routine_details/navigation.dart';
 
 class LargeCard extends StatefulWidget {
   const LargeCard({Key? key}) : super(key: key);

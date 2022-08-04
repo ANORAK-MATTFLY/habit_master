@@ -159,7 +159,6 @@ class _SmallCardState extends State<SmallCard> {
                         fontSize: 10.0,
                       ),
                     ),
-                    // const SizedBox(height: 10.0),
                     Container(
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(

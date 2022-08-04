@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:habit_master/features/routine/presentation/pages/routine-details/daily_routine_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/features/routine/presentation/pages/routine_details/competion_screen/bloc/events/load_person_action.dart';
+import 'package:habit_master/features/routine/presentation/pages/routine_details/competion_screen/bloc/logic.dart';
+import 'package:habit_master/features/routine/presentation/pages/routine_details/daily_routine_page.dart';
+
+import 'competion_screen/bloc/competitors_bloc.dart';
+import 'competion_screen/bloc/interfaces/competitors_event.dart';
+import 'competion_screen/bloc/states/competitors_state.dart';
+import 'competion_screen/page/competition_page.dart';
 
 class RoutineNavigation extends StatefulWidget {
   const RoutineNavigation({Key? key}) : super(key: key);
@@ -10,7 +18,10 @@ class RoutineNavigation extends StatefulWidget {
 
 class _RoutineNavigationState extends State<RoutineNavigation> {
   int index = 0;
-  final List screens = const [DailyRoutinePage()];
+  final List screens = const [
+    DailyRoutinePage(),
+    CompetitionScreen(),
+  ];
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -40,6 +51,12 @@ class _RoutineNavigationState extends State<RoutineNavigation> {
                       children: [
                         IconButton(
                           onPressed: () {
+                            context.read<CompetitorsBloc>().add(
+                                  const LoadCompetitorsAction(
+                                    url: PersonUrl.persons1,
+                                  ),
+                                );
+                            print("tap");
                             setState(() {
                               index = 0;
                             });
@@ -55,6 +72,19 @@ class _RoutineNavigationState extends State<RoutineNavigation> {
                             setState(() {
                               index = 1;
                             });
+
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) =>
+                            //         BlocBuilder<CompetitorsEventType, FetchResult?>(
+                            //       bloc: ,
+                            //       builder:
+                            //           (context, canDisplayOnboardingScreen) =>
+                            //               const CompetitionScreen(),
+                            //     ),
+                            //   ),
+                            // );
                           },
                           icon: const Icon(
                             Icons.sports_score_sharp,
