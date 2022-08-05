@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/routine/presentation/pages/routine_details/competion_screen/bloc/states/competitors_state.dart';
+import 'package:habit_master/features/routine/presentation/pages/routine_details/competition_screen/bloc/states/competitors_state.dart';
 
 import '../bloc/competitors_bloc.dart';
 

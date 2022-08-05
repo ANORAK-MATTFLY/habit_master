@@ -5,8 +5,8 @@ import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'features/auth/presentation/pages/onboarding_screen.dart';
 import 'features/home/presentation/pages/home_page.dart';
 import 'features/home/presentation/widgets/bottom_app_bar.dart';
-import 'features/routine/presentation/pages/routine_details/competion_screen/bloc/competitors_bloc.dart';
-import 'features/routine/presentation/pages/routine_details/competion_screen/page/competition_page.dart';
+import 'features/routine/presentation/pages/routine_details/competition_screen/bloc/competitors_bloc.dart';
+import 'features/routine/presentation/pages/routine_details/competition_screen/page/competition_page.dart';
 import 'features/routine/presentation/pages/routine_details/navigation.dart';
 
 void main() {

@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
 
-import '../../../../../../../auth/models/user_model.dart';
-
 @immutable
 class FetchResult {
   final Map<String, dynamic> competitors;

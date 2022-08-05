@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/routine/presentation/pages/routine_details/competion_screen/bloc/events/load_person_action.dart';
-import 'package:habit_master/features/routine/presentation/pages/routine_details/competion_screen/bloc/logic.dart';
+import 'package:habit_master/features/routine/presentation/pages/routine_details/competition_screen/bloc/events/load_person_action.dart';
+import 'package:habit_master/features/routine/presentation/pages/routine_details/competition_screen/bloc/logic.dart';
 import 'package:habit_master/features/routine/presentation/pages/routine_details/daily_routine_page.dart';
 
-import 'competion_screen/bloc/competitors_bloc.dart';
-import 'competion_screen/bloc/interfaces/competitors_event.dart';
-import 'competion_screen/bloc/states/competitors_state.dart';
-import 'competion_screen/page/competition_page.dart';
+import 'competition_screen/bloc/competitors_bloc.dart';
+import 'competition_screen/page/competition_page.dart';
 
 class RoutineNavigation extends StatefulWidget {
   const RoutineNavigation({Key? key}) : super(key: key);
@@ -56,7 +54,6 @@ class _RoutineNavigationState extends State<RoutineNavigation> {
                                     url: PersonUrl.persons1,
                                   ),
                                 );
-                            print("tap");
                             setState(() {
                               index = 0;
                             });
