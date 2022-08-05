@@ -26,11 +26,11 @@ class _StackedChartState extends State<StackedChart> {
       width: MediaQuery.of(context).size.width - 100,
       child: SfCartesianChart(
         title: ChartTitle(
-          text: 'Your weelky progress',
+          text: 'Your weekly progress',
           textStyle: const TextStyle(
             color: Colors.white,
             fontFamily: "Twitterchirp",
-            fontSize: 10.0,
+            fontSize: 12.0,
           ),
         ),
         legend: Legend(isVisible: false),
@@ -46,7 +46,10 @@ class _StackedChartState extends State<StackedChart> {
               borderColor: Colors.red,
               borderRadius: const BorderRadius.all(Radius.circular(5)),
               gradient: const LinearGradient(
-                  colors: [Color(0x2AC4EECB), Color(0x3A5E064B)],
+                  colors: [
+                    Color.fromARGB(95, 255, 218, 183),
+                    Color.fromARGB(139, 94, 6, 75)
+                  ],
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft,
                   stops: [0.0, 0.7],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:habit_master/features/home/presentation/pages/home_page.dart';
 
-import '../../../routine/presentation/pages/routine-details/navigation.dart';
+import '../../../routine/presentation/pages/routine_details/navigation.dart';
 
 class SuspendedBottomAppBar extends StatefulWidget {
   const SuspendedBottomAppBar({Key? key}) : super(key: key);
