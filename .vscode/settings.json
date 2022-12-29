@@ -1,12 +1,15 @@
 {
     "cSpell.words": [
         "ARGB",
+        "AUTOINCREMENT",
         "chrono",
         "elon",
-        "subosito",
         "Leaderboard",
+        "sqflite",
+        "subosito",
         "syncfusion",
         "Twitterchirp",
+        "VARCHAR",
         "vsync"
     ],
     "editor.bracketPairColorization.enabled": true,

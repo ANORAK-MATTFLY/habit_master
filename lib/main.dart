@@ -2,14 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/auth/presentation/bloc/sign_in_cubit.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
+import 'package:sqflite/sqflite.dart';
+// ignore: depend_on_referenced_packages
+import 'package:path/path.dart';
 import 'features/auth/presentation/pages/onboarding_screen.dart';
-import 'features/home/presentation/pages/home_page.dart';
-import 'features/home/presentation/widgets/bottom_app_bar.dart';
+import 'features/habits/presentation/pages/home_page.dart';
+import 'features/habits/presentation/widgets/bottom_app_bar.dart';
 import 'features/routine/presentation/pages/routine_details/competition_screen/bloc/competitors_bloc.dart';
 import 'features/routine/presentation/pages/routine_details/competition_screen/page/competition_page.dart';
 import 'features/routine/presentation/pages/routine_details/navigation.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await openDatabase(
+    // Set the path to the database. Note: Using the `join` function from the
+    // `path` package is best practice to ensure the path is correctly
+    // constructed for each platform.
+    join(await getDatabasesPath(), 'habits_local_database.db'),
+  );
+
   runApp(
     const MyApp(),
   );

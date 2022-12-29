@@ -1,12 +1,13 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:habit_master/shared/features/routine/models/routine.dart';
 
 import '../../../routine/presentation/pages/routine_details/navigation.dart';
 
 class LargeCard extends StatefulWidget {
-  const LargeCard({Key? key}) : super(key: key);
+  final authors;
+  const LargeCard({Key? key, required this.authors}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _PrebuiltCardState createState() => _PrebuiltCardState();
 }
 
@@ -16,16 +17,20 @@ class _PrebuiltCardState extends State<LargeCard> {
     return ListView.builder(
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
-      itemCount: routines.length,
+      itemCount: widget.authors.length,
       itemBuilder: (BuildContext context, int index) {
-        final routine = routines[index];
-        final cardPositionIsOdd = routines.indexOf(routine).isEven;
+        final routine = widget.authors[index];
+        final authorName = routine.authorName!.toString().length > 9
+            ? routine.authorName!.toString().substring(0, 9)
+            : routine.authorName!;
+        final cardPositionIsOdd = widget.authors.indexOf(routine).isEven;
         return GestureDetector(
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const RoutineNavigation()),
+                builder: (context) => const RoutineNavigation(),
+              ),
             );
           },
           child: Stack(
@@ -123,7 +128,8 @@ class _PrebuiltCardState extends State<LargeCard> {
                                   width: 110.0,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
-                                      image: AssetImage(routine.ownerImage!),
+                                      image: AssetImage(
+                                          routine.authorProfilePicture!),
                                     ),
                                   ),
                                 ),
@@ -133,7 +139,7 @@ class _PrebuiltCardState extends State<LargeCard> {
                         ),
                       ),
                       Text(
-                        "Start ${routine.ownerName!}'s Daily Routine",
+                        "Start $authorName's Daily Routine",
                         style: const TextStyle(
                             color: Colors.white,
                             fontFamily: "Twitterchirp_Bold",

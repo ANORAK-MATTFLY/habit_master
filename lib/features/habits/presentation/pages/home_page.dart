@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/home/presentation/widgets/small_card.dart';
+import 'package:habit_master/features/habits/presentation/widgets/small_card.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +7,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:habit_master/shared/features/routine/widgets/circle.dart';
 import 'package:intl/intl.dart';
 
-import 'package:habit_master/features/home/presentation/widgets/large_card.dart';
+import 'package:habit_master/features/habits/presentation/widgets/large_card.dart';
 
 import '../../../auth/presentation/pages/onboarding_screen.dart';
+import '../../infrastructure/data_sources/local_data_source/author_db.dart';
+import '../../infrastructure/data_sources/local_data_source/habits_db.dart';
+import '../../models/author_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,8 +23,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+    getAuthors();
+  }
+
+  @override
+  void dispose() {
+    AuthorDatabase.instance.closeDatabase();
+    super.dispose();
+  }
+
+  Future getAuthors() async {
+    final authorsExist = await AuthorDatabase.instance.checkIfAuthorsExist();
+
+    if (!authorsExist) {
+      await AuthorDatabase.instance.createAuthor();
+    }
+    await HabitsDatabaseProvider().createHabit();
+
+    final habits = await HabitsDatabaseProvider.getHabits();
+
+    print(habits);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+
     DateTime today = DateTime.now();
     final month = DateFormat("MMMM")
         .format(today)
@@ -37,7 +66,7 @@ class _HomePageState extends State<HomePage> {
       Container(
         height: 310.0,
         padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: const LargeCard(),
+        child: LargeCard(authors: predefinedAuthors),
       ),
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 10.0),
