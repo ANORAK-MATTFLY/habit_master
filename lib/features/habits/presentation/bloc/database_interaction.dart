@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../../models/habit_model.dart';
+import '../../infrastructure/models/habit_model.dart';
 
 @immutable
 abstract class DatabaseInteraction {

@@ -46,11 +46,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    final _canDisplaySignInScreen = BlocProvider.of<SignInCubit>(context);
+    final canDisplaySignInScreen = BlocProvider.of<SignInCubit>(context);
 
     return BlocBuilder<SignInCubit, bool>(
-      bloc: _canDisplaySignInScreen,
-      builder: (context, _canDisplaySignInScreen) => SlideTransition(
+      bloc: canDisplaySignInScreen,
+      builder: (context, canDisplaySignInScreen) => SlideTransition(
         transformHitTests: true,
         position: _offsetAnimation,
         child: SizedBox(
@@ -242,7 +242,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 ),
               ),
               Visibility(
-                visible: _canDisplaySignInScreen,
+                visible: canDisplaySignInScreen,
                 child: const SignInPopup(),
               ),
             ],

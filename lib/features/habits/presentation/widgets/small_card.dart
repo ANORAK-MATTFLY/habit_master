@@ -16,7 +16,11 @@ class _SmallCardState extends State<SmallCard> {
     "assets/images/3d objects/Ball-2.png",
     "assets/images/3d objects/Cones.png",
     "assets/images/3d objects/Cube-2.png",
-    "assets/images/3d objects/Polyhedron.png"
+    "assets/images/3d objects/Polyhedron.png",
+    "assets/images/bubble3.png",
+    "assets/images/bubble4.png",
+    "assets/images/bubble6.png",
+    "assets/images/bg.png",
   ];
   @override
   Widget build(BuildContext context) {

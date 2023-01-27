@@ -160,10 +160,11 @@ class _PrebuiltCardState extends State<LargeCard> {
                       const Text(
                         "Recommended for people that work 80+ hours a week.",
                         style: TextStyle(
-                            color: Color(0xB7FFFFFF),
-                            fontFamily: "Twitterchirp",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10.0),
+                          color: Color(0xB7FFFFFF),
+                          fontFamily: "Twitterchirp",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10.0,
+                        ),
                       ),
                       const SizedBox(height: 10.0),
                       Container(

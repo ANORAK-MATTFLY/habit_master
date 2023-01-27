@@ -1,5 +1,3 @@
-import 'package:habit_master/features/habits/models/task_model.dart';
-
 class Habit {
   final String? authorID;
   final String? authorName;

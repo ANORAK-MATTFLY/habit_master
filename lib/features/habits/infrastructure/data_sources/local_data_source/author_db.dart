@@ -2,7 +2,7 @@ import 'package:sqflite/sqflite.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 
-import '../../../models/author_model.dart';
+import '../../models/author_model.dart';
 import 'db_constants.dart';
 import 'habits_db.dart';
 

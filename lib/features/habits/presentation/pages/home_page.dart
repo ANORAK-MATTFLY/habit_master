@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/features/habits/presentation/pages/profile_page.dart';
 import 'package:habit_master/features/habits/presentation/widgets/small_card.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
+import 'package:lottie/lottie.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,7 +14,8 @@ import 'package:habit_master/features/habits/presentation/widgets/large_card.dar
 import '../../../auth/presentation/pages/onboarding_screen.dart';
 import '../../infrastructure/data_sources/local_data_source/author_db.dart';
 import '../../infrastructure/data_sources/local_data_source/habits_db.dart';
-import '../../models/author_model.dart';
+import '../../infrastructure/models/author_model.dart';
+import '../../infrastructure/models/habit_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -42,9 +45,7 @@ class _HomePageState extends State<HomePage> {
     }
     await HabitsDatabaseProvider().createHabit();
 
-    final habits = await HabitsDatabaseProvider.getHabits();
-
-    print(habits);
+    await HabitsDatabaseProvider.getHabits();
   }
 
   @override
@@ -75,12 +76,18 @@ class _HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.all(
             Radius.circular(20.0),
           ),
-          color: Color(0xFF060C14),
+          boxShadow: [
+            BoxShadow(
+                color: Color.fromARGB(145, 0, 0, 0),
+                blurRadius: 9,
+                spreadRadius: 9)
+          ],
+          color: Color.fromARGB(221, 6, 12, 20),
         ),
         child: Center(
           child: ListTile(
             title: GradientText(
-              "CAN YOU PLEASE GIVE US A RATING?",
+              "CAN YOU PLEASE GIVE US A FEEDBACK?",
               style: const TextStyle(
                 color: Colors.white,
                 fontFamily: "Twitterchirp_Bold",
@@ -126,11 +133,11 @@ class _HomePageState extends State<HomePage> {
       ),
       const SmallCard(),
     ];
-    final _canDisplayOnboardingScreen =
+    final canDisplayOnboardingScreen =
         BlocProvider.of<OnboardingCubit>(context);
     return Scaffold(
       body: BlocBuilder(
-        bloc: _canDisplayOnboardingScreen,
+        bloc: canDisplayOnboardingScreen,
         builder: (context, state) => Stack(
           children: [
             NestedScrollView(
@@ -215,7 +222,17 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ),
                                           GestureDetector(
-                                            onTap: () {},
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const ProfilePage(),
+                                                ),
+                                              );
+
+                                              // ProfilePage(),
+                                            },
                                             child: ClipRRect(
                                               borderRadius:
                                                   const BorderRadius.all(
@@ -255,22 +272,74 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     height: height,
                     width: double.infinity,
-                    decoration: const BoxDecoration(color: Color(0xFF0C051D)),
-                    child: ListView.separated(
-                      itemCount: listOfCard.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final section = listOfCard[index];
-                        return section;
-                      },
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const SizedBox(height: 10.0),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF0C051D),
+                    ),
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Container(
+                            height: height,
+                            width: double.infinity,
+                            padding: const EdgeInsets.only(top: 250.0),
+                            child: Container(
+                              height: 200,
+                              width: double.infinity,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage("assets/images/bg.png"),
+                                  alignment: Alignment.center,
+                                  opacity: 0.6,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        FutureBuilder<List<Habit>>(
+                            future: HabitsDatabaseProvider.getHabits(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                return const Center(
+                                  child: Text("Error"),
+                                );
+                              }
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.none:
+                                  return const Center(
+                                    child: Text("An error occurred"),
+                                  );
+                                case ConnectionState.waiting:
+                                  return Center(
+                                    child: Lottie.asset("assets/loading.json"),
+                                  );
+                                case ConnectionState.active:
+                                  return Center(
+                                    child: Lottie.asset("assets/loading.json"),
+                                  );
+                                case ConnectionState.done:
+                                  {
+                                    return ListView.separated(
+                                      itemCount: listOfCard.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        final section = listOfCard[index];
+                                        return section;
+                                      },
+                                      separatorBuilder:
+                                          (BuildContext context, int index) =>
+                                              const SizedBox(height: 10.0),
+                                    );
+                                  }
+                              }
+                            })
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
             BlocBuilder<OnboardingCubit, bool>(
-              bloc: _canDisplayOnboardingScreen,
+              bloc: canDisplayOnboardingScreen,
               builder: (context, canDisplayOnboardingScreen) => Positioned(
                 top: 0.0,
                 child: Visibility(

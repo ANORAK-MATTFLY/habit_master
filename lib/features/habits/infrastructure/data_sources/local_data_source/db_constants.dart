@@ -1,9 +1,8 @@
-import '../../../models/author_model.dart';
-import '../../../models/habit_model.dart';
+import '../../models/author_model.dart';
+import '../../models/habit_model.dart';
 
 class LocalDatabaseConstantProvider {
   static const getHabits = "SELECT * FROM habits";
-
   static const createHabitTable = '''
     CREATE TABLE habit(
       author_id INT,
@@ -13,23 +12,22 @@ class LocalDatabaseConstantProvider {
       description VARCHAR(255),
       isPremium BOOLEAN,
       PRIMARY KEY(author_id),
-      FOREIGN KEY(author_id) REFERENCES author(id) ON DELETE CASCADE
+      FOREIGN KEY(author_id) REFERENCES author(id),
+      FOREIGN KEY(author_profile_picture) REFERENCES author(author_profile_picture)
   )
     ''';
 
   static const createAuthorTable = '''CREATE TABLE author(
       id VARCHAR(255) NOT NULL PRIMARY KEY,
-      authorName VARCHAR(20),
-      authorProfilePicture VARCHAR(255),
-      isPredefined BOOLEAN NOT NULL DEFAULT FALSE,
-      isPremium BOOLEAN NOT NULL DEFAULT FALSE
+      author_name VARCHAR(20),
+      author_profile_picture VARCHAR(255)
     )''';
 
   static String createAuthor(Author author) {
     const attributes =
-        'INSERT INTO author(id, authorName, authorProfilePicture, isPredefined, isPremium)';
+        'INSERT INTO author(id, author_name, author_profile_picture)';
     final values =
-        ' VALUES("${author.id}", "${author.authorName}", "${author.authorProfilePicture}", ${author.isPredefined}, ${author.isPremium})';
+        ' VALUES("${author.id}", "${author.authorName}", "${author.authorProfilePicture}")';
     return attributes + values;
   }
 

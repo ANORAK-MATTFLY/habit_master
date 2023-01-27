@@ -1,8 +1,8 @@
 import 'package:habit_master/features/habits/infrastructure/data_sources/local_data_source/db_constants.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../../../models/author_model.dart';
-import '../../../models/habit_model.dart';
+import '../../models/author_model.dart';
+import '../../models/habit_model.dart';
 import 'author_db.dart';
 
 class HabitsDatabaseProvider {
@@ -30,17 +30,17 @@ class HabitsDatabaseProvider {
     }
   }
 
-  static Future getHabits() async {
+  static Future<List<Habit>> getHabits() async {
     final database = await AuthorDatabase.instance.database;
     final maps = await database.query("habit");
+    final List<Habit> habits = [];
     if (maps.isNotEmpty) {
-      return List.generate(maps.length, (i) {
-        final author = maps[i];
-        final Habit serializedAuthor = Habit.fromJson(author);
-        return serializedAuthor;
+      List.generate(maps.length, (i) {
+        final habit = maps[i];
+        final Habit serializedHabit = Habit.fromJson(habit);
+        habits.add(serializedHabit);
       });
-    } else {
-      return false;
     }
+    return habits;
   }
 }
