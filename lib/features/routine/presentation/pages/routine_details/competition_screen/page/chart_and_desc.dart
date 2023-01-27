@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 
-import '../../widgets/charts/stacked_chart.dart';
-import 'competition_screen/widgets/background_animation.dart';
+import '../widgets/charts/stacked_chart.dart';
+import 'background_animation.dart';
 
 class ChartAndDescription extends StatefulWidget {
   const ChartAndDescription({Key? key}) : super(key: key);
@@ -48,72 +48,6 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
               color: Colors.white.withOpacity(0.0),
               width: 250.0,
               height: 250.0,
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              padding: const EdgeInsets.all(0.2),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(30.0),
-                ),
-                border: Border.all(
-                    color: const Color(0xFFBDBDBD),
-                    style: BorderStyle.solid,
-                    width: 0.1),
-              ),
-              height: 100.0,
-              width: MediaQuery.of(context).size.width,
-              child: const Blur(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(30.0),
-                ),
-                blur: 10,
-                colorOpacity: 0.3,
-                blurColor: Color(0xFF104141),
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(30.0),
-                ),
-                border: Border.all(
-                    color: const Color(0xFFBDBDBD),
-                    style: BorderStyle.solid,
-                    width: 0.1),
-              ),
-              height: 100.0,
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  Text(
-                    "Elon musk's daily routine",
-                    style: TextStyle(
-                      color: Color(0xFFDADADA),
-                      fontFamily: "Twitterchirp_Bold",
-                      fontSize: 15.0,
-                    ),
-                  ),
-                  Text(
-                    "With success rate of 20% this routine will drastically increase your productivity, but remember consistency is the key, so good look!",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "Twitterchirp",
-                        fontSize: 12.0),
-                  )
-                ],
-              ),
             ),
           ),
           Positioned(

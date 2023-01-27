@@ -10,7 +10,8 @@ import 'features/habits/presentation/pages/home_page.dart';
 import 'features/habits/presentation/widgets/bottom_app_bar.dart';
 import 'features/routine/presentation/pages/routine_details/competition_screen/bloc/competitors_bloc.dart';
 import 'features/routine/presentation/pages/routine_details/competition_screen/page/competition_page.dart';
-import 'features/routine/presentation/pages/routine_details/navigation.dart';
+import 'features/routine/presentation/pages/routine_details/competition_screen/page/daily_routine_page.dart';
+import 'features/routine/presentation/pages/routine_details/competition_screen/page/navigation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,10 +45,10 @@ class MyApp extends StatelessWidget {
           create: (_) => CompetitorsBloc(),
           child: const CompetitionScreen(),
         ),
-        BlocProvider(
-          create: (_) => CompetitorsBloc(),
-          child: const RoutineNavigation(),
-        ),
+        // BlocProvider(
+        //   create: (_) => CompetitorsBloc(),
+        //   child: const DailyRoutinePage(),
+        // ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

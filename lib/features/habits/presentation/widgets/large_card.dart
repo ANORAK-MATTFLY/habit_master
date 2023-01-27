@@ -1,7 +1,8 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
-import '../../../routine/presentation/pages/routine_details/navigation.dart';
+import '../../../routine/presentation/pages/routine_details/competition_screen/page/daily_routine_page.dart';
+import '../../../routine/presentation/pages/routine_details/competition_screen/page/navigation.dart';
 
 class LargeCard extends StatefulWidget {
   final authors;
@@ -29,7 +30,7 @@ class _PrebuiltCardState extends State<LargeCard> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const RoutineNavigation(),
+                builder: (context) => const DailyRoutinePage(),
               ),
             );
           },
