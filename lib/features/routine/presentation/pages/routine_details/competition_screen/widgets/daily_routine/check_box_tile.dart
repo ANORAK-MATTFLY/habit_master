@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:habit_master/features/routine/presentation/pages/routine_details/competition_screen/widgets/daily_routine/progress_graph.dart';
 
 class CheckBoxItem extends StatefulWidget {
   final Color color;
-  const CheckBoxItem({Key? key, required this.color}) : super(key: key);
+  final Color shimmer;
+  const CheckBoxItem({Key? key, required this.color, required this.shimmer})
+      : super(key: key);
 
   @override
   State<CheckBoxItem> createState() => _CheckBoxItemState();
@@ -20,20 +24,29 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
       checkboxShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5.0),
       ),
-      secondary: Container(
-        height: 20,
-        width: 30.0,
-        color: Colors.black,
-        child: const Center(
-          child: Text(
-            "7:30",
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: "Twitterchirp_bold",
-              fontSize: 10.0,
-              decoration: TextDecoration.none,
-            ),
-          ),
+      secondary: IconButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => const AlertDialog(
+              title: Text(
+                "Your monthly progression on this task over the month",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Twitterchirp",
+                  fontSize: 14.0,
+                  decoration: TextDecoration.none,
+                ),
+              ),
+              backgroundColor: Color.fromARGB(255, 0, 0, 0),
+              content: ProgressGraph(),
+            ).animate().fadeIn(),
+          );
+        },
+        icon: Icon(
+          Icons.more,
+          color: widget.color,
+          size: 20.0,
         ),
       ),
       value: _triggerState,
@@ -49,12 +62,12 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
         });
       },
       controlAffinity: ListTileControlAffinity.leading,
-      title: throwLine(_width, widget.color),
+      title: throwLine(_width, widget.color, widget.shimmer),
     );
   }
 }
 
-Widget throwLine(double width, color) {
+Widget throwLine(double width, Color color, shimmer) {
   return width == 0.0
       ? Stack(
           children: [
@@ -88,7 +101,11 @@ Widget throwLine(double width, color) {
                 fontSize: 17.0,
                 decoration: TextDecoration.none,
               ),
-            ),
+            )
+                .animate(
+                  onPlay: (controller) => controller.repeat(),
+                )
+                .shimmer(color: shimmer, duration: 1800.ms),
             Positioned(
               bottom: 7.0,
               child: AnimatedContainer(

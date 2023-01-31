@@ -2,10 +2,9 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../../routine/presentation/pages/routine_details/competition_screen/page/daily_routine_page.dart';
-import '../../../routine/presentation/pages/routine_details/competition_screen/page/navigation.dart';
 
 class LargeCard extends StatefulWidget {
-  final authors;
+  final List authors;
   const LargeCard({Key? key, required this.authors}) : super(key: key);
   @override
   // ignore: library_private_types_in_public_api

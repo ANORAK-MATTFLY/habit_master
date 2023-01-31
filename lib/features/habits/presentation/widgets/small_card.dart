@@ -7,7 +7,7 @@ class SmallCard extends StatefulWidget {
   const SmallCard({Key? key}) : super(key: key);
 
   @override
-  _SmallCardState createState() => _SmallCardState();
+  State<SmallCard> createState() => _SmallCardState();
 }
 
 class _SmallCardState extends State<SmallCard> {

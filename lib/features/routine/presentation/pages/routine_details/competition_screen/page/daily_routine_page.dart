@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
-import '../widgets/daily_routine/expantion_item.dart';
+import '../widgets/daily_routine/add_habit_panel.dart';
+import '../widgets/daily_routine/expansion_item.dart';
 import '../widgets/daily_routine/progress.dart';
 
 import 'chart_and_desc.dart';
@@ -9,26 +11,48 @@ class DailyRoutinePage extends StatefulWidget {
   const DailyRoutinePage({Key? key}) : super(key: key);
 
   @override
-  _DailyRoutinePageState createState() => _DailyRoutinePageState();
+  @override
+  State<DailyRoutinePage> createState() => _DailyRoutinePageState();
 }
 
 class _DailyRoutinePageState extends State<DailyRoutinePage>
     with SingleTickerProviderStateMixin {
-  AnimationController? controller;
-
   bool isTap = false;
   bool canMove = false;
   @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000));
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      floatingActionButton: GestureDetector(
+        onTap: () {},
+        child: Container(
+          height: 40.0,
+          width: 40,
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 216, 143, 255),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10.0),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color:
+                    const Color.fromARGB(255, 216, 143, 255).withOpacity(0.3),
+                spreadRadius: 5,
+                blurRadius: 20.0,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: const Center(
+            child: Icon(
+              Icons.add,
+              // color: Colors.white,
+            ),
+          ),
+        ).animate().slideY(
+              begin: -0.3,
+              duration: const Duration(milliseconds: 800),
+            ),
+      ),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: const Color(0x00000000),
@@ -97,56 +121,64 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
           )
         ],
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        color: const Color.fromARGB(255, 7, 3, 15),
-        child: Stack(
-          children: [
-            Positioned(
-              bottom: 0,
-              child: SizedBox(
-                height: 430,
-                width: (MediaQuery.of(context).size.width),
-                child: ListView(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 40.0),
-                      child: ExpandedItemList(
-                        title: "Start your Morning Routine",
-                        progressRatio: progress(
-                          "0/3",
-                          const Color.fromARGB(255, 255, 230, 0),
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            color: const Color.fromARGB(255, 7, 3, 15),
+            child: Stack(
+              children: [
+                Positioned(
+                  bottom: 0,
+                  child: SizedBox(
+                    height: 430,
+                    width: (MediaQuery.of(context).size.width),
+                    child: ListView(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 40.0),
+                          child: ExpandedItemList(
+                            title: "Start your Morning Routine",
+                            progressRatio: progress(
+                              "0/3",
+                              const Color.fromARGB(255, 255, 230, 0),
+                            ),
+                            shimmer: Colors.white.withOpacity(0.2),
+                            color: const Color.fromARGB(255, 255, 230, 0),
+                          ),
                         ),
-                        color: const Color.fromARGB(255, 255, 230, 0),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 40.0),
-                      child: ExpandedItemList(
-                        title: "Kickoff your Afternoon!",
-                        progressRatio: progress(
-                          "0/4",
-                          Color.fromARGB(255, 246, 149, 255),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 40.0),
+                          child: ExpandedItemList(
+                            title: "Kickoff your Afternoon!",
+                            progressRatio: progress(
+                              "0/4",
+                              const Color.fromARGB(255, 246, 149, 255),
+                            ),
+                            color: const Color.fromARGB(255, 246, 149, 255),
+                            shimmer: const Color.fromARGB(255, 246, 149, 255),
+                          ),
                         ),
-                        color: Color.fromARGB(255, 246, 149, 255),
-                      ),
+                        ExpandedItemList(
+                          title: "Finish your day in style!",
+                          progressRatio: progress(
+                            "0/3",
+                            const Color.fromARGB(255, 0, 255, 247),
+                          ),
+                          color: const Color.fromARGB(255, 0, 255, 247),
+                          shimmer: const Color.fromARGB(255, 0, 255, 247),
+                        ),
+                      ],
                     ),
-                    ExpandedItemList(
-                      title: "Finish your day style!",
-                      progressRatio: progress(
-                        "0/3",
-                        const Color.fromARGB(255, 0, 255, 247),
-                      ),
-                      color: const Color.fromARGB(255, 0, 255, 247),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                const ChartAndDescription(),
+              ],
             ),
-            const ChartAndDescription(),
-          ],
-        ),
+          ),
+          const Align(alignment: Alignment.center, child: HabitPanel()),
+        ],
       ),
     );
   }

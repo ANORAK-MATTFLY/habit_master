@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:habit_master/features/habits/presentation/pages/home_page.dart';
 
 import '../../../routine/presentation/pages/routine_details/competition_screen/page/daily_routine_page.dart';
-import '../../../routine/presentation/pages/routine_details/competition_screen/page/navigation.dart';
 
 class SuspendedBottomAppBar extends StatefulWidget {
   const SuspendedBottomAppBar({Key? key}) : super(key: key);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 Widget progress(String ratio, Color color) => Container(
       height: 25.0,
@@ -22,4 +23,11 @@ Widget progress(String ratio, Color color) => Container(
           ),
         ),
       ),
-    );
+    )
+        .animate()
+        .slideY(begin: -0.4, duration: const Duration(milliseconds: 400),)
+        .then()
+        .slide(
+          begin: const Offset(-0.2, 0),
+          duration: const Duration(milliseconds: 700),
+        );

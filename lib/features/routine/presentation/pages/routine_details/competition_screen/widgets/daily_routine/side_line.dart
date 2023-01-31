@@ -7,10 +7,10 @@ Widget sideLine(Color color) => Container(
         color: color,
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(73, 255, 238, 1).withOpacity(0.1),
-            spreadRadius: 4,
+            color: color.withOpacity(0.1),
+            spreadRadius: 7,
             blurRadius: 10,
-            offset: const Offset(2, 9), // changes position of shadow
+            offset: const Offset(2, 9),
           ),
         ],
       ),

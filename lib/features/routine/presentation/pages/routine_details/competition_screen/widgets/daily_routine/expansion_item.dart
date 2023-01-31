@@ -8,11 +8,13 @@ class ExpandedItemList extends StatefulWidget {
   final String title;
   final Widget progressRatio;
   final Color color;
+  final Color shimmer;
   const ExpandedItemList(
       {Key? key,
       required this.title,
       required this.progressRatio,
-      required this.color})
+      required this.color,
+      required this.shimmer})
       : super(key: key);
 
   @override
@@ -114,11 +116,16 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        CheckBoxItem(color: widget.color),
-                        CheckBoxItem(color: widget.color),
-                        CheckBoxItem(color: widget.color),
-                        CheckBoxItem(color: widget.color),
-                        CheckBoxItem(color: widget.color),
+                        CheckBoxItem(
+                            color: widget.color, shimmer: widget.shimmer),
+                        CheckBoxItem(
+                            color: widget.color, shimmer: widget.shimmer),
+                        CheckBoxItem(
+                            color: widget.color, shimmer: widget.shimmer),
+                        CheckBoxItem(
+                            color: widget.color, shimmer: widget.shimmer),
+                        CheckBoxItem(
+                            color: widget.color, shimmer: widget.shimmer),
                       ],
                     )),
               ],
