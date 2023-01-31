@@ -18,22 +18,14 @@ class _HabitPanelState extends State<HabitPanel> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    final canDisplaySignInScreen = BlocProvider.of<TimerTaskCubit>(context);
+    final canDisplayTimeTask = BlocProvider.of<TimerTaskCubit>(context);
     return ListView(
       children: [
         Container(
           height: (height - 120.0),
           width: width - 100.0,
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 11, 11, 11),
-                  Color.fromARGB(255, 6, 6, 6),
-                ],
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                stops: [0.0, 0.9],
-                tileMode: TileMode.clamp),
+            color: Color.fromARGB(232, 0, 0, 0),
             borderRadius: BorderRadius.all(
               Radius.circular(15.0),
             ),
@@ -76,19 +68,27 @@ class _HabitPanelState extends State<HabitPanel> {
                         ),
                       ),
                       child: TextFormField(
-                          controller: email,
-                          decoration: const InputDecoration(
-                            labelStyle: TextStyle(
-                              color: Color.fromARGB(255, 140, 140, 140),
-                              fontFamily: "Twitterchirp_bold",
-                              fontSize: 13.0,
-                              decoration: TextDecoration.none,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            labelText: "Add an habit here...",
-                            border: InputBorder.none,
+                        controller: email,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: "Twitterchirp_bold",
+                          fontSize: 13.0,
+                          decoration: TextDecoration.none,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        decoration: const InputDecoration(
+                          labelStyle: TextStyle(
+                            color: Color.fromARGB(255, 140, 140, 140),
+                            fontFamily: "Twitterchirp_bold",
+                            fontSize: 13.0,
+                            decoration: TextDecoration.none,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          validator: (emailValue) {}),
+                          labelText: "Add an habit here...",
+                          border: InputBorder.none,
+                        ),
+                        validator: (emailValue) {},
+                      ),
                     ),
                   ],
                 ),
@@ -171,10 +171,10 @@ class _HabitPanelState extends State<HabitPanel> {
                 ),
               ),
               BlocBuilder<TimerTaskCubit, bool>(
-                bloc: canDisplaySignInScreen,
-                builder: (context, canDisplaySignInScreen) {
+                bloc: canDisplayTimeTask,
+                builder: (context, canDisplayTimeTask) {
                   return Visibility(
-                      visible: canDisplaySignInScreen,
+                      visible: canDisplayTimeTask,
                       child: SizedBox(
                         height: 80,
                         width: double.infinity,
@@ -193,7 +193,7 @@ class _HabitPanelState extends State<HabitPanel> {
                             ),
                             Container(
                               padding: const EdgeInsets.only(left: 10.0),
-                              height: 40,
+                              height: 50,
                               width: 100.0,
                               decoration: BoxDecoration(
                                 color: const Color.fromARGB(0, 255, 255, 255),
@@ -208,10 +208,22 @@ class _HabitPanelState extends State<HabitPanel> {
                                 ),
                               ),
                               child: TextFormField(
+                                  cursorColor:
+                                      const Color.fromARGB(255, 243, 176, 255),
                                   keyboardType: TextInputType.number,
                                   controller: email,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Twitterchirp_bold",
+                                    fontSize: 13.0,
+                                    decoration: TextDecoration.none,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                   decoration: const InputDecoration(
+                                    fillColor: Colors.white,
+                                    focusColor: Colors.white,
                                     labelStyle: TextStyle(
+                                      decorationColor: Colors.white,
                                       color: Color.fromARGB(255, 140, 140, 140),
                                       fontFamily: "Twitterchirp_bold",
                                       fontSize: 13.0,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/features/routine/presentation/cubit/show_panel.dart';
 
 import '../widgets/daily_routine/add_habit_panel.dart';
 import '../widgets/daily_routine/expansion_item.dart';
@@ -19,11 +21,20 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
     with SingleTickerProviderStateMixin {
   bool isTap = false;
   bool canMove = false;
+  bool animateFloatingActionButton = false;
   @override
   Widget build(BuildContext context) {
+    final canDisplayHabitPanel =
+        BlocProvider.of<ShowAddHabitPanelCubit>(context);
+
     return Scaffold(
       floatingActionButton: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          setState(() {
+            animateFloatingActionButton = !animateFloatingActionButton;
+          });
+          context.read<ShowAddHabitPanelCubit>().updateState();
+        },
         child: Container(
           height: 40.0,
           width: 40,
@@ -42,11 +53,25 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
               ),
             ],
           ),
-          child: const Center(
-            child: Icon(
-              Icons.add,
-              // color: Colors.white,
-            ),
+          child: Center(
+            child: animateFloatingActionButton == false
+                ? const Icon(
+                    Icons.add,
+                  ).animate().slideY(
+                      begin: -1,
+                      duration: const Duration(milliseconds: 500),
+                    )
+                : const Text(
+                    "X",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontFamily: "Twitterchirp",
+                    ),
+                  ).animate().slideY(
+                      begin: -2,
+                      duration: const Duration(milliseconds: 300),
+                    ),
           ),
         ).animate().slideY(
               begin: -0.3,
@@ -177,7 +202,18 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
               ],
             ),
           ),
-          const Align(alignment: Alignment.center, child: HabitPanel()),
+          BlocBuilder<ShowAddHabitPanelCubit, bool>(
+            bloc: canDisplayHabitPanel,
+            builder: (context, canDisplayHabitPanel) {
+              return Visibility(
+                visible: canDisplayHabitPanel,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: const HabitPanel().animate().fadeIn(),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

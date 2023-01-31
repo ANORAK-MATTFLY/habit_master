@@ -10,9 +10,11 @@ import 'package:path/path.dart';
 import 'features/auth/presentation/pages/onboarding_screen.dart';
 import 'features/habits/presentation/pages/home_page.dart';
 import 'features/habits/presentation/widgets/bottom_app_bar.dart';
+import 'features/routine/presentation/cubit/show_panel.dart';
 import 'features/routine/presentation/cubit/timer_task.dart';
 import 'features/routine/presentation/pages/routine_details/competition_screen/bloc/competitors_bloc.dart';
 import 'features/routine/presentation/pages/routine_details/competition_screen/page/competition_page.dart';
+import 'features/routine/presentation/pages/routine_details/competition_screen/page/daily_routine_page.dart';
 import 'features/routine/presentation/pages/routine_details/competition_screen/widgets/daily_routine/add_habit_panel.dart';
 
 void main() async {
@@ -54,6 +56,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => TimerTaskCubit(),
           child: const HabitPanel(),
+        ),
+        BlocProvider(
+          create: (_) => ShowAddHabitPanelCubit(),
+          child: const DailyRoutinePage(),
         ),
       ],
       child: MaterialApp(
