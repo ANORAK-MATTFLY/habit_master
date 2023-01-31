@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/routine/presentation/pages/routine_details/competition_screen/bloc/logic.dart';
-import 'package:habit_master/features/routine/presentation/pages/routine_details/competition_screen/bloc/states/competitors_state.dart';
+import 'package:habit_master/features/routine/presentation/states/logic.dart';
+import 'package:habit_master/features/routine/presentation/states/states/competitors_state.dart';
 
 import 'events/load_person_action.dart';
 import 'interfaces/competitors_event.dart';

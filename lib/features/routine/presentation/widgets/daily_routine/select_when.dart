@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/routine/models/habit_option.dart';
-import 'package:habit_master/features/routine/presentation/cubit/timer_task.dart';
+import 'package:habit_master/features/routine/presentation/states/cubit/timer_task.dart';
 import 'package:habit_master/shared/static/options.dart';
 
-import '../../bloc/bloc_logic/select_option_logic.dart';
-import '../../bloc/events/select_option.dart';
+import '../../states/bloc_logic/select_option_logic.dart';
+import '../../states/events/select_option.dart';
 
 class SelectWhen extends StatefulWidget {
   final List<String>? options;

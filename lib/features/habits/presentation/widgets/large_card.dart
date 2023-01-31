@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
-import '../../../routine/presentation/pages/routine_details/competition_screen/page/daily_routine_page.dart';
+import '../../../routine/presentation/pages/daily_routine_page.dart';
 
 class LargeCard extends StatefulWidget {
   final List authors;

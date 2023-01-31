@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../../../../../../models/habit_option.dart';
+import '../../../models/habit_option.dart';
 import '../interfaces/option_interface.dart';
 
 @immutable

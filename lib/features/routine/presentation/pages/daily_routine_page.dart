@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/routine/presentation/cubit/show_panel.dart';
+import 'package:habit_master/features/routine/presentation/states/cubit/show_panel.dart';
 
 import '../widgets/daily_routine/add_habit_panel.dart';
 import '../widgets/daily_routine/expansion_item.dart';

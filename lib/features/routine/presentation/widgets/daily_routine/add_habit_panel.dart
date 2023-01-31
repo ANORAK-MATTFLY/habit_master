@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/routine/presentation/cubit/timer_task.dart';
-import 'package:habit_master/features/routine/presentation/pages/routine_details/competition_screen/widgets/daily_routine/habit_options.dart';
-import 'package:habit_master/features/routine/presentation/pages/routine_details/competition_screen/widgets/daily_routine/select_when.dart';
+import 'package:habit_master/features/routine/presentation/states/cubit/timer_task.dart';
+import 'package:habit_master/features/routine/presentation/widgets/daily_routine/habit_options.dart';
+import 'package:habit_master/features/routine/presentation/widgets/daily_routine/select_when.dart';
 import 'package:habit_master/shared/static/options.dart';
 
 class HabitPanel extends StatefulWidget {

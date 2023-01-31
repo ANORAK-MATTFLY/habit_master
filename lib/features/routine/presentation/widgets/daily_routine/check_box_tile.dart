@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:habit_master/features/routine/presentation/pages/routine_details/competition_screen/widgets/daily_routine/progress_graph.dart';
+import 'package:habit_master/features/routine/presentation/widgets/daily_routine/progress_graph.dart';
 
 class CheckBoxItem extends StatefulWidget {
   final Color color;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:habit_master/features/routine/presentation/pages/routine_details/competition_screen/widgets/daily_routine/check_box_tile.dart';
-import 'package:habit_master/features/routine/presentation/pages/routine_details/competition_screen/widgets/daily_routine/circle_avatar.dart';
-import 'package:habit_master/features/routine/presentation/pages/routine_details/competition_screen/widgets/daily_routine/side_icon.dart';
-import 'package:habit_master/features/routine/presentation/pages/routine_details/competition_screen/widgets/daily_routine/side_line.dart';
+import 'package:habit_master/features/routine/presentation/widgets/daily_routine/check_box_tile.dart';
+import 'package:habit_master/features/routine/presentation/widgets/daily_routine/circle_avatar.dart';
+import 'package:habit_master/features/routine/presentation/widgets/daily_routine/side_icon.dart';
+import 'package:habit_master/features/routine/presentation/widgets/daily_routine/side_line.dart';
 
 class ExpandedItemList extends StatefulWidget {
   final String title;
