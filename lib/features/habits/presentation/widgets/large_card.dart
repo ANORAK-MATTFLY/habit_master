@@ -1,10 +1,11 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:habit_master/features/habits/infrastructure/models/author_model.dart';
 
 import '../../../routine/presentation/pages/daily_routine_page.dart';
 
 class LargeCard extends StatefulWidget {
-  final List authors;
+  final List<Author> authors;
   const LargeCard({Key? key, required this.authors}) : super(key: key);
   @override
   // ignore: library_private_types_in_public_api

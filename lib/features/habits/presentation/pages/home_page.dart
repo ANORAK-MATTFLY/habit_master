@@ -1,4 +1,8 @@
+import 'dart:isolate';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:habit_master/features/habits/presentation/pages/profile_page.dart';
 import 'package:habit_master/features/habits/presentation/widgets/small_card.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
@@ -12,6 +16,8 @@ import 'package:intl/intl.dart';
 import 'package:habit_master/features/habits/presentation/widgets/large_card.dart';
 
 import '../../../auth/presentation/pages/onboarding_screen.dart';
+import '../../domain/logic/author_logic.dart';
+import '../../infrastructure/data_sources/local_data_source/author_db.dart';
 import '../../infrastructure/data_sources/local_data_source/habits_db.dart';
 import '../../infrastructure/models/author_model.dart';
 import '../../infrastructure/models/habit_model.dart';
@@ -27,21 +33,16 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // getAuthors();
+    // AuthorLogic().createAuthorIsolate();
   }
 
-  // @override
-  // void dispose() {
-  //   AuthorDatabase.instance.closeDatabase();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    // AuthorDatabase.instance.closeDatabase();
+    super.dispose();
+  }
 
   // Future getAuthors() async {
-  //   final authorsExist = await AuthorDatabase.instance.checkIfAuthorsExist();
-
-  //   if (!authorsExist) {
-  //     await AuthorDatabase.instance.createAuthor();
-  //   }
   //   await HabitsDatabaseProvider().createHabit();
 
   //   await HabitsDatabaseProvider.getHabits();
@@ -63,11 +64,36 @@ class _HomePageState extends State<HomePage> {
     final dayNumber = today.day;
 
     final listOfCard = [
-      Container(
-        height: 310.0,
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: LargeCard(authors: predefinedAuthors),
-      ),
+      StreamBuilder<List<Author>>(
+          stream: AuthorDatabase.getAuthors(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return const Center(
+                  child: Text("An error occurred"),
+                );
+              case ConnectionState.waiting:
+                return const Center(
+                  child: CupertinoActivityIndicator(
+                      animating: true, color: Colors.white),
+                );
+              case ConnectionState.active:
+                return const Center(
+                  child: CupertinoActivityIndicator(
+                      animating: true, color: Colors.white),
+                );
+              case ConnectionState.done:
+                {
+                  final List<Author> authors = snapshot.data!;
+
+                  return Container(
+                    height: 310.0,
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: LargeCard(authors: authors),
+                  );
+                }
+            }
+          }),
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 10.0),
         height: 70,
@@ -296,43 +322,15 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        FutureBuilder<List<Habit>>(
-                            future: HabitsDatabaseProvider.getHabits(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasError) {
-                                return const Center(
-                                  child: Text("Error"),
-                                );
-                              }
-                              switch (snapshot.connectionState) {
-                                case ConnectionState.none:
-                                  return const Center(
-                                    child: Text("An error occurred"),
-                                  );
-                                case ConnectionState.waiting:
-                                  return Center(
-                                    child: Lottie.asset("assets/loading.json"),
-                                  );
-                                case ConnectionState.active:
-                                  return Center(
-                                    child: Lottie.asset("assets/loading.json"),
-                                  );
-                                case ConnectionState.done:
-                                  {
-                                    return ListView.separated(
-                                      itemCount: listOfCard.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        final section = listOfCard[index];
-                                        return section;
-                                      },
-                                      separatorBuilder:
-                                          (BuildContext context, int index) =>
-                                              const SizedBox(height: 10.0),
-                                    );
-                                  }
-                              }
-                            })
+                        ListView.separated(
+                          itemCount: listOfCard.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final section = listOfCard[index];
+                            return section;
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const SizedBox(height: 10.0),
+                        ),
                       ],
                     ),
                   ),

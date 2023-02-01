@@ -2,7 +2,7 @@ import '../../models/author_model.dart';
 import '../../models/habit_model.dart';
 
 class LocalDatabaseConstantProvider {
-  static const getHabits = "SELECT * FROM habits";
+  // static const getHabits = "SELECT * FROM habits";
   static const createHabitTable = '''
     CREATE TABLE habit(
       author_id INT,
@@ -27,7 +27,7 @@ class LocalDatabaseConstantProvider {
     const attributes =
         'INSERT INTO author(id, author_name, author_profile_picture)';
     final values =
-        ' VALUES("${author.id}", "${author.authorName}", "${author.authorProfilePicture}")';
+        " VALUES('${author.id}', '${author.authorName}', '${author.authorProfilePicture}')";
     return attributes + values;
   }
 
@@ -35,7 +35,7 @@ class LocalDatabaseConstantProvider {
     const attributes =
         'INSERT INTO habit(author_id, author_name, author_profile_picture, description, isPremium, name)';
     final values =
-        ' VALUES("${habit.authorID}", "${habit.authorName}", "${habit.authorProfilePicture}", "${habit.description}", "${habit.isPremium}"," ${habit.name}")';
+        " VALUES('${habit.authorID}'', '${habit.authorName}', '${habit.authorProfilePicture}', '${habit.description}', '${habit.isPremium}', '${habit.name}')";
     return attributes + values;
   }
 }

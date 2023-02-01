@@ -106,7 +106,11 @@ class _CompetitionScreenState extends State<CompetitionScreen> {
                                               decoration: BoxDecoration(
                                                 border: Border.all(
                                                   color: const Color.fromARGB(
-                                                      255, 0, 242, 255),
+                                                    255,
+                                                    0,
+                                                    242,
+                                                    255,
+                                                  ),
                                                   width: 3.0,
                                                   style: BorderStyle.solid,
                                                 ),

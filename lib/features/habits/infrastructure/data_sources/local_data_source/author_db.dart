@@ -13,7 +13,7 @@ class AuthorDatabase {
 
   Future<Database> get database async {
     if (_localDatabase != null) return _localDatabase!;
-    _localDatabase = await _initDB("habits_local_database4.db");
+    _localDatabase = await _initDB("habits_local_database15.db");
     return _localDatabase!;
   }
 
@@ -35,38 +35,35 @@ class AuthorDatabase {
     return database.isOpen;
   }
 
-  Future createAuthor() async {
+  static createAuthor(List<Author> authors) async {
     final database = await instance.database;
-    for (int index = 0; index < predefinedAuthors.length; index++) {
-      final Author author = predefinedAuthors[index];
-
-      final authorInsertionIntoTable =
-          LocalDatabaseConstantProvider.createAuthor(author);
-      await database.rawInsert(authorInsertionIntoTable);
+    try {
+      for (int index = 0; index < authors.length; index++) {
+        final Author author = authors[index];
+        final insertAuthor = LocalDatabaseConstantProvider.createAuthor(author);
+        await database.rawInsert(insertAuthor);
+      }
+    } catch (error) {
+      rethrow;
     }
   }
 
-  Future getAuthors() async {
+  static Stream<List<Author>> getAuthors() async* {
     final database = await instance.database;
     final maps = await database.query("author");
-    if (maps.isNotEmpty) {
-      return List.generate(maps.length, (i) {
-        final author = maps[i];
-        final serializedAuthor = Author.fromJson(author);
-        return serializedAuthor;
-      });
-    } else {
-      return false;
+    final List<Author> authors = [];
+
+    for (var index = 0; index < maps.length; index++) {
+      final author = maps[index];
+      final serializedAuthor = Author.fromJson(author);
+      authors.add(serializedAuthor);
+      yield authors;
     }
   }
 
-  Future checkIfAuthorsExist() async {
+  Future<bool> checkIfAuthorsExist() async {
     final database = await instance.database;
     final maps = await database.query("author");
-    if (maps.isNotEmpty) {
-      return true;
-    } else {
-      return false;
-    }
+    return maps.isNotEmpty;
   }
 }
