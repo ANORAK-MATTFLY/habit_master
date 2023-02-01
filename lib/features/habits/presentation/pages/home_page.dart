@@ -12,7 +12,6 @@ import 'package:intl/intl.dart';
 import 'package:habit_master/features/habits/presentation/widgets/large_card.dart';
 
 import '../../../auth/presentation/pages/onboarding_screen.dart';
-import '../../infrastructure/data_sources/local_data_source/author_db.dart';
 import '../../infrastructure/data_sources/local_data_source/habits_db.dart';
 import '../../infrastructure/models/author_model.dart';
 import '../../infrastructure/models/habit_model.dart';
@@ -28,25 +27,25 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getAuthors();
+    // getAuthors();
   }
 
-  @override
-  void dispose() {
-    AuthorDatabase.instance.closeDatabase();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   AuthorDatabase.instance.closeDatabase();
+  //   super.dispose();
+  // }
 
-  Future getAuthors() async {
-    final authorsExist = await AuthorDatabase.instance.checkIfAuthorsExist();
+  // Future getAuthors() async {
+  //   final authorsExist = await AuthorDatabase.instance.checkIfAuthorsExist();
 
-    if (!authorsExist) {
-      await AuthorDatabase.instance.createAuthor();
-    }
-    await HabitsDatabaseProvider().createHabit();
+  //   if (!authorsExist) {
+  //     await AuthorDatabase.instance.createAuthor();
+  //   }
+  //   await HabitsDatabaseProvider().createHabit();
 
-    await HabitsDatabaseProvider.getHabits();
-  }
+  //   await HabitsDatabaseProvider.getHabits();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +131,10 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       const SmallCard(),
+      const SizedBox(
+        height: 70.0,
+        width: 200.0,
+      ),
     ];
     final canDisplayOnboardingScreen =
         BlocProvider.of<OnboardingCubit>(context);
@@ -230,8 +233,6 @@ class _HomePageState extends State<HomePage> {
                                                       const ProfilePage(),
                                                 ),
                                               );
-
-                                              // ProfilePage(),
                                             },
                                             child: ClipRRect(
                                               borderRadius:

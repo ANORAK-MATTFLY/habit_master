@@ -4,7 +4,7 @@ import 'package:blur/blur.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:habit_master/shared/static/3d_objects.dart';
+import 'package:habit_master/shared/static/three_d_objects.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 
 import '../widgets/charts/stacked_chart.dart';
@@ -120,7 +120,7 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
           ),
           Positioned(
             bottom: 0.0,
-            child: Container(
+            child: SizedBox(
               height: 100.0,
               width: MediaQuery.of(context).size.width,
               // color: Colors.red,

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:habit_master/features/routine/presentation/widgets/daily_routine/progress_graph.dart';
@@ -44,7 +45,7 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
           );
         },
         icon: Icon(
-          Icons.more,
+          CupertinoIcons.layers_alt_fill,
           color: widget.color,
           size: 20.0,
         ),

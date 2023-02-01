@@ -56,9 +56,9 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   flutter_animate: ^3.0.0
   flutter_heatmap_calendar: ^1.0.5
-  cupertino_icons: ^1.0.2
   intl: ^0.17.0
-  easy_debounce: ^2.0.3
+  gradient_borders: ^1.0.0
+  cupertino_icons: ^1.0.5
 
 dev_dependencies:
   integration_test:
