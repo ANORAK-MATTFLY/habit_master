@@ -38,10 +38,10 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
                 height: 60.0,
                 width: (width),
                 decoration: const BoxDecoration(
-                  color: Color.fromARGB(34, 130, 12, 204),
+                  color: Color.fromARGB(5, 130, 12, 204),
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
                   ),
                 ),
               ),
@@ -53,8 +53,8 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
                 width: (width),
                 child: const Blur(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
                   ),
                   blur: 60,
                   colorOpacity: 0.0,
@@ -118,7 +118,7 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
                               });
                             },
                             icon: Icon(
-                              CupertinoIcons.house_fill,
+                              CupertinoIcons.house,
                               size: 25.0,
                               color: index == 0
                                   ? const Color.fromARGB(184, 232, 170, 255)
@@ -173,7 +173,7 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
                               });
                             },
                             icon: Icon(
-                              CupertinoIcons.square_grid_2x2_fill,
+                              CupertinoIcons.square_grid_2x2,
                               size: 25.0,
                               color: index == 1
                                   ? const Color.fromARGB(184, 232, 170, 255)
@@ -228,7 +228,7 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
                               });
                             },
                             icon: Icon(
-                              CupertinoIcons.square_stack_3d_up_fill,
+                              CupertinoIcons.square_stack_3d_down_right,
                               size: 25.0,
                               color: index == 2
                                   ? const Color.fromARGB(184, 232, 170, 255)
@@ -283,7 +283,7 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
                               });
                             },
                             icon: Icon(
-                              CupertinoIcons.bell_fill,
+                              CupertinoIcons.square_stack,
                               size: 25.0,
                               color: index == 3
                                   ? const Color.fromARGB(184, 232, 170, 255)

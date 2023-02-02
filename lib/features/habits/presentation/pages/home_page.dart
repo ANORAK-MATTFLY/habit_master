@@ -1,12 +1,9 @@
-import 'dart:isolate';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:habit_master/features/habits/presentation/pages/profile_page.dart';
 import 'package:habit_master/features/habits/presentation/widgets/small_card.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
-import 'package:lottie/lottie.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,11 +13,8 @@ import 'package:intl/intl.dart';
 import 'package:habit_master/features/habits/presentation/widgets/large_card.dart';
 
 import '../../../auth/presentation/pages/onboarding_screen.dart';
-import '../../domain/logic/author_logic.dart';
 import '../../infrastructure/data_sources/local_data_source/author_db.dart';
-import '../../infrastructure/data_sources/local_data_source/habits_db.dart';
 import '../../infrastructure/models/author_model.dart';
-import '../../infrastructure/models/habit_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -30,17 +24,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-    // AuthorLogic().createAuthorIsolate();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // AuthorLogic().createAuthorIsolate();
+  // }
 
-  @override
-  void dispose() {
-    // AuthorDatabase.instance.closeDatabase();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // AuthorDatabase.instance.closeDatabase();
+  //   super.dispose();
+  // }
 
   // Future getAuthors() async {
   //   await HabitsDatabaseProvider().createHabit();
@@ -62,6 +56,7 @@ class _HomePageState extends State<HomePage> {
 
     final day = DateFormat('EEEE').format(today).toUpperCase();
     final dayNumber = today.day;
+    // ignore: unused_local_variable
 
     final listOfCard = [
       StreamBuilder<List<Author>>(

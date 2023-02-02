@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:habit_master/features/habits/infrastructure/models/task_model.dart';
 import 'package:sqflite/sqflite.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
@@ -13,7 +16,7 @@ class AuthorDatabase {
 
   Future<Database> get database async {
     if (_localDatabase != null) return _localDatabase!;
-    _localDatabase = await _initDB("habits_local_database15.db");
+    _localDatabase = await _initDB("habits_local_database17.db");
     return _localDatabase!;
   }
 
@@ -48,6 +51,19 @@ class AuthorDatabase {
     }
   }
 
+  static createTask(List<Task> tasks) async {
+    final database = await instance.database;
+    try {
+      for (int index = 0; index < tasks.length; index++) {
+        final Task task = tasks[index];
+        final insertAuthor = LocalDatabaseConstantProvider.createTask(task);
+        await database.rawInsert(insertAuthor);
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   static Stream<List<Author>> getAuthors() async* {
     final database = await instance.database;
     final maps = await database.query("author");
@@ -57,8 +73,8 @@ class AuthorDatabase {
       final author = maps[index];
       final serializedAuthor = Author.fromJson(author);
       authors.add(serializedAuthor);
-      yield authors;
     }
+    yield authors;
   }
 
   Future<bool> checkIfAuthorsExist() async {

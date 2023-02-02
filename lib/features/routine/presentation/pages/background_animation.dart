@@ -18,6 +18,12 @@ class _BackgroundAnimationState extends State<BackgroundAnimation>
   }
 
   @override
+  dispose() {
+    _animationController.dispose(); // you need this
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Gif(
       image: const AssetImage("assets/animations/bg_animation.gif"),
