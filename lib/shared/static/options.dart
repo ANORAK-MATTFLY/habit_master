@@ -1,5 +1,3 @@
-final List<String> frequencyOptions = ["Daily", "Weekly"];
-
 final List<String> momentOptions = ["Morning", "Afternoon", "Evening"];
 
 final List<String> typeOptions = ["Check task ✅", "With Timer 🕗"];

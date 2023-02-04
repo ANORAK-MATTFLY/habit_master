@@ -1,12 +1,14 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:habit_master/features/habits/infrastructure/models/author_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/features/routine/presentation/states/cubit/habit_cubit.dart';
 
 import '../../../routine/presentation/pages/daily_routine_page.dart';
+import '../../infrastructure/models/habit_model.dart';
 
 class LargeCard extends StatefulWidget {
-  final List<Author> authors;
-  const LargeCard({Key? key, required this.authors}) : super(key: key);
+  final List<Habit> habits;
+  const LargeCard({Key? key, required this.habits}) : super(key: key);
   @override
   // ignore: library_private_types_in_public_api
   _PrebuiltCardState createState() => _PrebuiltCardState();
@@ -18,15 +20,17 @@ class _PrebuiltCardState extends State<LargeCard> {
     return ListView.builder(
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
-      itemCount: widget.authors.length,
+      itemCount: widget.habits.length,
       itemBuilder: (BuildContext context, int index) {
-        final routine = widget.authors[index];
-        final authorName = routine.authorName!.toString().length > 9
-            ? routine.authorName!.toString().substring(0, 9)
-            : routine.authorName!;
-        final cardPositionIsOdd = widget.authors.indexOf(routine).isEven;
+        final habit = widget.habits[index];
+        final authorName = habit.authorName!.toString().length > 9
+            ? habit.authorName!.toString().substring(0, 9)
+            : habit.authorName!;
+        final cardPositionIsOdd = widget.habits.indexOf(habit).isEven;
         return GestureDetector(
           onTap: () {
+            context.read<HabitCubit>().updateState(habit);
+
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -130,7 +134,7 @@ class _PrebuiltCardState extends State<LargeCard> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(
-                                          routine.authorProfilePicture!),
+                                          habit.authorProfilePicture!),
                                     ),
                                   ),
                                 ),

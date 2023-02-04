@@ -6,7 +6,4 @@ class OptionState {
   final OptionInterface option;
 
   const OptionState({required this.option});
-
-  @override
-  String toString() => "isRetrievedFromCache: $option";
 }

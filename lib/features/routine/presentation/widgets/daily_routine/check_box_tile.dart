@@ -1,13 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/features/habits/infrastructure/models/task_model.dart';
+import 'package:habit_master/features/routine/presentation/states/bloc_logic/task_bloc.dart';
+import 'package:habit_master/features/routine/presentation/states/events/toggle_task.dart';
 import 'package:habit_master/features/routine/presentation/widgets/daily_routine/progress_graph.dart';
 
 class CheckBoxItem extends StatefulWidget {
-  final Color color;
-  final Color shimmer;
-  const CheckBoxItem({Key? key, required this.color, required this.shimmer})
-      : super(key: key);
+  final Color? color;
+  final Color? shimmer;
+  final Task? task;
+  const CheckBoxItem({
+    Key? key,
+    required this.color,
+    required this.shimmer,
+    required this.task,
+  }) : super(key: key);
 
   @override
   State<CheckBoxItem> createState() => _CheckBoxItemState();
@@ -15,7 +24,14 @@ class CheckBoxItem extends StatefulWidget {
 
 class _CheckBoxItemState extends State<CheckBoxItem> {
   bool _triggerState = false;
-  double _width = 0.0;
+  @override
+  void initState() {
+    super.initState();
+    _triggerState = widget.task!.isDone!;
+  }
+
+  // double _width = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return CheckboxListTile(
@@ -51,30 +67,28 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
         ),
       ),
       value: _triggerState,
-      onChanged: (bool? value) {
+      onChanged: (bool? value) async {
         setState(() {
-          if (value == true) {
-            _width = 200.0;
-          }
-          if (value == false) {
-            _width = 0.0;
-          }
           _triggerState = !_triggerState;
         });
+        context.read<TaskBlocLogic>().add(
+              ToggleTaskAction(task: widget.task!),
+            );
       },
       controlAffinity: ListTileControlAffinity.leading,
-      title: throwLine(_width, widget.color, widget.shimmer),
+      title: throwLine(
+          _triggerState, widget.color!, widget.shimmer, widget.task!.taskName!),
     );
   }
 }
 
-Widget throwLine(double width, Color color, shimmer) {
-  return width == 0.0
+Widget throwLine(bool showLine, Color color, shimmer, String task) {
+  return showLine == false
       ? Stack(
           children: [
-            const Text(
-              "Do not receive notifications",
-              style: TextStyle(
+            Text(
+              task,
+              style: const TextStyle(
                 color: Colors.white,
                 fontFamily: "Twitterchirp",
                 fontSize: 17.0,
@@ -94,9 +108,9 @@ Widget throwLine(double width, Color color, shimmer) {
         )
       : Stack(
           children: [
-            const Text(
-              "Do not receive notifications",
-              style: TextStyle(
+            Text(
+              task,
+              style: const TextStyle(
                 color: Colors.grey,
                 fontFamily: "Twitterchirp",
                 fontSize: 17.0,

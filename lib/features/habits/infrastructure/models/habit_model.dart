@@ -2,36 +2,37 @@ class Habit {
   final String? authorID;
   final String? authorName;
   final String? authorProfilePicture;
-  final String? name;
   final String? description;
-  final int? followers;
+  final String? subTitle;
   final int? isPremium;
+  final int? subscribers;
+  final int? successRate;
 
   const Habit({
     this.authorID,
     this.authorName,
     this.authorProfilePicture,
-    this.name,
     this.description,
-    this.followers,
     this.isPremium,
+    this.subscribers,
+    this.subTitle,
+    this.successRate,
   });
 
   static Habit fromJson(Map<String, Object?> json) => Habit(
         authorID: json['author_id'] as String?,
-        authorName: json['authorName'] as String?,
-        authorProfilePicture: json['authorProfilePicture'] as String?,
+        authorName: json['author_name'] as String?,
+        authorProfilePicture: json['author_profile_picture'] as String?,
         description: json['description'] as String?,
-        followers: json['followers'] as int?,
-        name: json['name'] as String?,
-        isPremium: json['isPremium'] as int?,
+        subscribers: json['subscribers'] as int?,
+        subTitle: json['sub_title'] as String?,
+        successRate: json['success_rate'] as int?,
       );
 
   Map<String, dynamic> toJson() => {
         "author_id": authorID,
         "author_name": authorName,
         "author_profile_picture": authorProfilePicture,
-        "name": name,
         "description": description,
         "isPremium": isPremium
       };

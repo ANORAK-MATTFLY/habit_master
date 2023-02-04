@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget sideLine(Color color) => Container(
-      height: 300.0,
+Widget sideLine(Color color, {required double height}) => Container(
+      height: height,
       width: 2,
       decoration: BoxDecoration(
         color: color,

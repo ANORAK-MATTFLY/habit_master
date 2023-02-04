@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/features/routine/presentation/states/competitors_bloc.dart';
 import 'package:habit_master/features/routine/presentation/states/states/competitors_state.dart';
-
-import '../states/competitors_bloc.dart';
 
 class CompetitionScreen extends StatefulWidget {
   const CompetitionScreen({Key? key}) : super(key: key);

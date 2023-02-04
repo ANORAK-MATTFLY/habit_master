@@ -1,5 +1,9 @@
 import 'dart:async';
 
+import 'package:habit_master/features/habits/infrastructure/data_sources/local_data_source/mutation/task.dart';
+import 'package:habit_master/features/habits/infrastructure/data_sources/local_data_source/queries/habit_queries.dart';
+import 'package:habit_master/features/habits/infrastructure/data_sources/local_data_source/queries/task_queries.dart';
+import 'package:habit_master/features/habits/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/habits/infrastructure/models/task_model.dart';
 import 'package:sqflite/sqflite.dart';
 // ignore: depend_on_referenced_packages
@@ -16,7 +20,7 @@ class AuthorDatabase {
 
   Future<Database> get database async {
     if (_localDatabase != null) return _localDatabase!;
-    _localDatabase = await _initDB("habits_local_database17.db");
+    _localDatabase = await _initDB("habits_local_database47.db");
     return _localDatabase!;
   }
 
@@ -28,8 +32,10 @@ class AuthorDatabase {
 
   Future _createAuthorTable(Database database, int version) async {
     const createAuthorTable = LocalDatabaseConstantProvider.createAuthorTable;
-    await HabitsDatabaseProvider.createDatabase(database, version);
+    await HabitsDatabaseProvider.createDatabaseTable(database, version);
+    const createTaskTable = LocalDatabaseConstantProvider.createTaskTable;
     await database.execute(createAuthorTable);
+    await database.execute(createTaskTable);
   }
 
   Future<bool> closeDatabase() async {
@@ -43,6 +49,7 @@ class AuthorDatabase {
     try {
       for (int index = 0; index < authors.length; index++) {
         final Author author = authors[index];
+        await HabitsDatabaseProvider.createHabit(author, 0);
         final insertAuthor = LocalDatabaseConstantProvider.createAuthor(author);
         await database.rawInsert(insertAuthor);
       }
@@ -51,7 +58,7 @@ class AuthorDatabase {
     }
   }
 
-  static createTask(List<Task> tasks) async {
+  static Future createTasks(List<Task> tasks) async {
     final database = await instance.database;
     try {
       for (int index = 0; index < tasks.length; index++) {
@@ -59,6 +66,15 @@ class AuthorDatabase {
         final insertAuthor = LocalDatabaseConstantProvider.createTask(task);
         await database.rawInsert(insertAuthor);
       }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future createTask(Task task) async {
+    final database = await instance.database;
+    try {
+      await TaskMutation().createTask(task, database);
     } catch (error) {
       rethrow;
     }
@@ -75,6 +91,40 @@ class AuthorDatabase {
       authors.add(serializedAuthor);
     }
     yield authors;
+  }
+
+  static Stream<List<Habit>> getHabits() async* {
+    final database = await instance.database;
+    final habit = await HabitQueries().getHabitById(database);
+    yield habit;
+  }
+
+  static Future<List<Task>> getTasks(String habitID) async {
+    final database = await instance.database;
+
+    final tasks = await TaskQueries("").getTasks(habitID, database);
+    return tasks;
+  }
+
+  static Future<List<Task>> getTaskState(String taskID) async {
+    final database = await instance.database;
+
+    final tasks = await TaskQueries.getTaskState(taskID, database);
+    return tasks;
+  }
+
+  static Future<void> toggleTask(Task task, bool isDone) async {
+    final database = await instance.database;
+
+    await TaskMutation.toggleTask(task, isDone, database);
+  }
+
+  static Future<void> updateTaskExpirationDate(
+      String taskID, String expirationDate) async {
+    final database = await instance.database;
+
+    await TaskMutation.updateTaskExpirationDate(
+        taskID, expirationDate, database);
   }
 
   Future<bool> checkIfAuthorsExist() async {

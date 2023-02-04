@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/routine/models/habit_option.dart';
+import 'package:habit_master/features/routine/presentation/states/cubit/time_option_cubit.dart';
 import 'package:habit_master/features/routine/presentation/states/cubit/timer_task.dart';
+import 'package:habit_master/features/routine/presentation/states/cubit/type_cubit.dart';
+import 'package:habit_master/features/routine/presentation/states/cubit/when_cubit.dart';
 import 'package:habit_master/shared/static/options.dart';
-
-import '../../states/bloc_logic/select_option_logic.dart';
-import '../../states/events/select_option.dart';
 
 class SelectWhen extends StatefulWidget {
   final List<String>? options;
@@ -44,24 +43,26 @@ class _SelectWhenState extends State<SelectWhen> {
           .toList(),
       value: widget.options![valueIndex],
       onChanged: (selectedOption) {
+        selectedOption as String;
         setState(() {
-          valueIndex = widget.options!.indexOf(selectedOption as String);
+          valueIndex = widget.options!.indexOf(selectedOption);
         });
+        if (widget.title == "moment") {
+          context.read<MomentTaskCubit>().updateState(selectedOption);
+        }
+        if (widget.title == "type") {
+          context.read<TypeTaskCubit>().updateState(selectedOption);
+        }
+        if (widget.title == "time") {
+          context.read<TimeOptionCubit>().updateState(selectedOption);
+        }
+
         if (selectedOption == typeOptions[1]) {
           context.read<TimerTaskCubit>().updateState(true);
         }
         if (selectedOption == typeOptions[0]) {
           context.read<TimerTaskCubit>().updateState(false);
         }
-        final optionData = OptionInterface(
-          title: widget.title,
-          selectedOptionValue: selectedOption as String,
-        );
-        context.read<SelectOptionsBloc>().add(
-              SelectOptionAction(
-                optionData: optionData,
-              ),
-            );
       },
     );
   }

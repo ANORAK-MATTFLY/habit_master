@@ -4,6 +4,7 @@ import 'package:blur/blur.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:habit_master/features/habits/infrastructure/models/habit_model.dart';
 import 'package:habit_master/shared/static/three_d_objects.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 
@@ -11,7 +12,8 @@ import '../widgets/charts/stacked_chart.dart';
 import 'background_animation.dart';
 
 class ChartAndDescription extends StatefulWidget {
-  const ChartAndDescription({Key? key}) : super(key: key);
+  final Habit habit;
+  const ChartAndDescription({Key? key, required this.habit}) : super(key: key);
 
   @override
   State<ChartAndDescription> createState() => _ChartAndDescriptionState();
@@ -23,6 +25,9 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final random = Random();
+    final authorName = widget.habit.authorName!.length > 15
+        ? widget.habit.authorName!.substring(0, 15)
+        : widget.habit.authorName!;
     return Container(
       height: 500,
       padding: const EdgeInsets.only(top: 90.0),
@@ -130,10 +135,10 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
                   Container(
                     height: 70.0,
                     width: 70.0,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.contain,
-                        image: AssetImage("assets/images/bill-gate.png"),
+                        image: AssetImage(widget.habit.authorProfilePicture!),
                       ),
                     ),
                   ),
@@ -184,10 +189,10 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
                           child: Container(
                             padding: const EdgeInsets.all(10.0),
                             // color: Colors.green,
-                            child: const Center(
+                            child: Center(
                                 child: Text(
-                              "Bill Gates's Daily Routine has a success rate of 12%. So be focused and good luck!",
-                              style: TextStyle(
+                              "$authorName's Daily Routine has a success rate of 12%. So be focused and good luck!",
+                              style: const TextStyle(
                                 color: Color.fromARGB(255, 213, 213, 213),
                                 fontFamily: "Twitterchirp",
                                 fontSize: 13.0,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/features/habits/infrastructure/models/habit_model.dart';
 
 import 'package:habit_master/features/habits/presentation/pages/profile_page.dart';
 import 'package:habit_master/features/habits/presentation/widgets/small_card.dart';
@@ -14,7 +15,6 @@ import 'package:habit_master/features/habits/presentation/widgets/large_card.dar
 
 import '../../../auth/presentation/pages/onboarding_screen.dart';
 import '../../infrastructure/data_sources/local_data_source/author_db.dart';
-import '../../infrastructure/models/author_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,11 +24,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // AuthorLogic().createAuthorIsolate();
-  // }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   // @override
   // void dispose() {
@@ -59,8 +58,8 @@ class _HomePageState extends State<HomePage> {
     // ignore: unused_local_variable
 
     final listOfCard = [
-      StreamBuilder<List<Author>>(
-          stream: AuthorDatabase.getAuthors(),
+      StreamBuilder<List<Habit>>(
+          stream: AuthorDatabase.getHabits(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -79,12 +78,12 @@ class _HomePageState extends State<HomePage> {
                 );
               case ConnectionState.done:
                 {
-                  final List<Author> authors = snapshot.data!;
+                  final List<Habit> habits = snapshot.data!;
 
                   return Container(
                     height: 310.0,
                     padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    child: LargeCard(authors: authors),
+                    child: LargeCard(habits: habits),
                   );
                 }
             }

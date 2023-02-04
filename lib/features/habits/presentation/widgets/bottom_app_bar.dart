@@ -88,14 +88,16 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
                                   Radius.circular(10.0),
                                 ),
                                 gradient: LinearGradient(
-                                    colors: [
-                                      Color.fromARGB(255, 161, 20, 255),
-                                      Color.fromARGB(255, 86, 38, 170),
-                                    ],
-                                    begin: Alignment.topRight,
-                                    end: Alignment.bottomLeft,
-                                    stops: [0.0, 0.8],
-                                    tileMode: TileMode.clamp),
+                                  colors: [
+                                    Color.fromARGB(255, 99, 48, 187),
+                                    Color.fromARGB(255, 173, 20, 255),
+                                    Color.fromARGB(255, 86, 38, 170),
+                                  ],
+                                  begin: Alignment.topRight,
+                                  end: Alignment.bottomLeft,
+                                  stops: [0.0, 0.5, 0.8],
+                                  tileMode: TileMode.clamp,
+                                ),
                               ),
                             ).animate().slideX(
                                   begin: navbarIndicatorPosition,
@@ -103,7 +105,7 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
                                 ),
                           ),
                           IconButton(
-                            onPressed: () {
+                            onPressed: () async {
                               setState(() {
                                 if (index == 1) {
                                   navbarIndicatorPosition = 2;
@@ -143,14 +145,16 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
                                   Radius.circular(10.0),
                                 ),
                                 gradient: LinearGradient(
-                                    colors: [
-                                      Color.fromARGB(255, 161, 20, 255),
-                                      Color.fromARGB(255, 86, 38, 170),
-                                    ],
-                                    begin: Alignment.topRight,
-                                    end: Alignment.bottomLeft,
-                                    stops: [0.0, 0.8],
-                                    tileMode: TileMode.clamp),
+                                  colors: [
+                                    Color.fromARGB(255, 99, 48, 187),
+                                    Color.fromARGB(255, 173, 20, 255),
+                                    Color.fromARGB(255, 86, 38, 170),
+                                  ],
+                                  begin: Alignment.topRight,
+                                  end: Alignment.bottomLeft,
+                                  stops: [0.0, 0.5, 0.8],
+                                  tileMode: TileMode.clamp,
+                                ),
                               ),
                             ).animate().slideX(
                                   begin: navbarIndicatorPosition,
@@ -198,14 +202,16 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
                                   Radius.circular(10.0),
                                 ),
                                 gradient: LinearGradient(
-                                    colors: [
-                                      Color.fromARGB(255, 161, 20, 255),
-                                      Color.fromARGB(255, 86, 38, 170),
-                                    ],
-                                    begin: Alignment.topRight,
-                                    end: Alignment.bottomLeft,
-                                    stops: [0.0, 0.8],
-                                    tileMode: TileMode.clamp),
+                                  colors: [
+                                    Color.fromARGB(255, 99, 48, 187),
+                                    Color.fromARGB(255, 173, 20, 255),
+                                    Color.fromARGB(255, 86, 38, 170),
+                                  ],
+                                  begin: Alignment.topRight,
+                                  end: Alignment.bottomLeft,
+                                  stops: [0.0, 0.5, 0.8],
+                                  tileMode: TileMode.clamp,
+                                ),
                               ),
                             ).animate().slideX(
                                   begin: navbarIndicatorPosition,
@@ -253,14 +259,16 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
                                   Radius.circular(10.0),
                                 ),
                                 gradient: LinearGradient(
-                                    colors: [
-                                      Color.fromARGB(255, 161, 20, 255),
-                                      Color.fromARGB(255, 86, 38, 170),
-                                    ],
-                                    begin: Alignment.topRight,
-                                    end: Alignment.bottomLeft,
-                                    stops: [0.0, 0.8],
-                                    tileMode: TileMode.clamp),
+                                  colors: [
+                                    Color.fromARGB(255, 99, 48, 187),
+                                    Color.fromARGB(255, 173, 20, 255),
+                                    Color.fromARGB(255, 86, 38, 170),
+                                  ],
+                                  begin: Alignment.topRight,
+                                  end: Alignment.bottomLeft,
+                                  stops: [0.0, 0.5, 0.8],
+                                  tileMode: TileMode.clamp,
+                                ),
                               ),
                             ).animate().slideX(
                                   begin: navbarIndicatorPosition,
