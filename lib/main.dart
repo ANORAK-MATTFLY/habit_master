@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/auth/presentation/bloc/sign_in_cubit.dart';
-import 'package:habit_master/features/habits/infrastructure/data_sources/local_data_source/author_db.dart';
-import 'package:habit_master/features/habits/presentation/widgets/large_card.dart';
+import 'package:habit_master/features/auth/presentation/pages/authentication/bloc/cubit/sign_in_cubit.dart';
+import 'package:habit_master/features/auth/presentation/pages/authentication/page/authentication_panel.dart';
+import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/author_db.dart';
+import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/large_card.dart';
 import 'package:habit_master/features/routine/presentation/pages/competition_page.dart';
-import 'package:habit_master/features/routine/presentation/states/bloc_logic/create_task.dart';
-import 'package:habit_master/features/routine/presentation/states/bloc_logic/habit_bloc_logic.dart';
-import 'package:habit_master/features/routine/presentation/states/bloc_logic/task_bloc.dart';
-import 'package:habit_master/features/routine/presentation/states/competitors_bloc.dart';
-import 'package:habit_master/features/routine/presentation/states/cubit/habit_cubit.dart';
-import 'package:habit_master/features/routine/presentation/states/cubit/show_panel.dart';
-import 'package:habit_master/features/routine/presentation/states/cubit/tasks_list.dart';
-import 'package:habit_master/features/routine/presentation/states/cubit/time_option_cubit.dart';
-import 'package:habit_master/features/routine/presentation/states/cubit/timer_task.dart';
-import 'package:habit_master/features/routine/presentation/states/cubit/type_cubit.dart';
-import 'package:habit_master/features/routine/presentation/states/cubit/when_cubit.dart';
-import 'package:habit_master/features/routine/presentation/widgets/daily_routine/check_box_tile.dart';
-import 'package:habit_master/features/routine/presentation/widgets/daily_routine/select_when.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_task.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/toggle_task_bloc.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/page/daily_routine_page.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habit_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/tasks_list.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/check_box_tile.dart';
+import 'package:habit_master/features/routine/presentation/states/bloc_logic/competitors_bloc.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/time_option_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/timer_task.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/type_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/when_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/widgets/v1/select_when.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'package:sqflite/sqflite.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
-import 'features/auth/presentation/pages/onboarding_screen.dart';
-import 'features/habits/infrastructure/models/author_model.dart';
-import 'features/habits/presentation/pages/home_page.dart';
-import 'features/habits/presentation/widgets/bottom_app_bar.dart';
+import 'features/routine/infrastructure/models/author_model.dart';
+import 'features/routine/presentation/pages/home/page/home_page.dart';
+import 'features/routine/presentation/pages/navigation/bottom_app_bar.dart';
 
-import 'features/routine/presentation/pages/daily_routine_page.dart';
-import 'features/routine/presentation/states/bloc_logic/select_option_logic.dart';
-import 'features/routine/presentation/widgets/daily_routine/add_habit_panel.dart';
+import 'features/routine/presentation/pages/create_habit/page/add_habit_panel.dart';
 
 void main() async {
   Future createAuthorMainIsolate() async {
@@ -67,7 +64,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (_) => SignInCubit(),
-          child: const OnboardingScreen(),
+          child: const AuthenticationPanel(),
         ),
         BlocProvider(
           create: (_) => OnboardingCubit(),
@@ -78,20 +75,8 @@ class MyApp extends StatelessWidget {
           child: const CompetitionScreen(),
         ),
         BlocProvider(
-          create: (_) => SelectOptionsBloc(),
-          child: const SelectWhen(options: null, title: null),
-        ),
-        BlocProvider(
           create: (_) => TimerTaskCubit(),
           child: const HabitPanel(),
-        ),
-        BlocProvider(
-          create: (_) => ShowAddHabitPanelCubit(),
-          child: const DailyRoutinePage(),
-        ),
-        BlocProvider(
-          create: (_) => HabitBlocLogic(),
-          child: const DailyRoutinePage(),
         ),
         BlocProvider(
           create: (_) => CreateTaskBlocLogic(),
@@ -119,9 +104,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => HabitCubit(),
-          child: const LargeCard(habits: []),
+          child: const LargeCard(
+            habits: [],
+          ),
         ),
-        // HabitCubit
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
