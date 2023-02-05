@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
+import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
-class HabitCubit extends Cubit<Habit?> {
+class HabitCubit extends Cubit<Routine?> {
   HabitCubit() : super(null);
 
-  void updateState(Habit habit) => emit(habit);
+  void updateState(Routine habit) => emit(habit);
 }

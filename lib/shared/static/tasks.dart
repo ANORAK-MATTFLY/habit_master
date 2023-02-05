@@ -1,4 +1,4 @@
-import 'package:habit_master/features/routine/infrastructure/models/task_model.dart';
+import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/shared/static/dates.dart';
 import 'package:uuid/uuid.dart';
 
@@ -17,11 +17,11 @@ List<String> taskName = [
   "Workout",
   "plane the next day",
 ];
-List<Task> generateTasks(String habitID) {
-  List<Task> tasks = [];
+List<Habit> generateTasks(String habitID) {
+  List<Habit> tasks = [];
 
   for (var i = 0; i < taskName.length; i++) {
-    final task = Task(
+    final task = Habit(
       id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-$i",
       duration: "30min",
       scheduledFor: i < 4
@@ -29,8 +29,8 @@ List<Task> generateTasks(String habitID) {
           : (i >= 4) && (i < 8)
               ? "afternoon"
               : "evening",
-      habitID: habitID,
-      taskName: taskName[i],
+      routineID: habitID,
+      habitName: taskName[i],
       type: "check",
       isDone: false,
       expirationDate: expirationDate,

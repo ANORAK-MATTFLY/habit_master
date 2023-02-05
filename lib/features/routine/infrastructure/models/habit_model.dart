@@ -1,52 +1,51 @@
-class Habit {
-  final String? authorID;
-  final String? authorName;
-  final String? authorProfilePicture;
-  final String? description;
-  final String? subTitle;
-  final int? isPremium;
-  final int? subscribers;
-  final int? successRate;
+import 'package:habit_master/features/routine/domain/entities/habit_entity.dart';
+
+class Habit extends HabitEntity {
+  @override
+  // ignore: overridden_fields
+  final String? id;
+
+  @override
+  // ignore: overridden_fields
+  final String? routineID;
+  @override
+  // ignore: overridden_fields
+  final String? habitName;
+  @override
+  // ignore: overridden_fields
+  final String? type;
+  @override
+  // ignore: overridden_fields
+  final String? scheduledFor;
+  @override
+  // ignore: overridden_fields
+  final String? duration;
+  @override
+  // ignore: overridden_fields
+  final String? expirationDate;
+  @override
+  // ignore: overridden_fields
+  final bool? isDone;
 
   const Habit({
-    this.authorID,
-    this.authorName,
-    this.authorProfilePicture,
-    this.description,
-    this.isPremium,
-    this.subscribers,
-    this.subTitle,
-    this.successRate,
+    this.id,
+    this.routineID,
+    this.habitName,
+    this.type,
+    this.scheduledFor,
+    this.duration,
+    this.expirationDate,
+    this.isDone,
   });
 
   static Habit fromJson(Map<String, Object?> json) => Habit(
-        authorID: json['author_id'] as String?,
-        authorName: json['author_name'] as String?,
-        authorProfilePicture: json['author_profile_picture'] as String?,
-        description: json['description'] as String?,
-        subscribers: json['subscribers'] as int?,
-        subTitle: json['sub_title'] as String?,
-        successRate: json['success_rate'] as int?,
+        id: json['id'] as String?,
+        routineID: json['routine_id'] as String?,
+        habitName: json['habit_name'] as String?,
+        type: json['type'] as String?,
+        scheduledFor: json['scheduled_for'] as String?,
+        duration: json['duration'] as String?,
+        expirationDate: json['expiration_date'] as String?,
+        isDone: json['is_done'] == 1 ? true : false,
       );
-
-  Map<String, dynamic> toJson() => {
-        "author_id": authorID,
-        "author_name": authorName,
-        "author_profile_picture": authorProfilePicture,
-        "description": description,
-        "isPremium": isPremium
-      };
 }
-
-const habitsNames = [
-  "Elon musk's daily routine",
-  "Bill Gate's daily routine",
-  "Thomas daily routine",
-  "Thomas daily routine",
-  "Joey's daily routine",
-  "Joey's daily routine",
-];
-
-const habitsDescription = [
-  "With success rate of 20% this routine will drastically increase your productivity, but remember consistency is the key, so good look!"
-];

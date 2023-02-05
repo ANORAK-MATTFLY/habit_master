@@ -1,14 +1,21 @@
+import 'package:habit_master/features/routine/domain/entities/author.dart';
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
 
-class Author {
+class Author extends AuthorEntity {
   final String? id;
   final String? authorName;
   final String? authorProfilePicture;
   final String? type;
 
-  Author({this.id, this.authorName, this.authorProfilePicture, this.type});
+  const Author({this.id, this.authorName, this.authorProfilePicture, this.type})
+      : super(
+          id: id,
+          authorName: authorName,
+          authorProfilePicture: authorProfilePicture,
+          type: type,
+        );
 
   static Author fromJson(Map<String, Object?> json) => Author(
         id: json['id'] as String?,

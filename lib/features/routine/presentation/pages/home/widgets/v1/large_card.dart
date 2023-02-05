@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/page/daily_routine_page.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habit_cubit.dart';
 
-import '../../../../../infrastructure/models/habit_model.dart';
+import '../../../../../infrastructure/models/routine_model.dart';
 
 class LargeCard extends StatefulWidget {
-  final List<Habit> habits;
+  final List<Routine> habits;
   const LargeCard({Key? key, required this.habits}) : super(key: key);
   @override
   // ignore: library_private_types_in_public_api

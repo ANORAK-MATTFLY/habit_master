@@ -3,8 +3,8 @@ import 'package:habit_master/features/routine/infrastructure/models/habit_model.
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/interface/task.dart';
 
 @immutable
-class ToggleTaskAction implements TaskBlocInterface {
+class CreateHabitAction implements TaskBlocInterface {
   final Habit task;
 
-  const ToggleTaskAction({required this.task}) : super();
+  const CreateHabitAction({required this.task}) : super();
 }

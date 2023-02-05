@@ -1,29 +1,25 @@
-// import 'package:equatable/equatable.dart';
-// ignore: depend_on_referenced_packages
-// import 'package:meta/meta.dart';
+import 'package:equatable/equatable.dart';
 
-class AuthorEntity {
+class AuthorEntity extends Equatable {
   final String? id;
   final String? authorName;
   final String? authorProfilePicture;
-  final int? isPredefined;
-  final int? isPremium;
+  final String? type;
 
-  AuthorEntity({
+  const AuthorEntity({
     required this.id,
     required this.authorName,
     required this.authorProfilePicture,
-    required this.isPredefined,
-    required this.isPremium,
+    required this.type,
   });
 
+  @override
   List<Object> get props {
     return [
       id!,
       authorName!,
       authorProfilePicture!,
-      isPredefined!,
-      isPremium!,
+      type!,
     ];
   }
 }

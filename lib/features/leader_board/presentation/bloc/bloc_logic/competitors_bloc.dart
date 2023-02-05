@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/routine/presentation/states/bloc_logic/logic.dart';
-import 'package:habit_master/features/routine/presentation/states/states/competitors_state.dart';
+import 'package:habit_master/features/leader_board/presentation/bloc/bloc_logic/logic.dart';
+import 'package:habit_master/features/leader_board/presentation/bloc/bloc_state/competitors_state.dart';
 
-import '../events/load_person_action.dart';
-import '../interfaces/competitors_event.dart';
+import '../bloc_event/load_person_action.dart';
+import '../interface/competitors_event.dart';
 
 extension Subscript<T> on Iterable<T> {
   T? operator [](int index) => length > index ? elementAt(index) : null;

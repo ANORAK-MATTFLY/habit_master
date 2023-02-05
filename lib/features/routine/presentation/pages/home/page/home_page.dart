@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/page/authentication_panel.dart';
-import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
+import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/routine_queries.dart';
+import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
 import 'package:habit_master/features/auth/presentation/pages/profile/page/profile_page.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/small_card.dart';
@@ -13,8 +14,6 @@ import 'package:habit_master/shared/features/routine/widgets/circle.dart';
 import 'package:intl/intl.dart';
 
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/large_card.dart';
-
-import '../../../../infrastructure/data_sources/local_data_source/author_db.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -40,8 +39,8 @@ class _HomePageState extends State<HomePage> {
     final dayNumber = today.day;
 
     final listOfCard = [
-      StreamBuilder<List<Habit>>(
-          stream: AuthorDatabase.getHabits(),
+      StreamBuilder<List<Routine>>(
+          stream: RoutineQueries().stream,
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -54,13 +53,16 @@ class _HomePageState extends State<HomePage> {
                       animating: true, color: Colors.white),
                 );
               case ConnectionState.active:
-                return const Center(
-                  child: CupertinoActivityIndicator(
-                      animating: true, color: Colors.white),
+                final List<Routine> habits = snapshot.data!;
+
+                return Container(
+                  height: 310.0,
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: LargeCard(habits: habits),
                 );
               case ConnectionState.done:
                 {
-                  final List<Habit> habits = snapshot.data!;
+                  final List<Routine> habits = snapshot.data!;
 
                   return Container(
                     height: 310.0,

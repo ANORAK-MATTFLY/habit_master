@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/routine/domain/logic/task_helpers.dart';
+import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
-import 'package:habit_master/features/routine/infrastructure/models/task_model.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/tasks_list.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/check_box_tile.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v1/circle_avatar.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_icon.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_line.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/time_habit.dart';
+import 'package:habit_master/shared/static/options.dart';
 
 class ExpandedItemList extends StatefulWidget {
   final String title;
   final Widget progressRatio;
   final Color color;
   final Color shimmer;
-  final Habit habit;
+  final Routine habit;
   const ExpandedItemList(
       {Key? key,
       required this.title,
@@ -35,7 +37,7 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final streamedTasks = context.read<TaskListCubit>().state;
-    List<Task> tasks = [];
+    List<Habit> tasks = [];
     if (widget.title == "Start your Morning Routine") {
       tasks = TaskHelpers.getMorningTasks(streamedTasks);
     }
@@ -133,11 +135,18 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: tasks.map((task) {
+                          //  task.type! == "check"
+                          //     ?
                           return CheckBoxItem(
                             color: widget.color,
                             shimmer: widget.shimmer,
                             task: task,
                           );
+                          // : GestureDetector(
+                          //     onTap: () {
+                          //       print(task.type);
+                          //     },
+                          //     child: const TimerHabit());
                         }).toList(),
                       )),
                 ],

@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/bloc/cubit/sign_in_cubit.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/page/authentication_panel.dart';
-import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/author_db.dart';
+import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/mutation/author_mutations.dart';
+import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/author_queries.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/large_card.dart';
-import 'package:habit_master/features/routine/presentation/pages/competition_page.dart';
-import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_task.dart';
-import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/toggle_task_bloc.dart';
+import 'package:habit_master/features/leader_board/presentation/page/leader_board_page.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_habit.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/toggle_habit_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/page/daily_routine_page.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habit_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/tasks_list.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/check_box_tile.dart';
-import 'package:habit_master/features/routine/presentation/states/bloc_logic/competitors_bloc.dart';
+import 'package:habit_master/features/leader_board/presentation/bloc/bloc_logic/competitors_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/time_option_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/timer_task.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/type_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/when_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/widgets/v1/select_when.dart';
+import 'package:habit_master/shared/bloc/error_cubit.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'package:sqflite/sqflite.dart';
 // ignore: depend_on_referenced_packages
@@ -25,15 +27,16 @@ import 'features/routine/infrastructure/models/author_model.dart';
 import 'features/routine/presentation/pages/home/page/home_page.dart';
 import 'features/routine/presentation/pages/navigation/bottom_app_bar.dart';
 
-import 'features/routine/presentation/pages/create_habit/page/add_habit_panel.dart';
+import 'features/routine/presentation/pages/create_habit/page/create_habit_page.dart';
+import 'shared/bloc/show_error_cubit.dart';
 
 void main() async {
   Future createAuthorMainIsolate() async {
     // SendPort sendPort
     try {
-      final authorsExist = await AuthorDatabase.instance.checkIfAuthorsExist();
+      final authorsExist = await AuthorQueries().checkIfAuthorsExist();
       if (authorsExist == false) {
-        await AuthorDatabase.createAuthor(predefinedAuthors);
+        await AuthorMutations().createAuthor(predefinedAuthors);
         // Isolate.exit(sendPort, "The initialization succeeded!");
       }
     } catch (e) {
@@ -76,10 +79,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => TimerTaskCubit(),
-          child: const HabitPanel(),
+          child: const CreateHabitPage(),
         ),
         BlocProvider(
-          create: (_) => CreateTaskBlocLogic(),
+          create: (_) => CreateHabitBlocLogic(),
           child: const DailyRoutinePage(),
         ),
         BlocProvider(
@@ -107,6 +110,14 @@ class MyApp extends StatelessWidget {
           child: const LargeCard(
             habits: [],
           ),
+        ),
+        BlocProvider(
+          create: (_) => ErrorMessageCubit(),
+          child: const CreateHabitPage(),
+        ),
+        BlocProvider(
+          create: (_) => ShowErrorCubit(),
+          child: const CreateHabitPage(),
         ),
       ],
       child: MaterialApp(

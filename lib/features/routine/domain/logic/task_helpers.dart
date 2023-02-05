@@ -1,8 +1,8 @@
-import 'package:habit_master/features/routine/infrastructure/models/task_model.dart';
+import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 
 class TaskHelpers {
-  static List<Task> getMorningTasks(List<Task> tasks) {
-    final List<Task> morningTasks = [];
+  static List<Habit> getMorningTasks(List<Habit> tasks) {
+    final List<Habit> morningTasks = [];
     for (var index = 0; index < tasks.length; index++) {
       final task = tasks[index];
       if (task.scheduledFor! == "morning") {
@@ -12,8 +12,8 @@ class TaskHelpers {
     return morningTasks;
   }
 
-  static List<Task> getAfternoonTasks(List<Task> tasks) {
-    final List<Task> afternoonTasks = [];
+  static List<Habit> getAfternoonTasks(List<Habit> tasks) {
+    final List<Habit> afternoonTasks = [];
     for (var index = 0; index < tasks.length; index++) {
       final task = tasks[index];
       if (task.scheduledFor! == "afternoon") {
@@ -24,8 +24,8 @@ class TaskHelpers {
     return afternoonTasks;
   }
 
-  static List<Task> getEveningTasks(List<Task> tasks) {
-    final List<Task> eveningTasks = [];
+  static List<Habit> getEveningTasks(List<Habit> tasks) {
+    final List<Habit> eveningTasks = [];
     for (var index = 0; index < tasks.length; index++) {
       final task = tasks[index];
       if (task.scheduledFor! == "evening") {

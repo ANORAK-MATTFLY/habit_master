@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../interfaces/competitors_event.dart';
+import '../interface/competitors_event.dart';
 import '../bloc_logic/logic.dart';
 
 @immutable

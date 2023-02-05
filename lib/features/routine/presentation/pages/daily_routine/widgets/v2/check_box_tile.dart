@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/routine/infrastructure/models/task_model.dart';
-import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/toggle_task_bloc.dart';
+import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/toggle_habit_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_event/toggle_task.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/progress_graph.dart';
 
 class CheckBoxItem extends StatefulWidget {
   final Color? color;
   final Color? shimmer;
-  final Task? task;
+  final Habit? task;
   const CheckBoxItem({
     Key? key,
     required this.color,
@@ -76,8 +76,8 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
             );
       },
       controlAffinity: ListTileControlAffinity.leading,
-      title: throwLine(
-          _triggerState, widget.color!, widget.shimmer, widget.task!.taskName!),
+      title: throwLine(_triggerState, widget.color!, widget.shimmer,
+          widget.task!.habitName!),
     );
   }
 }

@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/task_queries.dart';
-import 'package:habit_master/features/routine/infrastructure/models/task_model.dart';
+import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/habit_queries.dart';
+import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habit_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/tasks_list.dart';
+import 'package:habit_master/features/routine/presentation/pages/navigation/bottom_app_bar.dart';
 
-import '../../create_habit/page/add_habit_panel.dart';
+import '../../create_habit/page/create_habit_page.dart';
 import '../widgets/v1/expansion_item.dart';
 import '../widgets/v1/progress.dart';
 
@@ -24,7 +25,6 @@ class DailyRoutinePage extends StatefulWidget {
 
 class _DailyRoutinePageState extends State<DailyRoutinePage>
     with SingleTickerProviderStateMixin {
-  bool isTap = false;
   @override
   Widget build(BuildContext context) {
     getTasks(streamedTasks) =>
@@ -32,13 +32,13 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
     final habit = context.read<HabitCubit>().state!;
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color.fromARGB(255, 7, 3, 15),
       floatingActionButton: GestureDetector(
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const HabitPanel(),
+              builder: (context) => const CreateHabitPage(),
             ),
           );
         },
@@ -96,7 +96,12 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
             child: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SuspendedBottomAppBar(),
+                  ),
+                );
               },
               color: Colors.white,
               iconSize: 12.0,
@@ -140,8 +145,8 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
       ),
       body: Stack(
         children: [
-          StreamBuilder<List<Task>>(
-              stream: TaskQueries(habit.authorID!).stream,
+          StreamBuilder<List<Habit>>(
+              stream: HabitQueries(habit.authorID!).stream,
               builder: (context, snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:

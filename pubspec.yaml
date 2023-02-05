@@ -59,6 +59,8 @@ dependencies:
   intl: ^0.17.0
   gradient_borders: ^1.0.0
   cupertino_icons: ^1.0.5
+  equatable: ^2.0.5
+  get_it: ^7.2.0
 
 dev_dependencies:
   integration_test:
