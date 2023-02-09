@@ -22,7 +22,7 @@ class RoutinesMutations {
       );
       final habits = generateTasks(habit.authorID!);
       await HabitMutations().createHabits(habits);
-      final mutation = LocalDatabaseConstantProvider.createHabit(habit);
+      final mutation = LocalDatabaseConstantProvider.createRoutine(habit);
       await database.rawInsert(mutation);
       return true;
     } catch (error) {

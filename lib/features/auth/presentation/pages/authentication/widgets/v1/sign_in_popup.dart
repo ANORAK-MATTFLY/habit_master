@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/widgets/v2/sign_in_button.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 
+import '../../../../../domain/logic/google_auth.dart';
 import '../../bloc/cubit/sign_in_cubit.dart';
 
 class SignInPopup extends StatefulWidget {
@@ -218,7 +219,7 @@ class _SignInPopupState extends State<SignInPopup>
                         ),
                         const Center(
                           child: Text(
-                            "Sign up with Google or Facebook",
+                            "Sign in with Google",
                             style: TextStyle(
                               color: Color.fromARGB(255, 107, 107, 107),
                               fontFamily: "Twitterchirp_Bold",
@@ -229,68 +230,45 @@ class _SignInPopupState extends State<SignInPopup>
                           ),
                         ),
                         Center(
-                          child: SizedBox(
-                            height: 100.0,
-                            width: 200.0,
-                            child: Row(
+                          child: GestureDetector(
+                            onTap: () async {
+                              await GoogleAuth().loginWithGoogle();
+                            },
+                            child: Container(
+                              height: 50.0,
+                              width: 200.0,
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    spreadRadius: -13,
+                                    blurRadius: 30.0,
+                                    offset: Offset(
+                                        2, 4), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    height: 50.0,
-                                    width: 50.0,
-                                    decoration: const BoxDecoration(
-                                      color: Color.fromARGB(168, 42, 209, 246),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(360.0),
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black,
-                                          spreadRadius: -13,
-                                          blurRadius: 30.0,
-                                          offset: Offset(2,
-                                              4), // changes position of shadow
-                                        ),
-                                      ],
-                                    ),
-                                    child: IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Icons.facebook,
-                                        size: 35.0,
-                                      ),
-                                      color: Colors.white,
-                                    ),
+                                  SizedBox(
+                                    width: 35.0,
+                                    child:
+                                        Image.asset("assets/images/google.png"),
                                   ),
-                                  Container(
-                                    height: 50.0,
-                                    width: 50.0,
-                                    decoration: const BoxDecoration(
-                                      color: Color.fromARGB(168, 255, 255, 255),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(360.0),
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Color.fromARGB(255, 0, 0, 0),
-                                          spreadRadius: -13,
-                                          blurRadius: 30.0,
-                                          offset: Offset(2,
-                                              4), // changes position of shadow
-                                        ),
-                                      ],
-                                    ),
-                                    child: Center(
-                                      child: SizedBox(
-                                        width: 35.0,
-                                        child: Image.asset(
-                                            "assets/images/google.png"),
-                                      ),
-                                    ),
-                                  ),
-                                ]),
+                                  const Text(
+                                    "Sign in with Google",
+                                    style: TextStyle(fontSize: 13.0),
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ],

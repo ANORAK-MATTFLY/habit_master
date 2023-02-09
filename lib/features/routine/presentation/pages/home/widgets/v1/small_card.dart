@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:habit_master/shared/features/routine/models/routine.dart';
 import 'dart:math';
 
+import '../../../../../../../shared/static/images.dart';
+
 class SmallCard extends StatefulWidget {
   const SmallCard({Key? key}) : super(key: key);
 
@@ -12,16 +14,7 @@ class SmallCard extends StatefulWidget {
 
 class _SmallCardState extends State<SmallCard> {
   final random = Random();
-  final images = [
-    "assets/images/3d objects/Ball-2.png",
-    "assets/images/3d objects/Cones.png",
-    "assets/images/3d objects/Cube-2.png",
-    "assets/images/3d objects/Polyhedron.png",
-    "assets/images/bubble3.png",
-    "assets/images/bubble4.png",
-    "assets/images/bubble6.png",
-    "assets/images/bg.png",
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Wrap(
@@ -117,7 +110,7 @@ class _SmallCardState extends State<SmallCard> {
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                    images[random.nextInt(images.length)],
+                                    objectsD[random.nextInt(objectsD.length)],
                                   ),
                                 ),
                               ),

@@ -1,21 +1,22 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/mutation/habit.dart';
+import 'package:habit_master/dep_injection.dart';
+import 'package:habit_master/features/routine/infrastructure/repository/habit_repository.dart';
 
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_event/toggle_task.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/interface/task.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_state/habit_state.dart';
-import 'package:uuid/uuid.dart';
-
-const uuid = Uuid();
 
 class TaskBlocLogic extends Bloc<TaskBlocInterface, HabitState?> {
   TaskBlocLogic() : super(null) {
     on<ToggleTaskAction>((event, emit) async {
-      final task = event.task;
-      await HabitMutations().toggleHabit(task, !task.isDone!);
+      final habit = event.task;
+      final habitMutation = serviceLocator<HabitRepository>();
+      final isToggled = await habitMutation.toggleHabit(habit, !habit.isDone!);
 
-      final resultingTask = HabitState(habitState: task);
-      emit(resultingTask);
+      if (isToggled == true) {
+        final resultingHabit = HabitState(habitState: habit);
+        emit(resultingHabit);
+      }
     });
   }
 }

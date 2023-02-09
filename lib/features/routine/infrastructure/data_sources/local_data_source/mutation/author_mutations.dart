@@ -5,7 +5,7 @@ import 'package:habit_master/features/routine/infrastructure/data_sources/local_
 import '../../../models/author_model.dart';
 
 class AuthorMutations {
-  createAuthor(List<Author> authors) async {
+  Future<bool> createAuthor(List<Author> authors) async {
     final database = await LocalDatabase.instance.database;
     try {
       for (int index = 0; index < authors.length; index++) {

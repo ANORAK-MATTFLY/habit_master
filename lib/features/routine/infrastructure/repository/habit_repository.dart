@@ -4,13 +4,7 @@ import 'package:habit_master/features/routine/infrastructure/data_sources/local_
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 
 class HabitRepository implements HabitInterface {
-  HabitRepository({
-    required this.habitMutations,
-    required this.habitQueries,
-  });
-
-  final HabitMutations habitMutations;
-  final HabitQueries habitQueries;
+  final HabitMutations habitMutations = HabitMutations();
 
   @override
   Future<bool> createHabit(Habit habit) {
@@ -35,6 +29,6 @@ class HabitRepository implements HabitInterface {
 
   @override
   Stream<List<Habit>> getHabits(String routineID) {
-    return habitQueries.stream;
+    return HabitQueries(routineID).stream;
   }
 }

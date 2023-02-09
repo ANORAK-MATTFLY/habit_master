@@ -4,12 +4,8 @@ import 'package:habit_master/features/routine/infrastructure/data_sources/local_
 import 'package:habit_master/features/routine/infrastructure/models/author_model.dart';
 
 class AuthorRepository implements AuthorInterface {
-  AuthorRepository({
-    required this.authorMutations,
-    required this.authorQueries,
-  });
-  final AuthorMutations authorMutations;
-  final AuthorQueries authorQueries;
+  final AuthorMutations authorMutations = AuthorMutations();
+  final AuthorQueries authorQueries = AuthorQueries();
 
   @override
   Future<bool> checkIfAuthorsExist() {
@@ -17,7 +13,7 @@ class AuthorRepository implements AuthorInterface {
   }
 
   @override
-  Stream<bool> createAuthor(List<Author> authors) {
+  Future<bool> createAuthor(List<Author> authors) async {
     return AuthorMutations().createAuthor(authors);
   }
 }

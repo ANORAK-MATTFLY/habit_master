@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/page/authentication_panel.dart';
-import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/routine_queries.dart';
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
 import 'package:habit_master/features/auth/presentation/pages/profile/page/profile_page.dart';
+import 'package:habit_master/features/routine/infrastructure/repository/routine_repository.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/small_card.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -37,10 +38,10 @@ class _HomePageState extends State<HomePage> {
 
     final day = DateFormat('EEEE').format(today).toUpperCase();
     final dayNumber = today.day;
-
+    final getRoutines = serviceLocator<RoutineRepository>();
     final listOfCard = [
       StreamBuilder<List<Routine>>(
-          stream: RoutineQueries().stream,
+          stream: getRoutines.getRoutines(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:

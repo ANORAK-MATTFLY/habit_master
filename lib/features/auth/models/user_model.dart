@@ -1,15 +1,15 @@
-class User {
+class UserAggregate {
   String? userName;
   String? email;
   String? profilePicture;
 
-  User({
+  UserAggregate({
     this.userName,
     this.email,
     this.profilePicture,
   });
 
-  User.fromJson(Map<String, dynamic> json)
+  UserAggregate.fromJson(Map<String, dynamic> json)
       : email = json["email"] as String,
         profilePicture = json["picture"] as String,
         userName = json["name"] as String;

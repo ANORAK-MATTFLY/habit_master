@@ -5,12 +5,8 @@ import 'package:habit_master/features/routine/infrastructure/models/author_model
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
 class RoutineRepository implements RoutineInterface {
-  RoutineRepository({
-    required this.routinesMutations,
-    required this.routineQueries,
-  });
-  final RoutinesMutations routinesMutations;
-  final RoutineQueries routineQueries;
+  final RoutinesMutations routinesMutations = RoutinesMutations();
+  final RoutineQueries routineQueries = RoutineQueries();
 
   @override
   Future<bool> createRoutine(Author author, int successRate) {

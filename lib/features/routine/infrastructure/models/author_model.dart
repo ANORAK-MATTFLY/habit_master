@@ -4,9 +4,17 @@ import 'package:uuid/uuid.dart';
 const uuid = Uuid();
 
 class Author extends AuthorEntity {
+  @override
+  // ignore: overridden_fields
   final String? id;
+  @override
+  // ignore: overridden_fields
   final String? authorName;
+  @override
+  // ignore: overridden_fields
   final String? authorProfilePicture;
+  @override
+  // ignore: overridden_fields
   final String? type;
 
   const Author({this.id, this.authorName, this.authorProfilePicture, this.type})

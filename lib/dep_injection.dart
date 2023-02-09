@@ -1,0 +1,18 @@
+import 'package:get_it/get_it.dart';
+import 'package:habit_master/features/routine/infrastructure/repository/author_repository.dart';
+import 'package:habit_master/features/routine/infrastructure/repository/habit_repository.dart';
+import 'package:habit_master/features/routine/infrastructure/repository/routine_repository.dart';
+
+final serviceLocator = GetIt.instance;
+
+Future<void> setup() async {
+  serviceLocator.registerLazySingleton(
+    () => AuthorRepository(),
+  );
+  serviceLocator.registerLazySingleton(
+    () => RoutineRepository(),
+  );
+  serviceLocator.registerLazySingleton(
+    () => HabitRepository(),
+  );
+}

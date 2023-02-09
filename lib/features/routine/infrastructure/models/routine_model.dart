@@ -42,6 +42,7 @@ class Routine extends RoutineEntity {
         authorName: json['author_name'] as String?,
         authorProfilePicture: json['author_profile_picture'] as String?,
         description: json['description'] as String?,
+        isPremium: json['is_premium'] as int?,
         subscribers: json['subscribers'] as int?,
         subTitle: json['sub_title'] as String?,
         successRate: json['success_rate'] as int?,

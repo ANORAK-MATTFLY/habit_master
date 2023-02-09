@@ -13,7 +13,7 @@ Widget tinyCircleAvatar(String image, List<Color> colors) => Container(
           Radius.circular(360.0),
         ),
         image: DecorationImage(
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
           image: AssetImage(image),
         ),
         boxShadow: [

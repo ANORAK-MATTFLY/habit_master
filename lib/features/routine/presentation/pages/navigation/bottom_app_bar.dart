@@ -5,6 +5,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/page/home_page.dart';
 import 'package:habit_master/features/auth/presentation/pages/profile/page/profile_page.dart';
 
+import '../../../../user_feed/presentation/user_feed/page/user_feed_page.dart';
+import '../daily_routine/page/personal_routine.dart';
+
 class SuspendedBottomAppBar extends StatefulWidget {
   const SuspendedBottomAppBar({Key? key}) : super(key: key);
 
@@ -19,10 +22,11 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
     final screens = [
       const HomePage(),
-      const ProfilePage(),
-      const ProfilePage(),
+      const PersonalRoutinePage(),
+      const UserFeedPage(),
       const ProfilePage(),
     ];
     return Scaffold(

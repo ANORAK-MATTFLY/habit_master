@@ -8,8 +8,6 @@ import 'package:habit_master/features/routine/presentation/pages/daily_routine/w
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v1/circle_avatar.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_icon.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_line.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/time_habit.dart';
-import 'package:habit_master/shared/static/options.dart';
 
 class ExpandedItemList extends StatefulWidget {
   final String title;
