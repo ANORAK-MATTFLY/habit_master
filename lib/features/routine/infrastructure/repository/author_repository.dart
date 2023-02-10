@@ -8,12 +8,12 @@ class AuthorRepository implements AuthorInterface {
   final AuthorQueries authorQueries = AuthorQueries();
 
   @override
-  Future<bool> checkIfAuthorsExist() {
-    return AuthorQueries().checkIfAuthorsExist();
+  Future<bool> checkIfAuthorExist(String authorID) {
+    return AuthorQueries().checkIfAuthorExist(authorID);
   }
 
   @override
-  Future<bool> createAuthor(List<Author> authors) async {
-    return AuthorMutations().createAuthor(authors);
+  Future<bool> createAuthor(Author author) async {
+    return AuthorMutations().createAuthor(author);
   }
 }

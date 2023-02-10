@@ -64,12 +64,6 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
           setState(() {
             showCerateHabitPanel = !showCerateHabitPanel;
           });
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => const CreateHabitPage(),
-          //   ),
-          // );
         },
         child: Container(
           height: 40.0,
@@ -179,9 +173,72 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                       child: Text("An error occurred"),
                     );
                   case ConnectionState.waiting:
-                    return const Center(
-                      child: CupertinoActivityIndicator(
-                          animating: true, color: Colors.white),
+                    final List<Habit> streamedTasks = [];
+                    getTasks(streamedTasks);
+                    return Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      color: const Color.fromARGB(255, 7, 3, 15),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            bottom: 0,
+                            child: SizedBox(
+                              height: 430,
+                              width: (MediaQuery.of(context).size.width),
+                              child: ListView(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 40.0),
+                                    child: ExpandedItemList(
+                                      habit: habit,
+                                      title: "Start your Morning Routine",
+                                      progressRatio: progress(
+                                        "0/3",
+                                        const Color.fromARGB(255, 255, 230, 0),
+                                      ),
+                                      shimmer: Colors.white.withOpacity(0.2),
+                                      color: const Color.fromARGB(
+                                          255, 255, 230, 0),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 40.0),
+                                    child: ExpandedItemList(
+                                      habit: habit,
+                                      title: "Kickoff your Afternoon!",
+                                      progressRatio: progress(
+                                        "0/4",
+                                        const Color.fromARGB(
+                                            255, 246, 149, 255),
+                                      ),
+                                      color: const Color.fromARGB(
+                                          255, 246, 149, 255),
+                                      shimmer: const Color.fromARGB(
+                                          255, 246, 149, 255),
+                                    ),
+                                  ),
+                                  ExpandedItemList(
+                                    habit: habit,
+                                    title: "Finish your day in style!",
+                                    progressRatio: progress(
+                                      "0/3",
+                                      const Color.fromARGB(255, 0, 255, 247),
+                                    ),
+                                    color:
+                                        const Color.fromARGB(255, 0, 255, 247),
+                                    shimmer:
+                                        const Color.fromARGB(255, 0, 255, 247),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          ChartAndDescription(habit: habit),
+                        ],
+                      ),
                     );
                   case ConnectionState.active:
                     final streamedTasks = snapshot.data!;

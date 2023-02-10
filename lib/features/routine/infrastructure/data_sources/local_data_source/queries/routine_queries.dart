@@ -25,4 +25,13 @@ class RoutineQueries {
     );
     return rawRoutinesData;
   }
+
+  static Future<Routine> getOneRoutine(String authorID) async {
+    final database = await LocalDatabase.instance.database;
+    final rawData = await database.rawQuery(
+        "SELECT * FROM routine WHERE author_id = '$authorID' LIMIT 1");
+
+    final Routine routine = Routine.fromJson(rawData[0]);
+    return routine;
+  }
 }

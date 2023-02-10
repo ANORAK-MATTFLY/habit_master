@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/routine/domain/logic/task_helpers.dart';
@@ -132,19 +133,35 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                       width: width - 20,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: tasks.map((task) {
+                        children: tasks.map((habit) {
                           //  task.type! == "check"
                           //     ?
-                          return CheckBoxItem(
-                            color: widget.color,
-                            shimmer: widget.shimmer,
-                            task: task,
+                          return Dismissible(
+                            key: Key(habit.id!),
+                            background: Container(
+                              color: const Color.fromARGB(255, 255, 103, 92),
+                              alignment: AlignmentDirectional.centerEnd,
+                              child: const Center(
+                                child: Icon(
+                                  CupertinoIcons.delete,
+                                  color: Colors.white,
+                                  size: 25.0,
+                                ),
+                              ),
+                            ),
+                            onDismissed: ((direction) {
+                              setState(() {
+                                streamedTasks
+                                    .removeAt(streamedTasks.indexOf(habit));
+                                tasks.removeAt(tasks.indexOf(habit));
+                              });
+                            }),
+                            child: CheckBoxItem(
+                              color: widget.color,
+                              shimmer: widget.shimmer,
+                              task: habit,
+                            ),
                           );
-                          // : GestureDetector(
-                          //     onTap: () {
-                          //       print(task.type);
-                          //     },
-                          //     child: const TimerHabit());
                         }).toList(),
                       )),
                 ],

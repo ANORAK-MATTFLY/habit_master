@@ -17,11 +17,11 @@ List<String> taskName = [
   "Workout",
   "plane the next day",
 ];
-List<Habit> generateTasks(String habitID) {
-  List<Habit> tasks = [];
+List<Habit> generateTasks(String routineID) {
+  List<Habit> habits = [];
 
   for (var i = 0; i < taskName.length; i++) {
-    final task = Habit(
+    final habit = Habit(
       id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-$i",
       duration: "30min",
       scheduledFor: i < 4
@@ -29,13 +29,13 @@ List<Habit> generateTasks(String habitID) {
           : (i >= 4) && (i < 8)
               ? "afternoon"
               : "evening",
-      routineID: habitID,
+      routineID: routineID,
       habitName: taskName[i],
       type: "check",
       isDone: false,
       expirationDate: expirationDate,
     );
-    tasks.add(task);
+    habits.add(habit);
   }
-  return tasks;
+  return habits;
 }

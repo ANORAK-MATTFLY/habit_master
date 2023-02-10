@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/bloc/cubit/sign_in_cubit.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/page/authentication_panel.dart';
-import 'package:habit_master/features/routine/infrastructure/repository/author_repository.dart';
+import 'package:habit_master/features/routine/domain/logic/prebuilt_data.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_author.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/timer_task.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/page/personal_routine.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/large_card.dart';
 import 'package:habit_master/features/leader_board/presentation/page/leader_board_page.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_habit.dart';
@@ -24,36 +26,16 @@ import 'package:habit_master/shared/bloc/show_error_cubit.dart';
 import 'package:sqflite/sqflite.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
-import 'features/routine/infrastructure/models/author_model.dart';
 import 'features/routine/presentation/pages/home/page/home_page.dart';
 import 'features/routine/presentation/pages/navigation/bottom_app_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  Future createAuthorMainIsolate() async {
-    // SendPort sendPort
-
-    try {
-      final authorQueries = serviceLocator<AuthorRepository>();
-      final authorMutations = serviceLocator<AuthorRepository>();
-
-      final authorsExist = await authorQueries.checkIfAuthorsExist();
-      if (authorsExist == false) {
-        authorMutations.createAuthor(predefinedAuthors);
-        // Isolate.exit(sendPort, "The initialization succeeded!");
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  await setup();
-
   WidgetsFlutterBinding.ensureInitialized();
-  await createAuthorMainIsolate();
-
-  await openDatabase(
+  await setup();
+  PrebuiltData().createPrebuiltData();
+  openDatabase(
     // Set the path to the database. Note: Using the `join` function from the
     // `path` package is best practice to ensure the path is correctly
     // constructed for each platform.
@@ -140,6 +122,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => ErrorMessageCubit(),
           child: const DailyRoutinePage(),
+        ),
+        BlocProvider(
+          create: (_) => CreateAuthorBlocLogic(),
+          child: const PersonalRoutinePage(),
         ),
       ],
       child: MaterialApp(

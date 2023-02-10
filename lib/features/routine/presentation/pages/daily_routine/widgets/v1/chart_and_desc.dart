@@ -28,6 +28,10 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
     final authorName = widget.habit.authorName!.length > 15
         ? widget.habit.authorName!.substring(0, 15)
         : widget.habit.authorName!;
+
+    final profileImage = widget.habit.authorProfilePicture!.startsWith("asset")
+        ? AssetImage(widget.habit.authorProfilePicture!)
+        : NetworkImage(widget.habit.authorProfilePicture!);
     return Container(
       height: 500,
       padding: const EdgeInsets.only(top: 90.0),
@@ -135,19 +139,29 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
                   Container(
                     height: 70.0,
                     width: 70.0,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.contain,
-                        image: AssetImage(widget.habit.authorProfilePicture!),
-                      ),
-                    ),
+                    decoration: widget.habit.authorProfilePicture!
+                                .startsWith("assets") ==
+                            true
+                        ? BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.contain,
+                              image: AssetImage(
+                                  widget.habit.authorProfilePicture!),
+                            ),
+                          )
+                        : BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.contain,
+                              image: NetworkImage(
+                                  widget.habit.authorProfilePicture!),
+                            ),
+                          ),
                   ),
                   Container(
                     padding: const EdgeInsets.only(left: 8.0),
                     height: 90,
                     width: (width - 80),
                     decoration: BoxDecoration(
-                      // color: Color.fromARGB(232, 181, 106, 225),
                       gradient: LinearGradient(
                           colors: [
                             const Color(0xB0246776).withOpacity(0.4),

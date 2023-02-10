@@ -41,26 +41,26 @@ class Author extends AuthorEntity {
 }
 
 List<Author> predefinedAuthors = [
-  Author(
-    id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}",
+  const Author(
+    id: "Elon MuskElon MuskElon MuskElon MuskElon MuskElon Musk 2",
     authorName: "Elon Musk",
     authorProfilePicture: "assets/images/elon-musk.png",
     type: "prebuilt",
   ),
-  Author(
-    id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}",
+  const Author(
+    id: "Bill GateBill GateBill GateBill GateBill GateBill Gate",
     authorName: "Bill Gate",
     authorProfilePicture: "assets/images/bill-gate.png",
     type: "prebuilt",
   ),
-  Author(
-    id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}",
+  const Author(
+    id: "Thomas FranksThomas FranksThomas FranksThomas FranksThomas Franks",
     authorName: "Thomas Franks",
     authorProfilePicture: "assets/images/thomas_frank.png",
     type: "prebuilt",
   ),
-  Author(
-    id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}",
+  const Author(
+    id: "JoeySchweitzerJoeySchweitzerJoeySchweitzerJoeySchweitzer",
     authorName: "Joey Schweitzer",
     authorProfilePicture: "assets/images/joey_schweitzer.png",
     type: "prebuilt",
