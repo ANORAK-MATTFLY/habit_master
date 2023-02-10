@@ -4,6 +4,7 @@
         "autofocus",
         "AUTOINCREMENT",
         "chrono",
+        "colorsets",
         "elon",
         "Leaderboard",
         "sqflite",

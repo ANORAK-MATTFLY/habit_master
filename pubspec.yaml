@@ -18,7 +18,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.16.2 <3.0.0'
+  sdk: ">=2.16.2 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -29,7 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+
   # State management
   flutter_bloc: ^8.0.1
 
@@ -54,9 +54,18 @@ dependencies:
   percent_indicator: ^4.0.0
   flutter_svg: ^1.0.0
   sliding_up_panel: ^2.0.0+1
-
-  cupertino_icons: ^1.0.2
+  flutter_animate: ^3.0.0
+  flutter_heatmap_calendar: ^1.0.5
   intl: ^0.17.0
+  gradient_borders: ^1.0.0
+  cupertino_icons: ^1.0.5
+  equatable: ^2.0.5
+  get_it: ^7.2.0
+  firebase_core: ^2.4.1
+  firebase_auth: ^4.2.5
+  google_sign_in: ^5.4.4
+  cloud_firestore: ^4.3.1
+  flutter_facebook_auth: ^5.0.7
 
 dev_dependencies:
   integration_test:
@@ -108,6 +117,21 @@ flutter:
     - assets/images/avatars/av6.jpg
     - assets/images/avatars/av7.jpg
     - assets/images/avatars/av8.jpg
+    - assets/images/avatars/ava12.png
+    - assets/images/avatars/av13.png
+    - assets/images/avatars/av14.png
+    - assets/images/avatars/av15.png
+    - assets/images/avatars/av16.png
+    - assets/images/avatars/av17.png
+    - assets/images/avatars/av18.png
+    - assets/images/avatars/av19.png
+    - assets/images/avatars/av20.png
+    - assets/images/avatars/av21.png
+    - assets/images/avatars/av22.png
+    - assets/images/avatars/av23.png
+
+
+
     - assets/images/icons/crown.png
     - assets/images/icons/trophy.png
     - assets/svg/search-icon.svg
