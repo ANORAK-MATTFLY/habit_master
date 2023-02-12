@@ -24,7 +24,8 @@ class LocalDatabaseConstantProvider {
       id VARCHAR(255) NOT NULL PRIMARY KEY,
       author_name VARCHAR(20),
       author_profile_picture VARCHAR(255),
-      type VARCHAR(15)
+      type VARCHAR(15),
+      subscribed_to VARCHAR(255)
     )''';
   static const createHabitTable = '''CREATE TABLE habit(
       id VARCHAR(255) NOT NULL,

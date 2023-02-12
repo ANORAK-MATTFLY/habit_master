@@ -12,8 +12,9 @@ import '../v2/stacked_chart.dart';
 import '../v2/background_animation.dart';
 
 class ChartAndDescription extends StatefulWidget {
-  final Routine habit;
-  const ChartAndDescription({Key? key, required this.habit}) : super(key: key);
+  final Routine routine;
+  const ChartAndDescription({Key? key, required this.routine})
+      : super(key: key);
 
   @override
   State<ChartAndDescription> createState() => _ChartAndDescriptionState();
@@ -25,13 +26,10 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final random = Random();
-    final authorName = widget.habit.authorName!.length > 15
-        ? widget.habit.authorName!.substring(0, 15)
-        : widget.habit.authorName!;
+    final authorName = widget.routine.authorName!.length > 15
+        ? widget.routine.authorName!.substring(0, 15)
+        : widget.routine.authorName!;
 
-    final profileImage = widget.habit.authorProfilePicture!.startsWith("asset")
-        ? AssetImage(widget.habit.authorProfilePicture!)
-        : NetworkImage(widget.habit.authorProfilePicture!);
     return Container(
       height: 500,
       padding: const EdgeInsets.only(top: 90.0),
@@ -139,21 +137,21 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
                   Container(
                     height: 70.0,
                     width: 70.0,
-                    decoration: widget.habit.authorProfilePicture!
+                    decoration: widget.routine.authorProfilePicture!
                                 .startsWith("assets") ==
                             true
                         ? BoxDecoration(
                             image: DecorationImage(
                               fit: BoxFit.contain,
                               image: AssetImage(
-                                  widget.habit.authorProfilePicture!),
+                                  widget.routine.authorProfilePicture!),
                             ),
                           )
                         : BoxDecoration(
                             image: DecorationImage(
                               fit: BoxFit.contain,
                               image: NetworkImage(
-                                  widget.habit.authorProfilePicture!),
+                                  widget.routine.authorProfilePicture!),
                             ),
                           ),
                   ),

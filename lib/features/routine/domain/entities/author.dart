@@ -5,12 +5,13 @@ class AuthorEntity extends Equatable {
   final String? authorName;
   final String? authorProfilePicture;
   final String? type;
-
+  final String? subscribedTo;
   const AuthorEntity({
     required this.id,
     required this.authorName,
     required this.authorProfilePicture,
     required this.type,
+    required this.subscribedTo,
   });
 
   @override
@@ -20,6 +21,7 @@ class AuthorEntity extends Equatable {
       authorName!,
       authorProfilePicture!,
       type!,
+      subscribedTo!,
     ];
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/routine/domain/logic/task_helpers.dart';
-import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/tasks_list.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/check_box_tile.dart';
@@ -15,15 +14,13 @@ class ExpandedItemList extends StatefulWidget {
   final Widget progressRatio;
   final Color color;
   final Color shimmer;
-  final Routine habit;
-  const ExpandedItemList(
-      {Key? key,
-      required this.title,
-      required this.progressRatio,
-      required this.color,
-      required this.shimmer,
-      required this.habit})
-      : super(key: key);
+  const ExpandedItemList({
+    Key? key,
+    required this.title,
+    required this.progressRatio,
+    required this.color,
+    required this.shimmer,
+  }) : super(key: key);
 
   @override
   State<ExpandedItemList> createState() => _ExpandedItemListState();
@@ -134,8 +131,6 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: tasks.map((habit) {
-                          //  task.type! == "check"
-                          //     ?
                           return Dismissible(
                             key: Key(habit.id!),
                             background: Container(
@@ -159,7 +154,7 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                             child: CheckBoxItem(
                               color: widget.color,
                               shimmer: widget.shimmer,
-                              task: habit,
+                              habit: habit,
                             ),
                           );
                         }).toList(),

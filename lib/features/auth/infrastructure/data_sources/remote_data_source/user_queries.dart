@@ -13,13 +13,13 @@ class UserQueries {
     }
   }
 
-  static Future<User?> getAuthenticatedUser() async {
+  static getAuthenticatedUser() {
     final User? currentUser = FirebaseAuth.instance.currentUser;
     return currentUser;
   }
 
   static Future<bool> isAuthenticated() async {
-    final User? user = await getAuthenticatedUser();
+    final User? user = FirebaseAuth.instance.currentUser;
     return user != null;
   }
 }

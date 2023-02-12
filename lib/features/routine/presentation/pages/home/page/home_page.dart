@@ -54,21 +54,21 @@ class _HomePageState extends State<HomePage> {
                       animating: true, color: Colors.white),
                 );
               case ConnectionState.active:
-                final List<Routine> habits = snapshot.data!;
+                final List<Routine> routines = snapshot.data!;
 
                 return Container(
                   height: 310.0,
                   padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  child: LargeCard(habits: habits),
+                  child: LargeCard(routines: routines),
                 );
               case ConnectionState.done:
                 {
-                  final List<Routine> habits = snapshot.data!;
+                  final List<Routine> routines = snapshot.data!;
 
                   return Container(
                     height: 310.0,
                     padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    child: LargeCard(habits: habits),
+                    child: LargeCard(routines: routines),
                   );
                 }
             }

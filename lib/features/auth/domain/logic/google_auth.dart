@@ -10,17 +10,22 @@ class GoogleAuth extends ChangeNotifier {
   GoogleSignIn googleSignIn = GoogleSignIn();
 
   Future loginWithGoogle() async {
-    final user = await googleSignIn.signIn();
+    try {
+      final user = await googleSignIn.signIn();
 
-    final googleAuth = await user!.authentication;
+      final googleAuth = await user!.authentication;
 
-    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    ) as GoogleAuthCredential;
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    GoogleSignInAccount currentUser = googleSignIn.currentUser!;
-    UserMutations().createNewUser(currentUser);
+      final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      ) as GoogleAuthCredential;
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      GoogleSignInAccount currentUser = googleSignIn.currentUser!;
+      UserMutations().createNewUser(currentUser);
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   logout() async {

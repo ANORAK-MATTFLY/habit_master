@@ -78,8 +78,8 @@ class MyApp extends StatelessWidget {
           child: const DailyRoutinePage(),
         ),
         BlocProvider(
-          create: (_) => TaskBlocLogic(),
-          child: const CheckBoxItem(color: null, shimmer: null, task: null),
+          create: (_) => HabitBlocLogic(),
+          child: const CheckBoxItem(color: null, shimmer: null, habit: null),
         ),
         BlocProvider(
           create: (_) => TimeOptionCubit(),
@@ -96,7 +96,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => HabitCubit(),
           child: const LargeCard(
-            habits: [],
+            routines: [],
           ),
         ),
         BlocProvider(

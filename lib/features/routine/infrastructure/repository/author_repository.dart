@@ -16,4 +16,14 @@ class AuthorRepository implements AuthorInterface {
   Future<bool> createAuthor(Author author) async {
     return AuthorMutations().createAuthor(author);
   }
+
+  @override
+  Future<bool> subscribeToRoutine(String routineID) {
+    return AuthorMutations().subscribeToRoutine(routineID);
+  }
+
+  @override
+  Future getAuthorById(String authorID) {
+    return AuthorQueries().getAuthorById(authorID);
+  }
 }

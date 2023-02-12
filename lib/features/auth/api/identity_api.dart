@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:habit_master/features/auth/infrastructure/repository/user_repository.dart';
 
 class IdentityApi {
-  Future<User?> getAuthenticatedUser() {
+  getAuthenticatedUser() {
     return UserRepository().getAuthenticatedUser();
   }
 

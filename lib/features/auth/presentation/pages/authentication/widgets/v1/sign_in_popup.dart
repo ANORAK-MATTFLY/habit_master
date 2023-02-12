@@ -1,7 +1,14 @@
+import 'dart:math';
+
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/features/auth/api/identity_api.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/widgets/v2/sign_in_button.dart';
+import 'package:habit_master/features/routine/infrastructure/models/author_model.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_event/create_author.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_author.dart';
+import 'package:habit_master/shared/static/images.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 
 import '../../../../../domain/logic/google_auth.dart';
@@ -232,7 +239,29 @@ class _SignInPopupState extends State<SignInPopup>
                         Center(
                           child: GestureDetector(
                             onTap: () async {
-                              await GoogleAuth().loginWithGoogle();
+                              final loginSucceeded =
+                                  await GoogleAuth().loginWithGoogle();
+                              if (loginSucceeded == true) {
+                                final userInfo =
+                                    IdentityApi().getAuthenticatedUser();
+
+                                if (userInfo != null) {
+                                  final random = Random();
+                                  final avatar =
+                                      avatars[random.nextInt(avatars.length)];
+                                  final Author author = Author(
+                                    authorProfilePicture: avatar,
+                                    authorName: userInfo.displayName,
+                                    id: userInfo.uid,
+                                    type: "costumer",
+                                  );
+
+                                  // ignore: use_build_context_synchronously
+                                  context.read<CreateAuthorBlocLogic>().add(
+                                        CreateAuthorAction(author: author),
+                                      );
+                                }
+                              }
                             },
                             child: Container(
                               height: 50.0,

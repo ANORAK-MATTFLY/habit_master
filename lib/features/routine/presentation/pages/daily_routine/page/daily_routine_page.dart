@@ -26,13 +26,11 @@ import 'package:uuid/uuid.dart';
 
 import '../widgets/v1/expansion_item.dart';
 import '../widgets/v1/progress.dart';
-
 import '../widgets/v1/chart_and_desc.dart';
 
 class DailyRoutinePage extends StatefulWidget {
   const DailyRoutinePage({Key? key}) : super(key: key);
 
-  @override
   @override
   State<DailyRoutinePage> createState() => _DailyRoutinePageState();
 }
@@ -48,7 +46,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
   Widget build(BuildContext context) {
     getTasks(streamedTasks) =>
         context.read<TaskListCubit>().updateState(streamedTasks);
-    final habit = context.read<HabitCubit>().state!;
+    final routine = context.read<HabitCubit>().state!;
 
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -164,8 +162,8 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
       body: Stack(
         children: [
           StreamBuilder<List<Habit>>(
-              stream:
-                  serviceLocator<HabitRepository>().getHabits(habit.authorID!),
+              stream: serviceLocator<HabitRepository>()
+                  .getHabits(routine.authorID!),
               builder: (context, snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
@@ -192,7 +190,6 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 40.0),
                                     child: ExpandedItemList(
-                                      habit: habit,
                                       title: "Start your Morning Routine",
                                       progressRatio: progress(
                                         "0/3",
@@ -207,7 +204,6 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     padding:
                                         const EdgeInsets.only(bottom: 40.0),
                                     child: ExpandedItemList(
-                                      habit: habit,
                                       title: "Kickoff your Afternoon!",
                                       progressRatio: progress(
                                         "0/4",
@@ -221,7 +217,6 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     ),
                                   ),
                                   ExpandedItemList(
-                                    habit: habit,
                                     title: "Finish your day in style!",
                                     progressRatio: progress(
                                       "0/3",
@@ -236,7 +231,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                               ),
                             ),
                           ),
-                          ChartAndDescription(habit: habit),
+                          ChartAndDescription(routine: routine),
                         ],
                       ),
                     );
@@ -260,7 +255,6 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 40.0),
                                     child: ExpandedItemList(
-                                      habit: habit,
                                       title: "Start your Morning Routine",
                                       progressRatio: progress(
                                         "0/3",
@@ -275,7 +269,6 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     padding:
                                         const EdgeInsets.only(bottom: 40.0),
                                     child: ExpandedItemList(
-                                      habit: habit,
                                       title: "Kickoff your Afternoon!",
                                       progressRatio: progress(
                                         "0/4",
@@ -289,7 +282,6 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     ),
                                   ),
                                   ExpandedItemList(
-                                    habit: habit,
                                     title: "Finish your day in style!",
                                     progressRatio: progress(
                                       "0/3",
@@ -304,7 +296,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                               ),
                             ),
                           ),
-                          ChartAndDescription(habit: habit),
+                          ChartAndDescription(routine: routine),
                         ],
                       ),
                     );
@@ -329,7 +321,6 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 40.0),
                                       child: ExpandedItemList(
-                                        habit: habit,
                                         title: "Start your Morning Routine",
                                         progressRatio: progress(
                                           "0/3",
@@ -345,7 +336,6 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                       padding:
                                           const EdgeInsets.only(bottom: 40.0),
                                       child: ExpandedItemList(
-                                        habit: habit,
                                         title: "Kickoff your Afternoon!",
                                         progressRatio: progress(
                                           "0/4",
@@ -359,7 +349,6 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                       ),
                                     ),
                                     ExpandedItemList(
-                                      habit: habit,
                                       title: "Finish your day in style!",
                                       progressRatio: progress(
                                         "0/3",
@@ -374,7 +363,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                 ),
                               ),
                             ),
-                            ChartAndDescription(habit: habit),
+                            ChartAndDescription(routine: routine),
                           ],
                         ),
                       );
@@ -667,7 +656,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                 final task = Habit(
                                   id: uuid.v1(),
                                   expirationDate: expirationDate,
-                                  routineID: habit.authorID,
+                                  routineID: routine.authorID,
                                   isDone: false,
                                   scheduledFor: taskMoment.state.toLowerCase(),
                                   type: taskType.state,

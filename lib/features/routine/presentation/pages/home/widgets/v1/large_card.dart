@@ -7,8 +7,8 @@ import 'package:habit_master/features/routine/presentation/pages/daily_routine/b
 import '../../../../../infrastructure/models/routine_model.dart';
 
 class LargeCard extends StatefulWidget {
-  final List<Routine> habits;
-  const LargeCard({Key? key, required this.habits}) : super(key: key);
+  final List<Routine> routines;
+  const LargeCard({Key? key, required this.routines}) : super(key: key);
   @override
   // ignore: library_private_types_in_public_api
   _PrebuiltCardState createState() => _PrebuiltCardState();
@@ -20,16 +20,16 @@ class _PrebuiltCardState extends State<LargeCard> {
     return ListView.builder(
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
-      itemCount: widget.habits.length,
+      itemCount: widget.routines.length,
       itemBuilder: (BuildContext context, int index) {
-        final habit = widget.habits[index];
-        final authorName = habit.authorName!.toString().length > 9
-            ? habit.authorName!.toString().substring(0, 9)
-            : habit.authorName!;
-        final cardPositionIsOdd = widget.habits.indexOf(habit).isEven;
+        final routine = widget.routines[index];
+        final authorName = routine.authorName!.toString().length > 9
+            ? routine.authorName!.toString().substring(0, 9)
+            : routine.authorName!;
+        final cardPositionIsOdd = widget.routines.indexOf(routine).isEven;
         return GestureDetector(
           onTap: () {
-            context.read<HabitCubit>().updateState(habit);
+            context.read<HabitCubit>().updateState(routine);
 
             Navigator.push(
               context,
@@ -134,7 +134,7 @@ class _PrebuiltCardState extends State<LargeCard> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(
-                                          habit.authorProfilePicture!),
+                                          routine.authorProfilePicture!),
                                     ),
                                   ),
                                 ),

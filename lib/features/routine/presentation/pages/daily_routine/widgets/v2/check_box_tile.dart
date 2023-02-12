@@ -4,18 +4,18 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/toggle_habit_bloc.dart';
-import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_event/toggle_task.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_event/toggle_habit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/progress_graph.dart';
 
 class CheckBoxItem extends StatefulWidget {
   final Color? color;
   final Color? shimmer;
-  final Habit? task;
+  final Habit? habit;
   const CheckBoxItem({
     Key? key,
     required this.color,
     required this.shimmer,
-    required this.task,
+    required this.habit,
   }) : super(key: key);
 
   @override
@@ -27,7 +27,7 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
   @override
   void initState() {
     super.initState();
-    _triggerState = widget.task!.isDone!;
+    _triggerState = widget.habit!.isDone!;
   }
 
   // double _width = 0.0;
@@ -71,13 +71,14 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
         setState(() {
           _triggerState = !_triggerState;
         });
-        context.read<TaskBlocLogic>().add(
-              ToggleTaskAction(task: widget.task!),
+
+        context.read<HabitBlocLogic>().add(
+              ToggleHabitAction(habit: widget.habit!),
             );
       },
       controlAffinity: ListTileControlAffinity.leading,
       title: throwLine(_triggerState, widget.color!, widget.shimmer,
-          widget.task!.habitName!),
+          widget.habit!.habitName!),
     );
   }
 }
