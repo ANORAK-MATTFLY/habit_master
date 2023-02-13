@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/dep_injection.dart';
+import 'package:habit_master/features/auth/api/identity_api.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/author_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_repository.dart';
 
@@ -27,11 +28,13 @@ class HabitBlocLogic extends Bloc<TaskBlocInterface, HabitState?> {
 
   Future subOperation(String routineID) async {
     final authorRepo = serviceLocator<AuthorRepository>();
+    final currentUserID =
+        serviceLocator<IdentityApi>().getAuthenticatedUser().uid;
 
-    final Author author = await authorRepo.getAuthorById(routineID);
+    final Author author = await authorRepo.getAuthorById(currentUserID);
     if (author is String) {
       return;
     }
-    await subscribeToRoutine(routineID, author.subscribedTo!);
+    await subscribeToRoutine(routineID, currentUserID, author.subscribedTo!);
   }
 }

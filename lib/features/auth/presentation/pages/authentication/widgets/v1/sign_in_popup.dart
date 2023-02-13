@@ -245,6 +245,7 @@ class _SignInPopupState extends State<SignInPopup>
                                 final userInfo =
                                     IdentityApi().getAuthenticatedUser();
 
+                                // ignore: unnecessary_null_comparison
                                 if (userInfo != null) {
                                   final random = Random();
                                   final avatar =

@@ -6,12 +6,12 @@ import 'package:habit_master/features/auth/presentation/pages/authentication/pag
 import 'package:habit_master/features/routine/domain/logic/prebuilt_data.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_author.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/timer_task.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/page/personal_routine.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/pages/personal_routine.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/large_card.dart';
 import 'package:habit_master/features/leader_board/presentation/page/leader_board_page.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_habit.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/toggle_habit_bloc.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/page/daily_routine_page.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/pages/daily_routine_page.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habit_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/tasks_list.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/check_box_tile.dart';
@@ -94,7 +94,7 @@ class MyApp extends StatelessWidget {
           child: const SelectWhen(options: [], title: ""),
         ),
         BlocProvider(
-          create: (_) => HabitCubit(),
+          create: (_) => RoutineCubit(),
           child: const LargeCard(
             routines: [],
           ),

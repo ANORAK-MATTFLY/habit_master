@@ -10,14 +10,15 @@ class AuthorQueries {
     return maps.isNotEmpty;
   }
 
-  Future getAuthorById(String authorID) async {
-    final database = await LocalDatabase.instance.database;
-    final query = "SELECT * FROM author WHERE id= '$authorID' LIMIT 1";
-    final rawData = await database.rawQuery(query);
-    final Author author = Author.fromJson(rawData[0]);
-    if (author.id == null) {
-      return "The author data from database is corrupted";
+  Future<Author> getAuthorById(String authorID) async {
+    try {
+      final database = await LocalDatabase.instance.database;
+      final query = "SELECT * FROM author WHERE id= '$authorID' LIMIT 1";
+      final rawData = await database.rawQuery(query);
+      final Author author = Author.fromJson(rawData[0]);
+      return author;
+    } catch (error) {
+      rethrow;
     }
-    return author;
   }
 }

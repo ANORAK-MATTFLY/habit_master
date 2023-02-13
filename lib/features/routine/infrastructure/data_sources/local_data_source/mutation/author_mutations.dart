@@ -15,14 +15,16 @@ class AuthorMutations {
     }
   }
 
-  Future<bool> subscribeToRoutine(String routineId) async {
+  Future<bool> subscribeToRoutine(
+      String routineId, String currentUserID) async {
     try {
       final database = await LocalDatabase.instance.database;
-      final query = "UPDATE author SET subscribed_to = '$routineId'";
-      await database.rawQuery(query);
+      final query =
+          "UPDATE author SET subscribed_to = '$routineId' WHERE id = '$currentUserID'";
+      await database.rawUpdate(query);
       return false;
     } catch (error) {
-      return false;
+      rethrow;
     }
   }
 }

@@ -7,7 +7,7 @@ class HabitMutations {
   Future<bool> createHabit(Habit task) async {
     try {
       final database = await LocalDatabase.instance.database;
-      final createTaskQuery = LocalDatabaseConstantProvider.createTask(task);
+      final createTaskQuery = LocalDatabaseConstantProvider.createHabit(task);
       await database.rawInsert(createTaskQuery);
       return true;
     } catch (error) {
@@ -22,7 +22,7 @@ class HabitMutations {
           LocalDatabaseConstantProvider.updateHabitDoneAttribute(
               isDone, habit.id!);
 
-      await database.rawQuery(updateHabit);
+      await database.rawUpdate(updateHabit);
       return true;
     } catch (error) {
       return false;
@@ -35,7 +35,7 @@ class HabitMutations {
       final Database database = await LocalDatabase.instance.database;
       final String query = LocalDatabaseConstantProvider.updateExpirationDate(
           expirationDate, habitID);
-      await database.rawQuery(query);
+      await database.rawUpdate(query);
       return true;
     } catch (error) {
       return false;
@@ -47,7 +47,7 @@ class HabitMutations {
       final database = await LocalDatabase.instance.database;
       for (int index = 0; index < habits.length; index++) {
         final Habit task = habits[index];
-        final insertAuthor = LocalDatabaseConstantProvider.createTask(task);
+        final insertAuthor = LocalDatabaseConstantProvider.createHabit(task);
         await database.rawInsert(insertAuthor);
       }
       return true;

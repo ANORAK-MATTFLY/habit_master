@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:habit_master/features/auth/infrastructure/data_sources/remote_data_source/user_queries.dart';
 
 class UserRepository {
@@ -6,7 +7,7 @@ class UserRepository {
     return UserQueries().getUserByID(userID);
   }
 
-  getAuthenticatedUser() {
+  User getAuthenticatedUser() {
     return UserQueries.getAuthenticatedUser();
   }
 

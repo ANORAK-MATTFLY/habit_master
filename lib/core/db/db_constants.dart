@@ -50,13 +50,13 @@ class LocalDatabaseConstantProvider {
 
   static String createAuthor(Author author) {
     const attributes =
-        'INSERT INTO author(id, author_name, author_profile_picture, type)';
+        'INSERT INTO author(id, author_name, author_profile_picture, type, subscribed_to)';
     final values =
-        " VALUES('${author.id}', '${author.authorName}', '${author.authorProfilePicture}', '${author.type}')";
+        " VALUES('${author.id}', '${author.authorName}', '${author.authorProfilePicture}', '${author.type}', 'i' )";
     return attributes + values;
   }
 
-  static String createTask(Habit habit) {
+  static String createHabit(Habit habit) {
     const attributes =
         'INSERT INTO habit(id, routine_id, habit_name, type, scheduled_for, duration, expiration_date, is_done)';
     final values =

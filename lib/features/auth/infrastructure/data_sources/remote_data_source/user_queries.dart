@@ -13,8 +13,8 @@ class UserQueries {
     }
   }
 
-  static getAuthenticatedUser() {
-    final User? currentUser = FirebaseAuth.instance.currentUser;
+  static User getAuthenticatedUser() {
+    final User currentUser = FirebaseAuth.instance.currentUser!;
     return currentUser;
   }
 

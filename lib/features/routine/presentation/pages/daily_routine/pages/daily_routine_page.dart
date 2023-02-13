@@ -46,7 +46,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
   Widget build(BuildContext context) {
     getTasks(streamedTasks) =>
         context.read<TaskListCubit>().updateState(streamedTasks);
-    final routine = context.read<HabitCubit>().state!;
+    final routine = context.read<RoutineCubit>().state!;
 
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;

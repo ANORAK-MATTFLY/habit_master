@@ -6,7 +6,7 @@ import 'package:habit_master/features/routine/presentation/pages/home/page/home_
 import 'package:habit_master/features/auth/presentation/pages/profile/page/profile_page.dart';
 
 import '../../../../user_feed/presentation/user_feed/page/user_feed_page.dart';
-import '../daily_routine/page/personal_routine.dart';
+import '../daily_routine/pages/personal_routine.dart';
 
 class SuspendedBottomAppBar extends StatefulWidget {
   const SuspendedBottomAppBar({Key? key}) : super(key: key);
