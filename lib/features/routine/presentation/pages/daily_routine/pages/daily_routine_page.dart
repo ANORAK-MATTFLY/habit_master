@@ -45,7 +45,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
   @override
   Widget build(BuildContext context) {
     getTasks(streamedTasks) =>
-        context.read<TaskListCubit>().updateState(streamedTasks);
+        context.read<HabitListCubit>().updateState(streamedTasks);
     final routine = context.read<RoutineCubit>().state!;
 
     final height = MediaQuery.of(context).size.height;
@@ -653,7 +653,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                   return;
                                 }
                                 const uuid = Uuid();
-                                final task = Habit(
+                                final habit = Habit(
                                   id: uuid.v1(),
                                   expirationDate: expirationDate,
                                   routineID: routine.authorID,
@@ -663,16 +663,17 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                   habitName: taskName.text,
                                   duration:
                                       "${taskDuration.text}-${taskTimeOption.state}",
+                                  doneOn: "",
                                 );
                                 context.read<CreateHabitBlocLogic>().add(
-                                      CreateHabitAction(task: task),
+                                      CreateHabitAction(habit: habit),
                                     );
-                                final tasks =
-                                    context.read<TaskListCubit>().state;
-                                tasks.add(task);
+                                final habits =
+                                    context.read<HabitListCubit>().state;
+                                habits.add(habit);
                                 context
-                                    .read<TaskListCubit>()
-                                    .updateState(tasks);
+                                    .read<HabitListCubit>()
+                                    .updateState(habits);
                                 setState(() {
                                   showCerateHabitPanel = !showCerateHabitPanel;
                                 });

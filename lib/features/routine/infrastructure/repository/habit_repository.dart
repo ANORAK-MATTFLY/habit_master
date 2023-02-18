@@ -31,4 +31,24 @@ class HabitRepository implements HabitInterface {
   Stream<List<Habit>> getHabits(String routineID) {
     return HabitQueries(routineID).stream;
   }
+
+  @override
+  Future<bool> updateHabitDoneDate(String habitID, bool doneDate) {
+    return habitMutations.updateHabitDoneDate(habitID, doneDate);
+  }
+
+  @override
+  Future<List<Map<String, Object?>>> countNumberOfDoneHabits(
+      String routineID, String doneOn) {
+    return HabitQueries.countNumberOfDoneHabits(routineID, doneOn);
+  }
+
+  @override
+  Future<Habit> getHabitById(String habitID) async {
+    final List<Habit> habits = [];
+    final rawHabitData = await HabitQueries.getHabitById(habitID);
+    final Habit habit = Habit.fromJson(rawHabitData[0]);
+    habits.add(habit);
+    return habits[0];
+  }
 }

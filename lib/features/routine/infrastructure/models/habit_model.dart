@@ -23,6 +23,8 @@ class Habit extends HabitEntity {
   @override
   // ignore: overridden_fields
   final String? expirationDate;
+  // ignore: overridden_fields
+  final String? doneOn;
   @override
   // ignore: overridden_fields
   final bool? isDone;
@@ -36,6 +38,7 @@ class Habit extends HabitEntity {
     this.duration,
     this.expirationDate,
     this.isDone,
+    this.doneOn,
   });
 
   static Habit fromJson(Map<String, Object?> json) => Habit(
@@ -47,5 +50,6 @@ class Habit extends HabitEntity {
         duration: json['duration'] as String?,
         expirationDate: json['expiration_date'] as String?,
         isDone: json['is_done'] == 1 ? true : false,
+        doneOn: json['done_on'] as String?,
       );
 }

@@ -17,6 +17,7 @@ class RoutinesMutations {
         isPremium: 1,
         subTitle: "",
         successRate: successRate,
+        progress: 0,
       );
 
       final command = LocalDatabaseConstantProvider.createRoutine(routine);

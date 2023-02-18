@@ -6,4 +6,8 @@ abstract class HabitInterface {
   Future<bool> updateHabitExpirationDate(String habitID, String expirationDate);
   Future<bool> toggleHabit(Habit habit, bool isDone);
   Stream<List<Habit>> getHabits(String routineID);
+  Future<bool> updateHabitDoneDate(String habitID, bool isAlreadySet);
+  Future<List<Map<String, Object?>>> countNumberOfDoneHabits(
+      String routineID, String doneOn);
+  Future<Habit> getHabitById(String habitID);
 }

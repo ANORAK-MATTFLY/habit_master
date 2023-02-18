@@ -10,6 +10,7 @@ class RoutineEntity extends Equatable {
   final int? isPremium;
   final int? subscribers;
   final int? successRate;
+  final int? progress;
 
   const RoutineEntity({
     this.authorID,
@@ -20,6 +21,7 @@ class RoutineEntity extends Equatable {
     this.subTitle,
     this.subscribers,
     this.successRate,
+    this.progress,
   });
 
   @override
@@ -33,6 +35,7 @@ class RoutineEntity extends Equatable {
       subTitle!,
       subscribers!,
       successRate!,
+      progress!,
     ];
   }
 }

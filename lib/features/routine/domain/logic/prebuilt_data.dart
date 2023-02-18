@@ -1,7 +1,7 @@
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/mutation/habit.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/mutation/routine.dart';
 import 'package:habit_master/features/routine/infrastructure/models/author_model.dart';
-import 'package:habit_master/shared/static/tasks.dart';
+import 'package:habit_master/shared/static/habits.dart';
 
 import '../../../../dep_injection.dart';
 import '../../infrastructure/repository/author_repository.dart';

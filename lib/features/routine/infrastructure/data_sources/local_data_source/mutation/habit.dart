@@ -1,9 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habit_master/core/db/local_db.dart';
 import 'package:habit_master/core/db/db_constants.dart';
+import 'package:habit_master/features/routine/infrastructure/models/habit_history.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
+import 'package:habit_master/features/routine/infrastructure/repository/habit_history_repository.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:uuid/uuid.dart';
 
 class HabitMutations {
+  final uuid = const Uuid();
+
   Future<bool> createHabit(Habit task) async {
     try {
       final database = await LocalDatabase.instance.database;
@@ -11,7 +17,7 @@ class HabitMutations {
       await database.rawInsert(createTaskQuery);
       return true;
     } catch (error) {
-      return false;
+      rethrow;
     }
   }
 
@@ -25,7 +31,45 @@ class HabitMutations {
       await database.rawUpdate(updateHabit);
       return true;
     } catch (error) {
-      return false;
+      rethrow;
+    }
+  }
+
+  Future<bool> updateHabitDoneDate(String habitID, bool isAlreadySet) async {
+    try {
+      final String doneDate = Timestamp.now().toDate().toString().split(" ")[0];
+      final database = await LocalDatabase.instance.database;
+      final todaysHabitHistory =
+          await HabitHistoryRepository().getTodaysHabitHistoryRecord(habitID);
+
+      if (isAlreadySet == true) {
+        final query =
+            "UPDATE habit SET done_on = '$doneDate' WHERE id = '$habitID'";
+
+        await database.rawUpdate(query);
+
+        const uuid = Uuid();
+        if (todaysHabitHistory.habitID == null) {
+          final id = "${uuid.v1()}-${DateTime.now().microsecond.toString()}-";
+          final HabitHistory habitHistory =
+              HabitHistory(doneOn: doneDate, habitID: habitID, id: id);
+          await HabitHistoryRepository().createHabitHistoryRecord(habitHistory);
+          return true;
+        } else {
+          await HabitHistoryRepository().deleteHabitHistoryRecord(habitID);
+          return true;
+        }
+      }
+      if (isAlreadySet == false) {
+        final query = "UPDATE habit SET done_on = '' WHERE id = '$habitID'";
+
+        await database.rawUpdate(query);
+
+        return true;
+      }
+      return true;
+    } catch (error) {
+      rethrow;
     }
   }
 
@@ -38,7 +82,7 @@ class HabitMutations {
       await database.rawUpdate(query);
       return true;
     } catch (error) {
-      return false;
+      rethrow;
     }
   }
 
@@ -46,13 +90,13 @@ class HabitMutations {
     try {
       final database = await LocalDatabase.instance.database;
       for (int index = 0; index < habits.length; index++) {
-        final Habit task = habits[index];
-        final insertAuthor = LocalDatabaseConstantProvider.createHabit(task);
-        await database.rawInsert(insertAuthor);
+        final Habit habit = habits[index];
+        final insertHabit = LocalDatabaseConstantProvider.createHabit(habit);
+        await database.rawInsert(insertHabit);
       }
       return true;
     } catch (error) {
-      return false;
+      rethrow;
     }
   }
 }

@@ -45,8 +45,8 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (context) => const AlertDialog(
-              title: Text(
+            builder: (context) => AlertDialog(
+              title: const Text(
                 "Your monthly progression on this task over the month",
                 style: TextStyle(
                   color: Colors.white,
@@ -55,13 +55,13 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
                   decoration: TextDecoration.none,
                 ),
               ),
-              backgroundColor: Color.fromARGB(255, 0, 0, 0),
-              content: ProgressGraph(),
+              backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+              content: ProgressGraph(habit: widget.habit!),
             ).animate().fadeIn(),
           );
         },
         icon: Icon(
-          CupertinoIcons.layers_alt_fill,
+          CupertinoIcons.circle_grid_3x3,
           color: widget.color,
           size: 20.0,
         ),
@@ -70,11 +70,10 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
       onChanged: (bool? value) async {
         setState(() {
           _triggerState = !_triggerState;
+          context.read<HabitBlocLogic>().add(
+                ToggleHabitAction(habit: widget.habit!),
+              );
         });
-
-        context.read<HabitBlocLogic>().add(
-              ToggleHabitAction(habit: widget.habit!),
-            );
       },
       controlAffinity: ListTileControlAffinity.leading,
       title: throwLine(_triggerState, widget.color!, widget.shimmer,

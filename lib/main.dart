@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
           child: const DailyRoutinePage(),
         ),
         BlocProvider(
-          create: (_) => TaskListCubit(),
+          create: (_) => HabitListCubit(),
           child: const DailyRoutinePage(),
         ),
         BlocProvider(

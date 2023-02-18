@@ -6,14 +6,15 @@ import 'package:habit_master/features/routine/presentation/pages/create_habit/bl
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/interface/task.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_state/habit_state.dart';
 
-class CreateHabitBlocLogic extends Bloc<TaskBlocInterface, HabitState?> {
+class CreateHabitBlocLogic extends Bloc<HabitBlocInterface, HabitState?> {
   CreateHabitBlocLogic() : super(null) {
     on<CreateHabitAction>((event, emit) async {
-      final task = event.task;
+      final habit = event.habit;
       final habitMutation = serviceLocator<HabitRepository>();
-      final habitHasBeenCreated = await habitMutation.createHabit(task);
+      final habitHasBeenCreated = await habitMutation.createHabit(habit);
+
       if (habitHasBeenCreated == true) {
-        final resultingTask = HabitState(habitState: task);
+        final resultingTask = HabitState(habitState: habit);
         emit(resultingTask);
       }
     });

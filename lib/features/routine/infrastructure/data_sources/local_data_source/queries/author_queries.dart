@@ -13,7 +13,7 @@ class AuthorQueries {
   Future<Author> getAuthorById(String authorID) async {
     try {
       final database = await LocalDatabase.instance.database;
-      final query = "SELECT * FROM author WHERE id= '$authorID' LIMIT 1";
+      final query = "SELECT * FROM author WHERE id = '$authorID' LIMIT 1";
       final rawData = await database.rawQuery(query);
       final Author author = Author.fromJson(rawData[0]);
       return author;

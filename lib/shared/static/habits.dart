@@ -34,6 +34,7 @@ List<Habit> generateTasks(String routineID) {
       type: "check",
       isDone: false,
       expirationDate: expirationDate,
+      doneOn: "1212",
     );
     habits.add(habit);
   }

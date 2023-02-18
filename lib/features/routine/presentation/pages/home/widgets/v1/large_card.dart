@@ -178,13 +178,15 @@ class _PrebuiltCardState extends State<LargeCard> {
                             Radius.circular(40.0),
                           ),
                         ),
-                        child: const ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(20),
+                          ),
                           child: LinearProgressIndicator(
                             minHeight: 5.0,
-                            value: 0.2,
+                            value: routine.progress!.toDouble(),
                             color: Colors.white,
-                            backgroundColor: Color(0xFF3B2D73),
+                            backgroundColor: const Color(0xFF3B2D73),
                           ),
                         ),
                       )

@@ -45,4 +45,29 @@ class HabitQueries {
       return;
     }
   }
+
+  static Future<List<Map<String, Object?>>> countNumberOfDoneHabits(
+      String routineID, String doneOn) async {
+    try {
+      final database = await LocalDatabase.instance.database;
+      final query =
+          "SELECT COUNT(id) FROM habit WHERE routine_id = '$routineID' AND done_on = '$doneOn' AND is_done = ${true}";
+      final result = await database.rawQuery(query);
+
+      return result;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<List<Map<String, Object?>>> getHabitById(String habitID) async {
+    try {
+      final database = await LocalDatabase.instance.database;
+      final query = LocalDatabaseConstantProvider.getHabitById(habitID);
+      final habit = await database.rawQuery(query);
+      return habit;
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

@@ -51,9 +51,9 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
               child: BackgroundAnimation(),
             ),
           ),
-          const Positioned(
+          Positioned(
             top: 50,
-            child: StackedChart(),
+            child: StackedChart(routine: widget.routine),
           ),
           Positioned(
             top: 50,

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
 @immutable
-abstract class TaskBlocInterface {
-  const TaskBlocInterface();
+abstract class HabitBlocInterface {
+  const HabitBlocInterface();
 }

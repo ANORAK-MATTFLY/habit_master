@@ -4,5 +4,5 @@ import 'package:habit_master/features/routine/infrastructure/models/routine_mode
 class RoutineCubit extends Cubit<Routine?> {
   RoutineCubit() : super(null);
 
-  void updateState(Routine habit) => emit(habit);
+  void updateState(Routine routine) => emit(routine);
 }

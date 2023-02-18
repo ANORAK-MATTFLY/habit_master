@@ -11,16 +11,19 @@ import 'package:habit_master/features/routine/presentation/pages/create_habit/bl
 import '../../../../../../domain/logic/sub_to_routine.dart';
 import '../../../../../../infrastructure/models/author_model.dart';
 
-class HabitBlocLogic extends Bloc<TaskBlocInterface, HabitState?> {
+class HabitBlocLogic extends Bloc<HabitBlocInterface, HabitState?> {
   HabitBlocLogic() : super(null) {
     on<ToggleHabitAction>((event, emit) async {
       final habit = event.habit;
       final habitMutation = serviceLocator<HabitRepository>();
       final isToggled = await habitMutation.toggleHabit(habit, !habit.isDone!);
 
+      await habitMutation.updateHabitDoneDate(habit.id!, !habit.isDone!);
+
       if (isToggled == true) {
         final resultingHabit = HabitState(habitState: habit);
-        await subOperation(habit.routineID!);
+
+        // await subOperation(habit.routineID!);
         emit(resultingHabit);
       }
     });

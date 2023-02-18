@@ -13,7 +13,7 @@ class LocalDatabase {
 
   Future<Database> get database async {
     if (_localDatabase != null) return _localDatabase!;
-    _localDatabase = await _initDB("habits_local_database56.db");
+    _localDatabase = await _initDB("habits_local_database83.db");
     return _localDatabase!;
   }
 
@@ -27,9 +27,12 @@ class LocalDatabase {
     const createAuthorTable = LocalDatabaseConstantProvider.createAuthorTable;
     const createRoutineTable = LocalDatabaseConstantProvider.createRoutineTable;
     const createHabitTable = LocalDatabaseConstantProvider.createHabitTable;
+    const createHabitHistoryTable =
+        LocalDatabaseConstantProvider.createHabitHistoryTable;
     await database.execute(createAuthorTable);
     await database.execute(createRoutineTable);
     await database.execute(createHabitTable);
+    await database.execute(createHabitHistoryTable);
   }
 
   Future<bool> closeDatabase() async {

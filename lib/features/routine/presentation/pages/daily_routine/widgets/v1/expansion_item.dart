@@ -32,7 +32,7 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final streamedTasks = context.read<TaskListCubit>().state;
+    final streamedTasks = context.read<HabitListCubit>().state;
     List<Habit> tasks = [];
     if (widget.title == "Start your Morning Routine") {
       tasks = TaskHelpers.getMorningTasks(streamedTasks);

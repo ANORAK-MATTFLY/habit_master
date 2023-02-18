@@ -26,6 +26,10 @@ class Routine extends RoutineEntity {
   // ignore: overridden_fields
   final int? successRate;
 
+  @override
+  // ignore: overridden_fields
+  final int? progress;
+
   const Routine({
     this.authorID,
     this.authorName,
@@ -35,6 +39,7 @@ class Routine extends RoutineEntity {
     this.subscribers,
     this.subTitle,
     this.successRate,
+    this.progress,
   });
 
   static Routine fromJson(Map<String, Object?> json) => Routine(
@@ -46,6 +51,7 @@ class Routine extends RoutineEntity {
         subscribers: json['subscribers'] as int?,
         subTitle: json['sub_title'] as String?,
         successRate: json['success_rate'] as int?,
+        progress: json['progress'] as int?,
       );
 
   Map<String, dynamic> toJson() => {
