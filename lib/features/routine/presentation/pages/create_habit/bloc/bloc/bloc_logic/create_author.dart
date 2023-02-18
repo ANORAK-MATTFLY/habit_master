@@ -1,7 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/dep_injection.dart';
-import 'package:habit_master/features/routine/infrastructure/models/author_model.dart';
-import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/author_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/routine_repository.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_state/author_state.dart';
