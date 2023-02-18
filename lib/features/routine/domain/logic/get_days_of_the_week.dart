@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DateTimeManipulation {
+  static String todaysDate = Timestamp.now().toDate().toString().split(" ")[0];
   static List<String> getDaysOfTheWeek() {
     final now = Timestamp.now().toDate();
     final thisYear = now.year;
@@ -31,5 +32,30 @@ class DateTimeManipulation {
       }
     }
     return daysOfTheWeek;
+  }
+
+  static int getDaysInMonth() {
+    final year = Timestamp.now().toDate().year;
+    final month = Timestamp.now().toDate().month;
+    if (month == DateTime.february) {
+      final bool isLeapYear =
+          (year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0);
+      return isLeapYear ? 29 : 28;
+    }
+    const List<int> daysInMonth = <int>[
+      31,
+      -1,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ];
+    return daysInMonth[month - 1];
   }
 }

@@ -5,7 +5,6 @@ import 'package:habit_master/features/routine/infrastructure/repository/author_r
 import 'package:habit_master/features/routine/infrastructure/repository/habit_history_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/routine_repository.dart';
-import 'package:habit_master/features/statistics/api/stats_api.dart';
 
 import 'features/auth/infrastructure/repository/user_repository.dart';
 
@@ -27,9 +26,7 @@ Future<void> setup() async {
   serviceLocator.registerLazySingleton(
     () => IdentityApi(),
   );
-  serviceLocator.registerLazySingleton(
-    () => StatsApi(),
-  );
+
   serviceLocator.registerLazySingleton(
     () => StatsLogic(),
   );

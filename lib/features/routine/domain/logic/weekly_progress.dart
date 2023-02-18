@@ -1,14 +1,13 @@
 import 'package:habit_master/dep_injection.dart';
+import 'package:habit_master/features/routine/domain/logic/get_days_of_the_week.dart';
 import 'package:habit_master/features/routine/infrastructure/models/weekly_progress_chart_model.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_repository.dart';
-import 'package:habit_master/features/statistics/api/stats_api.dart';
 
 class StatsLogic {
   Future<List<ChartData>> getWeeklyProgress(
       String routineID, int totalHabits) async {
     final List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    final stats = serviceLocator<StatsApi>();
-    final week = stats.getDaysOfTheWeek();
+    final week = DateTimeManipulation.getDaysOfTheWeek();
     final query = serviceLocator<HabitRepository>();
     final List<ChartData> chartData = [];
 
