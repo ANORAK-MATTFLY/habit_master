@@ -1,8 +1,8 @@
 import 'package:habit_master/core/db/local_db.dart';
+import 'package:habit_master/features/routine/domain/interfaces/author_queries_interface.dart';
 
-import '../../../models/author_model.dart';
-
-class AuthorQueries {
+class AuthorQueries implements AuthorQueriesInterface {
+  @override
   Future<bool> checkIfAuthorExist(String authorID) async {
     final database = await LocalDatabase.instance.database;
     final maps = await database
@@ -10,13 +10,13 @@ class AuthorQueries {
     return maps.isNotEmpty;
   }
 
-  Future<Author> getAuthorById(String authorID) async {
+  @override
+  Future<List<Map<String, Object?>>> getAuthorById(String authorID) async {
     try {
       final database = await LocalDatabase.instance.database;
       final query = "SELECT * FROM author WHERE id = '$authorID' LIMIT 1";
       final rawData = await database.rawQuery(query);
-      final Author author = Author.fromJson(rawData[0]);
-      return author;
+      return rawData;
     } catch (error) {
       rethrow;
     }

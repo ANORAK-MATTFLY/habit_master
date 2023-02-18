@@ -23,7 +23,9 @@ class AuthorRepository implements AuthorInterface {
   }
 
   @override
-  Future<Author> getAuthorById(String authorID) {
-    return AuthorQueries().getAuthorById(authorID);
+  Future<Author> getAuthorById(String authorID) async {
+    final rawAuthorData = await AuthorQueries().getAuthorById(authorID);
+    final Author author = Author.fromJson(rawAuthorData[0]);
+    return author;
   }
 }

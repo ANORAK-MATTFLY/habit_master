@@ -40,13 +40,13 @@ class HabitRepository implements HabitInterface {
   @override
   Future<List<Map<String, Object?>>> countNumberOfDoneHabits(
       String routineID, String doneOn) {
-    return HabitQueries.countNumberOfDoneHabits(routineID, doneOn);
+    return HabitQueries('').countNumberOfDoneHabits(routineID, doneOn);
   }
 
   @override
   Future<Habit> getHabitById(String habitID) async {
     final List<Habit> habits = [];
-    final rawHabitData = await HabitQueries.getHabitById(habitID);
+    final rawHabitData = await HabitQueries(habitID).getHabitById(habitID);
     final Habit habit = Habit.fromJson(rawHabitData[0]);
     habits.add(habit);
     return habits[0];

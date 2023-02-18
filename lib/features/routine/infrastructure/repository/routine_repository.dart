@@ -20,6 +20,9 @@ class RoutineRepository implements RoutineInterface {
 
   @override
   Future<Routine> getOneRoutine(String authorID) async {
-    return await RoutineQueries.getOneRoutine(authorID);
+    final rawRoutineData = await RoutineQueries().getOneRoutine(authorID);
+
+    final Routine routine = Routine.fromJson(rawRoutineData[0]);
+    return routine;
   }
 }
