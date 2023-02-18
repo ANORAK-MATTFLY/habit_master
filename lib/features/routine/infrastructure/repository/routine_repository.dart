@@ -9,7 +9,7 @@ class RoutineRepository implements RoutineInterface {
   final RoutineQueries routineQueries = RoutineQueries();
 
   @override
-  Future<Routine> createRoutine(Author author, int successRate) async {
+  Future<bool> createRoutine(Author author, int successRate) async {
     return await routinesMutations.createRoutine(author, successRate);
   }
 

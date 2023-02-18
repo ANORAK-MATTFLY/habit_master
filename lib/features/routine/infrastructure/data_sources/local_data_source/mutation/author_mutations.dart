@@ -1,9 +1,11 @@
 import 'package:habit_master/core/db/local_db.dart';
 import 'package:habit_master/core/db/db_constants.dart';
+import 'package:habit_master/features/routine/domain/interfaces/author_mutation_interface.dart';
 
 import '../../../models/author_model.dart';
 
-class AuthorMutations {
+class AuthorMutations implements AuthorMutationsInterface {
+  @override
   Future<bool> createAuthor(Author author) async {
     final database = await LocalDatabase.instance.database;
     try {
@@ -15,6 +17,7 @@ class AuthorMutations {
     }
   }
 
+  @override
   Future<bool> subscribeToRoutine(
       String routineId, String currentUserID) async {
     try {

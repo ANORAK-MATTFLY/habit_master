@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habit_master/core/db/local_db.dart';
 import 'package:habit_master/core/db/db_constants.dart';
+import 'package:habit_master/features/routine/domain/interfaces/habit_mutation_interface.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_history.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_history_repository.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
 
-class HabitMutations {
+class HabitMutations implements HabitMutationsInterface {
   final uuid = const Uuid();
-
+  @override
   Future<bool> createHabit(Habit task) async {
     try {
       final database = await LocalDatabase.instance.database;
@@ -21,6 +22,7 @@ class HabitMutations {
     }
   }
 
+  @override
   Future<bool> toggleHabit(Habit habit, bool isDone) async {
     try {
       final database = await LocalDatabase.instance.database;
@@ -35,6 +37,7 @@ class HabitMutations {
     }
   }
 
+  @override
   Future<bool> updateHabitDoneDate(String habitID, bool isAlreadySet) async {
     try {
       final String doneDate = Timestamp.now().toDate().toString().split(" ")[0];
@@ -73,6 +76,7 @@ class HabitMutations {
     }
   }
 
+  @override
   Future<bool> updateHabitExpirationDate(
       String habitID, String expirationDate) async {
     try {
@@ -86,6 +90,7 @@ class HabitMutations {
     }
   }
 
+  @override
   Future<bool> createHabits(List<Habit> habits) async {
     try {
       final database = await LocalDatabase.instance.database;
