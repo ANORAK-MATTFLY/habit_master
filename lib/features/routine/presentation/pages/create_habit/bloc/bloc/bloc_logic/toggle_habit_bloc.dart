@@ -17,7 +17,7 @@ class HabitBlocLogic extends Bloc<HabitBlocInterface, HabitState?> {
 
       await habitMutation.updateHabitDoneDate(habit.id!, !habit.isDone!);
 
-      if (isToggled == true) {
+      if (isToggled.isRight()) {
         final resultingHabit = HabitState(habitState: habit);
 
         await subscribeToRoutine(habit.routineID!);

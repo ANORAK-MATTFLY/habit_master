@@ -13,7 +13,7 @@ class CreateHabitBlocLogic extends Bloc<HabitBlocInterface, HabitState?> {
       final habitMutation = serviceLocator<HabitRepository>();
       final habitHasBeenCreated = await habitMutation.createHabit(habit);
 
-      if (habitHasBeenCreated == true) {
+      if (habitHasBeenCreated.isRight()) {
         final resultingTask = HabitState(habitState: habit);
         emit(resultingTask);
       }
