@@ -6,11 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v1/circle_avatar.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_line.dart';
+import 'package:habit_master/features/user_feed/infrastrcture/model/post_model.dart';
 import 'package:habit_master/shared/static/colors.dart';
 import 'package:habit_master/shared/static/images.dart';
 
+// ignore: must_be_immutable
 class PostWidget extends StatefulWidget {
-  const PostWidget({Key? key}) : super(key: key);
+  Post post;
+  PostWidget({Key? key, required this.post}) : super(key: key);
 
   @override
   State<PostWidget> createState() => _PostWidgetState();
@@ -22,20 +25,20 @@ class _PostWidgetState extends State<PostWidget> {
     final width = MediaQuery.of(context).size.width;
     final random = Random();
     final color = colors[random.nextInt(colors.length)];
-    final avatar = avatars[random.nextInt(avatars.length)];
-
+    final Post post = widget.post;
+    final List<String> days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20.0),
       child: SizedBox(
         width: width,
-        height: (220.0),
+        height: (250.0),
         child: Stack(
           children: [
             Align(
               alignment: Alignment.bottomCenter,
               child: SizedBox(
                 width: width,
-                height: (200.0),
+                height: (240.0),
                 child: Blur(
                   borderRadius: const BorderRadius.all(
                     Radius.circular(20.0),
@@ -54,12 +57,12 @@ class _PostWidgetState extends State<PostWidget> {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
-                    height: 200.0,
+                    height: 240.0,
                     width: (width - 20),
                     child: Center(
                       child: Container(
                           padding: const EdgeInsets.all(8),
-                          height: 200.0,
+                          height: 230.0,
                           width: (width - 20),
                           decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(
@@ -69,9 +72,9 @@ class _PostWidgetState extends State<PostWidget> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              sideLine(color, height: 170),
+                              sideLine(color, height: 200),
                               SizedBox(
-                                  height: 200.0,
+                                  height: 220.0,
                                   width: (width - 80),
                                   child: Column(
                                     mainAxisAlignment:
@@ -83,7 +86,7 @@ class _PostWidgetState extends State<PostWidget> {
                                         children: [
                                           SizedBox(
                                             height: 40.0,
-                                            width: 150.0,
+                                            width: 200.0,
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -104,14 +107,35 @@ class _PostWidgetState extends State<PostWidget> {
                                                     ),
                                                     image: DecorationImage(
                                                       fit: BoxFit.cover,
-                                                      image: AssetImage(avatar),
+                                                      image: AssetImage(post
+                                                          .ownerProfilePicture!),
                                                     ),
                                                   ),
                                                 ),
-                                                const Text("Erina Klint",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                    )),
+                                                Container(
+                                                  height: 25.0,
+                                                  width: 150.0,
+                                                  decoration: BoxDecoration(
+                                                    color:
+                                                        color.withOpacity(0.4),
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                      Radius.circular(10),
+                                                    ),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      post.ownerName!.length >
+                                                              10
+                                                          ? post.ownerName!
+                                                              .substring(0, 8)
+                                                          : post.ownerName!,
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -131,7 +155,7 @@ class _PostWidgetState extends State<PostWidget> {
                                             ),
                                             child: Center(
                                               child: Text(
-                                                "Motivational Quote",
+                                                post.type!,
                                                 style: TextStyle(
                                                   color: color,
                                                 ),
@@ -142,15 +166,19 @@ class _PostWidgetState extends State<PostWidget> {
                                       ),
                                       Container(
                                         padding: const EdgeInsets.all(8.0),
-                                        height: 140.0,
+                                        height: 170.0,
                                         width: (width - 50),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const Text(
-                                              "A Cubit is similar to Bloc but has no notion of events and relies on methods to emit new states. Every Cubit requires an initial state which will  state getter.",
-                                              style: TextStyle(
+                                            Text(
+                                              post.textContent!.length > 100
+                                                  ? post.textContent!
+                                                      .substring(0, 240)
+                                                  : post.textContent!,
+                                              style: const TextStyle(
+                                                  overflow: TextOverflow.clip,
                                                   color: Colors.white),
                                             ),
                                             Align(
@@ -321,7 +349,7 @@ class _PostWidgetState extends State<PostWidget> {
                     alignment: Alignment.topLeft,
                     child: Container(
                       height: 25.0,
-                      width: 70,
+                      width: 120,
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(30.0),
@@ -330,14 +358,14 @@ class _PostWidgetState extends State<PostWidget> {
                         ),
                         color: color,
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          "Ben Matt",
-                          style: TextStyle(
+                          "${days[post.createdAt!.toDate().weekday]}, ${post.createdAt!.toDate().hour} : ${post.createdAt!.toDate().minute}, ${post.createdAt!.toDate().year}",
+                          style: const TextStyle(
                             color: Colors.black,
                             fontFamily: "Twitterchirp",
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 11.0,
+                            fontWeight: FontWeight.w700,
                             decoration: TextDecoration.none,
                           ),
                         ),

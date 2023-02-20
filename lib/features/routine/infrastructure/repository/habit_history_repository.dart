@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:habit_master/core/errors/interface/error_model.dart';
 import 'package:habit_master/features/routine/domain/interfaces/habit_history_interface.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/mutation/habit_history.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/habit_history_queries.dart';
@@ -9,7 +11,8 @@ class HabitHistoryRepository implements HabitHistoryInterface {
   final habitHistoryQueries = HabitHistoryQueries();
 
   @override
-  Future<bool> deleteHabitHistoryRecord(String habitHistoryID) {
+  Future<Either<ErrorInfo, bool>> deleteHabitHistoryRecord(
+      String habitHistoryID) {
     return habitHistoryMutations.deleteHabitHistoryRecord(habitHistoryID);
   }
 
@@ -27,7 +30,8 @@ class HabitHistoryRepository implements HabitHistoryInterface {
   }
 
   @override
-  Future<bool> createHabitHistoryRecord(HabitHistory habitHistory) {
+  Future<Either<ErrorInfo, bool>> createHabitHistoryRecord(
+      HabitHistory habitHistory) {
     return habitHistoryMutations.createHabitHistoryRecord(habitHistory);
   }
 

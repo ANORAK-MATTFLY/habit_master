@@ -1,27 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:habit_master/core/db/local_db.dart';
 import 'package:habit_master/core/db/db_constants.dart';
+import 'package:habit_master/core/errors/exception_handlers.dart';
+import 'package:habit_master/core/errors/interface/error_model.dart';
+import 'package:habit_master/features/routine/domain/interfaces/habit_mutation_interface.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_history.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_history_repository.dart';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
 
-class HabitMutations {
+class HabitMutations implements HabitMutationsInterface {
   final uuid = const Uuid();
+  final ExceptionHandlers exceptionHandlers = ExceptionHandlers();
 
-  Future<bool> createHabit(Habit task) async {
+  @override
+  Future<Either<ErrorInfo, bool>> createHabit(Habit task) async {
     try {
       final database = await LocalDatabase.instance.database;
       final createTaskQuery = LocalDatabaseConstantProvider.createHabit(task);
       await database.rawInsert(createTaskQuery);
-      return true;
-    } catch (error) {
-      rethrow;
+      return const Right(true);
+    } on DatabaseException catch (error) {
+      return exceptionHandlers.handleLocalDatabaseError(error, "createHabit");
     }
   }
 
-  Future<bool> toggleHabit(Habit habit, bool isDone) async {
+  @override
+  Future<Either<ErrorInfo, bool>> toggleHabit(Habit habit, bool isDone) async {
     try {
       final database = await LocalDatabase.instance.database;
       final updateHabit =
@@ -29,13 +37,15 @@ class HabitMutations {
               isDone, habit.id!);
 
       await database.rawUpdate(updateHabit);
-      return true;
-    } catch (error) {
-      rethrow;
+      return const Right(true);
+    } on DatabaseException catch (error) {
+      return exceptionHandlers.handleLocalDatabaseError(error, "toggleHabit");
     }
   }
 
-  Future<bool> updateHabitDoneDate(String habitID, bool isAlreadySet) async {
+  @override
+  Future<Either<ErrorInfo, bool>> updateHabitDoneDate(
+      String habitID, bool isAlreadySet) async {
     try {
       final String doneDate = Timestamp.now().toDate().toString().split(" ")[0];
       final database = await LocalDatabase.instance.database;
@@ -54,10 +64,10 @@ class HabitMutations {
           final HabitHistory habitHistory =
               HabitHistory(doneOn: doneDate, habitID: habitID, id: id);
           await HabitHistoryRepository().createHabitHistoryRecord(habitHistory);
-          return true;
+          return const Right(true);
         } else {
           await HabitHistoryRepository().deleteHabitHistoryRecord(habitID);
-          return true;
+          return const Right(true);
         }
       }
       if (isAlreadySet == false) {
@@ -65,28 +75,32 @@ class HabitMutations {
 
         await database.rawUpdate(query);
 
-        return true;
+        return const Right(true);
       }
-      return true;
-    } catch (error) {
-      rethrow;
+      return const Right(true);
+    } on DatabaseException catch (error) {
+      return exceptionHandlers.handleLocalDatabaseError(
+          error, "updateHabitDoneDate");
     }
   }
 
-  Future<bool> updateHabitExpirationDate(
+  @override
+  Future<Either<ErrorInfo, bool>> updateHabitExpirationDate(
       String habitID, String expirationDate) async {
     try {
       final Database database = await LocalDatabase.instance.database;
       final String query = LocalDatabaseConstantProvider.updateExpirationDate(
           expirationDate, habitID);
       await database.rawUpdate(query);
-      return true;
-    } catch (error) {
-      rethrow;
+      return const Right(true);
+    } on DatabaseException catch (error) {
+      return exceptionHandlers.handleLocalDatabaseError(
+          error, "updateHabitExpirationDate");
     }
   }
 
-  Future<bool> createHabits(List<Habit> habits) async {
+  @override
+  Future<Either<ErrorInfo, bool>> createHabits(List<Habit> habits) async {
     try {
       final database = await LocalDatabase.instance.database;
       for (int index = 0; index < habits.length; index++) {
@@ -94,9 +108,9 @@ class HabitMutations {
         final insertHabit = LocalDatabaseConstantProvider.createHabit(habit);
         await database.rawInsert(insertHabit);
       }
-      return true;
-    } catch (error) {
-      rethrow;
+      return const Right(true);
+    } on DatabaseException catch (error) {
+      return exceptionHandlers.handleLocalDatabaseError(error, "createHabits");
     }
   }
 }

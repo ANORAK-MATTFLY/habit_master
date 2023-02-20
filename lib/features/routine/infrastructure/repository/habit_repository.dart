@@ -1,3 +1,5 @@
+import 'package:fpdart/fpdart.dart';
+import 'package:habit_master/core/errors/interface/error_model.dart';
 import 'package:habit_master/features/routine/domain/interfaces/habit_interface.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/mutation/habit.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/habit_queries.dart';
@@ -7,22 +9,22 @@ class HabitRepository implements HabitInterface {
   final HabitMutations habitMutations = HabitMutations();
 
   @override
-  Future<bool> createHabit(Habit habit) {
+  Future<Either<ErrorInfo, bool>> createHabit(Habit habit) {
     return habitMutations.createHabit(habit);
   }
 
   @override
-  Future<bool> createHabits(List<Habit> habits) {
+  Future<Either<ErrorInfo, bool>> createHabits(List<Habit> habits) {
     return habitMutations.createHabits(habits);
   }
 
   @override
-  Future<bool> toggleHabit(Habit habit, bool isDone) {
+  Future<Either<ErrorInfo, bool>> toggleHabit(Habit habit, bool isDone) {
     return habitMutations.toggleHabit(habit, isDone);
   }
 
   @override
-  Future<bool> updateHabitExpirationDate(
+  Future<Either<ErrorInfo, bool>> updateHabitExpirationDate(
       String habitID, String expirationDate) {
     return habitMutations.updateHabitExpirationDate(habitID, expirationDate);
   }
@@ -33,20 +35,21 @@ class HabitRepository implements HabitInterface {
   }
 
   @override
-  Future<bool> updateHabitDoneDate(String habitID, bool doneDate) {
+  Future<Either<ErrorInfo, bool>> updateHabitDoneDate(
+      String habitID, bool doneDate) {
     return habitMutations.updateHabitDoneDate(habitID, doneDate);
   }
 
   @override
   Future<List<Map<String, Object?>>> countNumberOfDoneHabits(
       String routineID, String doneOn) {
-    return HabitQueries.countNumberOfDoneHabits(routineID, doneOn);
+    return HabitQueries('').countNumberOfDoneHabits(routineID, doneOn);
   }
 
   @override
   Future<Habit> getHabitById(String habitID) async {
     final List<Habit> habits = [];
-    final rawHabitData = await HabitQueries.getHabitById(habitID);
+    final rawHabitData = await HabitQueries(habitID).getHabitById(habitID);
     final Habit habit = Habit.fromJson(rawHabitData[0]);
     habits.add(habit);
     return habits[0];

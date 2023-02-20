@@ -1,3 +1,5 @@
+import 'package:fpdart/fpdart.dart';
+import 'package:habit_master/core/errors/interface/error_model.dart';
 import 'package:habit_master/features/routine/domain/interfaces/routine_interface.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/mutation/routine.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/routine_queries.dart';
@@ -9,7 +11,8 @@ class RoutineRepository implements RoutineInterface {
   final RoutineQueries routineQueries = RoutineQueries();
 
   @override
-  Future<Routine> createRoutine(Author author, int successRate) async {
+  Future<Either<ErrorInfo, bool>> createRoutine(
+      Author author, int successRate) async {
     return await routinesMutations.createRoutine(author, successRate);
   }
 
@@ -20,6 +23,9 @@ class RoutineRepository implements RoutineInterface {
 
   @override
   Future<Routine> getOneRoutine(String authorID) async {
-    return await RoutineQueries.getOneRoutine(authorID);
+    final rawRoutineData = await RoutineQueries().getOneRoutine(authorID);
+
+    final Routine routine = Routine.fromJson(rawRoutineData[0]);
+    return routine;
   }
 }

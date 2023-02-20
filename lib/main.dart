@@ -20,6 +20,9 @@ import 'package:habit_master/features/routine/presentation/pages/create_habit/bl
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/type_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/when_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/widgets/v1/select_when.dart';
+import 'package:habit_master/features/user_feed/presentation/user_feed/bloc/cubit/list_post.dart';
+import 'package:habit_master/features/user_feed/presentation/user_feed/bloc/cubit/show_edit_panel.dart';
+import 'package:habit_master/features/user_feed/presentation/user_feed/page/user_feed_page.dart';
 import 'package:habit_master/shared/bloc/error_cubit.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'package:habit_master/shared/bloc/show_error_cubit.dart';
@@ -126,6 +129,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => CreateAuthorBlocLogic(),
           child: const PersonalRoutinePage(),
+        ),
+        BlocProvider(
+          create: (_) => ShowEditPanelCubit(),
+          child: const UserFeedPage(),
+        ),
+        BlocProvider(
+          create: (_) => ListOfPostCubit(),
+          child: const UserFeedPage(),
         ),
       ],
       child: MaterialApp(

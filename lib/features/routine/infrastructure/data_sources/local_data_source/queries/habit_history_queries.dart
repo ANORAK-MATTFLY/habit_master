@@ -1,7 +1,9 @@
 import 'package:habit_master/core/db/db_constants.dart';
 import 'package:habit_master/core/db/local_db.dart';
+import 'package:habit_master/features/routine/domain/interfaces/habit_history_queries_interface.dart';
 
-class HabitHistoryQueries {
+class HabitHistoryQueries implements HabitHistoryQueriesInterface {
+  @override
   Future<List<Map<String, Object?>>> getHabitHistoryRecord(
       String habitHistoryID) async {
     try {
@@ -15,6 +17,7 @@ class HabitHistoryQueries {
     }
   }
 
+  @override
   Future<List<Map<String, Object?>>> getTodaysHabitHistoryRecord(
       String habitID, String doneOn) async {
     try {

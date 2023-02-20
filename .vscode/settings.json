@@ -6,6 +6,7 @@
         "chrono",
         "colorsets",
         "elon",
+        "fpdart",
         "Leaderboard",
         "sqflite",
         "subosito",

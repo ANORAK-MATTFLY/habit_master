@@ -1,7 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/dep_injection.dart';
-import 'package:habit_master/features/routine/infrastructure/models/author_model.dart';
-import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/author_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/routine_repository.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_state/author_state.dart';
@@ -15,17 +13,16 @@ class CreateAuthorBlocLogic extends Bloc<AuthorBlocInterface, AuthorState?> {
       final author = event.author;
       final authorMutation = serviceLocator<AuthorRepository>();
       final authorHasBeenCreated = await authorMutation.createAuthor(author);
-      if (authorHasBeenCreated == true) {
-        final routine = await createRoutine(author);
-        final resultingData = AuthorState(authorState: routine);
+      if (authorHasBeenCreated.isRight()) {
+        final routineMutations = serviceLocator<RoutineRepository>();
+
+        await routineMutations.createRoutine(author, 0);
+
+        final resultingData =
+            AuthorState(authorState: authorHasBeenCreated.isRight());
+
         emit(resultingData);
       }
     });
-  }
-  Future<Routine> createRoutine(Author author) async {
-    final routineMutations = serviceLocator<RoutineRepository>();
-
-    final routine = await routineMutations.createRoutine(author, 0);
-    return routine;
   }
 }
