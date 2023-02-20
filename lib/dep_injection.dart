@@ -5,6 +5,7 @@ import 'package:habit_master/features/routine/infrastructure/repository/author_r
 import 'package:habit_master/features/routine/infrastructure/repository/habit_history_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/routine_repository.dart';
+import 'package:habit_master/features/user_feed/infrastrcture/data/remote_data_source/mutations/post_mutations.dart';
 
 import 'features/auth/infrastructure/repository/user_repository.dart';
 
@@ -32,5 +33,8 @@ Future<void> setup() async {
   );
   serviceLocator.registerLazySingleton(
     () => HabitHistoryRepository(),
+  );
+  serviceLocator.registerLazySingleton(
+    () => PostMutations(),
   );
 }

@@ -1,34 +1,40 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserAggregate {
   String? userID;
   String? displayName;
+  String? email;
   String? photoUrl;
+  String? jobTitle;
+
   String? userDeviceToken;
+  List? followers;
+  List? following;
+  Timestamp? lastSeen;
 
   UserAggregate({
     this.userID,
     this.displayName,
     this.photoUrl,
     this.userDeviceToken,
+    this.email,
+    this.followers,
+    this.following,
+    this.lastSeen,
+    this.jobTitle,
   });
 
-  factory UserAggregate.fromGoogleAuth(GoogleSignInAccount user) {
+  factory UserAggregate.fromDocument(dynamic doc) {
     return UserAggregate(
-      userID: user.id,
-      displayName: user.displayName,
-      photoUrl: user.photoUrl,
-      userDeviceToken: "",
-    );
-  }
-
-  factory UserAggregate.fromFacebookAuth(UserInfo user) {
-    return UserAggregate(
-      userID: user.uid,
-      displayName: user.displayName,
-      photoUrl: user.photoURL,
-      userDeviceToken: "",
+      userID: doc["id"],
+      displayName: doc["display_name"],
+      photoUrl: doc["photo_url"],
+      userDeviceToken: doc["user_device_token"],
+      email: doc["email"],
+      followers: doc["followers"],
+      following: doc["following"],
+      lastSeen: doc["last_seen"],
+      jobTitle: doc["job_title"],
     );
   }
 }
