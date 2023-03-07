@@ -57,6 +57,10 @@ class LocalDatabaseConstantProvider {
     return "SELECT * FROM habit_history WHERE habit_id = '$habitID'";
   }
 
+  static String getCurrentUserFromCache(String userID) {
+    return "SELECT * FROM author WHERE id = '$userID'";
+  }
+
   static getTodaysHabitHistory(String habitID, String doneOn) {
     return "SELECT * FROM habit_history WHERE habit_id = '$habitID' AND done_on = '$doneOn'";
   }

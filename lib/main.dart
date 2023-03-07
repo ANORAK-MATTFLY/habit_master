@@ -8,14 +8,12 @@ import 'package:habit_master/features/routine/presentation/pages/create_habit/bl
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/timer_task.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/pages/personal_routine.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/large_card.dart';
-import 'package:habit_master/features/leader_board/presentation/page/leader_board_page.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_habit.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/toggle_habit_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/pages/daily_routine_page.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habit_cubit.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/tasks_list.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habits_list.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/check_box_tile.dart';
-import 'package:habit_master/features/leader_board/presentation/bloc/bloc_logic/competitors_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/time_option_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/type_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/when_cubit.dart';
@@ -69,8 +67,8 @@ class MyApp extends StatelessWidget {
           child: const HomePage(),
         ),
         BlocProvider(
-          create: (_) => CompetitorsBloc(),
-          child: const CompetitionScreen(),
+          create: (_) => OnboardingCubit(),
+          child: const DailyRoutinePage(),
         ),
         BlocProvider(
           create: (_) => CreateHabitBlocLogic(),

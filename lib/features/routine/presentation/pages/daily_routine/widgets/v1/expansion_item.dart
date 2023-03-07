@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/dep_injection.dart';
+import 'package:habit_master/features/auth/api/identity_api.dart';
 import 'package:habit_master/features/routine/domain/logic/task_helpers.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/tasks_list.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habits_list.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/check_box_tile.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v1/circle_avatar.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_icon.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_line.dart';
+import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 
 class ExpandedItemList extends StatefulWidget {
   final String title;

@@ -9,22 +9,22 @@ class HabitRepository implements HabitInterface {
   final HabitMutations habitMutations = HabitMutations();
 
   @override
-  Future<Either<ErrorInfo, bool>> createHabit(Habit habit) {
+  Future<Either<Failure, bool>> createHabit(Habit habit) {
     return habitMutations.createHabit(habit);
   }
 
   @override
-  Future<Either<ErrorInfo, bool>> createHabits(List<Habit> habits) {
+  Future<Either<Failure, bool>> createHabits(List<Habit> habits) {
     return habitMutations.createHabits(habits);
   }
 
   @override
-  Future<Either<ErrorInfo, bool>> toggleHabit(Habit habit, bool isDone) {
+  Future<Either<Failure, bool>> toggleHabit(Habit habit, bool isDone) {
     return habitMutations.toggleHabit(habit, isDone);
   }
 
   @override
-  Future<Either<ErrorInfo, bool>> updateHabitExpirationDate(
+  Future<Either<Failure, bool>> updateHabitExpirationDate(
       String habitID, String expirationDate) {
     return habitMutations.updateHabitExpirationDate(habitID, expirationDate);
   }
@@ -35,9 +35,9 @@ class HabitRepository implements HabitInterface {
   }
 
   @override
-  Future<Either<ErrorInfo, bool>> updateHabitDoneDate(
-      String habitID, bool doneDate) {
-    return habitMutations.updateHabitDoneDate(habitID, doneDate);
+  Future<Either<Failure, bool>> updateHabitDoneDate(
+      Habit habit, bool doneDate) {
+    return habitMutations.updateHabitDoneDate(habit, doneDate);
   }
 
   @override

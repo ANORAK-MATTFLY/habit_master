@@ -5,4 +5,6 @@ class RemoteDatabase {
       FirebaseFirestore.instance.collection("users");
   static CollectionReference postsCollection =
       FirebaseFirestore.instance.collection("posts");
+  static CollectionReference leaderBoardCollection =
+      FirebaseFirestore.instance.collection("leader_board");
 }

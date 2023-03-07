@@ -1,14 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:habit_master/dep_injection.dart';
-import 'package:habit_master/features/auth/api/identity_api.dart';
-import 'package:habit_master/features/auth/infrastructure/model/user_aggregate.dart';
-import 'package:habit_master/features/user_feed/infrastrcture/data/remote_data_source/mutations/post_mutations.dart';
-import 'package:habit_master/features/user_feed/infrastrcture/model/post_model.dart';
+import 'package:habit_master/features/user_feed/domain/logic/post_logic.dart';
+import 'package:habit_master/shared/logic/text_trimer.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-import 'package:uuid/uuid.dart';
 
 class EditPostPanel extends StatefulWidget {
   const EditPostPanel({Key? key}) : super(key: key);
@@ -235,26 +231,8 @@ class _EditPostPanelState extends State<EditPostPanel> {
             ),
             GestureDetector(
               onTap: () async {
-                final postLogic = serviceLocator<PostMutations>();
-                final userInfo =
-                    serviceLocator<IdentityApi>().getAuthenticatedUser();
-                final UserAggregate user = await serviceLocator<IdentityApi>()
-                    .getUserById(userInfo.uid);
-                const id = Uuid();
-                final Post post = Post(
-                  comments: 0,
-                  createdAt: Timestamp.now(),
-                  id: id.v1(),
-                  likes: const [],
-                  ownerID: user.userID,
-                  ownerName: user.displayName,
-                  ownerProfilePicture: user.photoUrl,
-                  ownerTokenID: "",
-                  postParentID: "",
-                  textContent: postContent.text,
-                  type: postType,
-                );
-                await postLogic.createPost(post, user);
+                final content = textTrimer(postContent.text, 240);
+                await serviceLocator<PostLogic>().createPost(content, postType);
               },
               child: Container(
                 height: 40.0,

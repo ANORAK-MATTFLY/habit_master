@@ -12,7 +12,7 @@ class RoutinesMutations implements RoutinesMutationsInterface {
   final ExceptionHandlers exceptionHandlers = ExceptionHandlers();
 
   @override
-  Future<Either<ErrorInfo, bool>> createRoutine(
+  Future<Either<Failure, bool>> createRoutine(
       Author author, int successRate) async {
     try {
       final database = await LocalDatabase.instance.database;

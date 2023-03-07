@@ -11,8 +11,7 @@ class HabitHistoryMutations implements HabitHistoryMutationsInterface {
   final ExceptionHandlers exceptionHandlers = ExceptionHandlers();
 
   @override
-  Future<Either<ErrorInfo, bool>> deleteHabitHistoryRecord(
-      String habitID) async {
+  Future<Either<Failure, bool>> deleteHabitHistoryRecord(String habitID) async {
     try {
       final database = await LocalDatabase.instance.database;
       final query = LocalDatabaseConstantProvider.deleteHabitHistory(habitID);
@@ -25,7 +24,7 @@ class HabitHistoryMutations implements HabitHistoryMutationsInterface {
   }
 
   @override
-  Future<Either<ErrorInfo, bool>> createHabitHistoryRecord(
+  Future<Either<Failure, bool>> createHabitHistoryRecord(
       HabitHistory habitHistory) async {
     try {
       final database = await LocalDatabase.instance.database;

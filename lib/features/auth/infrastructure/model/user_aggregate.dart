@@ -6,7 +6,7 @@ class UserAggregate {
   String? email;
   String? photoUrl;
   String? jobTitle;
-
+  String? atUserName;
   String? userDeviceToken;
   List? followers;
   List? following;
@@ -15,6 +15,7 @@ class UserAggregate {
   UserAggregate({
     this.userID,
     this.displayName,
+    this.atUserName,
     this.photoUrl,
     this.userDeviceToken,
     this.email,
@@ -28,6 +29,7 @@ class UserAggregate {
     return UserAggregate(
       userID: doc["id"],
       displayName: doc["display_name"],
+      atUserName: doc["@name"],
       photoUrl: doc["photo_url"],
       userDeviceToken: doc["user_device_token"],
       email: doc["email"],

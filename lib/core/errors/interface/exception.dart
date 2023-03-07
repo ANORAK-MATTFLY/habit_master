@@ -4,6 +4,6 @@ import 'package:sqflite/sqflite.dart';
 import 'error_model.dart';
 
 abstract class ExceptionHandlersInterface {
-  Left<ErrorInfo, bool> handleLocalDatabaseError(
+  Left<Failure, bool> handleLocalDatabaseError(
       DatabaseException error, String source);
 }

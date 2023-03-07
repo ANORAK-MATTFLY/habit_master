@@ -3,6 +3,7 @@ import 'package:habit_master/features/auth/infrastructure/model/user_aggregate.d
 
 abstract class UserRemoteDataInterface {
   Future<UserAggregate> getUserById(String userID);
-  User getAuthenticatedUser();
+  User? getAuthenticatedUser();
   Future<bool> isAuthenticated();
+  Future<List<UserAggregate>> getUsers(List userIDs);
 }

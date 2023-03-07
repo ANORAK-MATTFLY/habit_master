@@ -14,8 +14,14 @@ class HabitQueries implements HabitQueriesInterface {
       for (var index = 0; index < rawHabitsData.length; index++) {
         final rawHabit = rawHabitsData[index];
         final habit = Habit.fromJson(rawHabit);
-        await HabitMutations()
-            .updateHabitExpirationDate(habit.id!, expirationDate);
+        final hasExpired =
+            DateTime.now().isAfter(DateTime.parse(habit.expirationDate!));
+        if (hasExpired == true) {
+          await HabitMutations()
+              .updateHabitExpirationDate(habit.id!, expirationDate);
+          HabitMutations().toggleHabit(habit, false);
+        }
+
         habits.add(habit);
         _streamController.sink.add(habits);
       }

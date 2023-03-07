@@ -28,11 +28,10 @@ class RoutineQueries implements RoutineQueriesInterface {
   }
 
   @override
-  Future<List<Map<String, Object?>>> getOneRoutine(String authorID) async {
+  Future<List<Map<String, Object?>>> getRoutineByID(String authorID) async {
     final database = await LocalDatabase.instance.database;
     final rawData = await database.rawQuery(
         "SELECT * FROM routine WHERE author_id = '$authorID' LIMIT 1");
-
     return rawData;
   }
 }

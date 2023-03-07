@@ -11,7 +11,7 @@ class RoutineRepository implements RoutineInterface {
   final RoutineQueries routineQueries = RoutineQueries();
 
   @override
-  Future<Either<ErrorInfo, bool>> createRoutine(
+  Future<Either<Failure, bool>> createRoutine(
       Author author, int successRate) async {
     return await routinesMutations.createRoutine(author, successRate);
   }
@@ -23,7 +23,7 @@ class RoutineRepository implements RoutineInterface {
 
   @override
   Future<Routine> getOneRoutine(String authorID) async {
-    final rawRoutineData = await RoutineQueries().getOneRoutine(authorID);
+    final rawRoutineData = await RoutineQueries().getRoutineByID(authorID);
 
     final Routine routine = Routine.fromJson(rawRoutineData[0]);
     return routine;

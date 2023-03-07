@@ -5,7 +5,7 @@ import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/routine/domain/logic/weekly_progress.dart';
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 import 'package:habit_master/features/routine/infrastructure/models/weekly_progress_chart_model.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/tasks_list.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habits_list.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 // ignore: must_be_immutable

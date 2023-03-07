@@ -17,7 +17,7 @@ class PrebuiltData {
         final authorExist = await authorQueries.checkIfAuthorExist(author.id!);
 
         if (authorExist == false) {
-          await authorMutations.createAuthor(author);
+          await authorMutations.authorMutations.createAuthor(author);
           await RoutinesMutations().createRoutine(author, 0);
           final habits = generateTasks(author.id!);
           await HabitMutations().createHabits(habits);

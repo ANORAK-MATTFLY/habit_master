@@ -1,14 +1,16 @@
-import 'dart:math';
-
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/auth/api/identity_api.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/widgets/v2/sign_in_button.dart';
+import 'package:habit_master/features/leader_board/infrastructure/models/leader.dart';
+import 'package:habit_master/features/leader_board/infrastructure/repository/leader_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/models/author_model.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_event/create_author.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_author.dart';
-import 'package:habit_master/shared/static/images.dart';
+import 'package:habit_master/features/routine/use_cases/author_use_cases.dart';
+
 import 'package:show_up_animation/show_up_animation.dart';
 
 import '../../../../../domain/logic/google_auth.dart';
@@ -239,6 +241,23 @@ class _SignInPopupState extends State<SignInPopup>
                         Center(
                           child: GestureDetector(
                             onTap: () async {
+                              // final userInfo =
+                              //     IdentityApi().getAuthenticatedUser();
+                              // const Author myAuthor = Author(
+                              //   authorProfilePicture:
+                              //       "assets/images/avatars/av15.png",
+                              //   authorName: "Will",
+                              //   id: ".llksjdfklduid",
+                              //   type: "costumer",
+                              // );
+                              // final resust =
+                              //     await serviceLocator<AuthorUseCases>()
+                              //         .executeCreateAuthor(myAuthor);
+                              // final auth =
+                              //     await serviceLocator<AuthorUseCases>()
+                              //         .executeCheckIfAuthorExist(userInfo!.uid);
+                              // print(auth);
+
                               final loginSucceeded =
                                   await GoogleAuth().loginWithGoogle();
                               if (loginSucceeded == true) {
@@ -247,15 +266,24 @@ class _SignInPopupState extends State<SignInPopup>
 
                                 // ignore: unnecessary_null_comparison
                                 if (userInfo != null) {
-                                  final random = Random();
-                                  final avatar =
-                                      avatars[random.nextInt(avatars.length)];
+                                  final user = await IdentityApi()
+                                      .getUserById(userInfo.uid);
                                   final Author author = Author(
-                                    authorProfilePicture: avatar,
-                                    authorName: userInfo.displayName,
+                                    authorProfilePicture: user!.photoUrl,
+                                    authorName: user.displayName,
                                     id: userInfo.uid,
                                     type: "costumer",
                                   );
+                                  final Leader leader = Leader(
+                                    id: user.userID,
+                                    leaderName: user.displayName,
+                                    profilePicture: user.photoUrl,
+                                    score: 0,
+                                  );
+
+                                  await serviceLocator<LeaderRepository>()
+                                      .leaderMutations
+                                      .createLeaderDocument(leader);
 
                                   // ignore: use_build_context_synchronously
                                   context.read<CreateAuthorBlocLogic>().add(

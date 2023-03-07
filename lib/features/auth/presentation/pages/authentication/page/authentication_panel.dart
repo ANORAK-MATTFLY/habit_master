@@ -209,11 +209,12 @@ class _AuthenticationPanelState extends State<AuthenticationPanel>
                                             bottom: 65.0,
                                             right: 40.0,
                                             child: Text(
-                                              "> Start using the app",
+                                              "> Please login first",
                                               style: TextStyle(
                                                 color: Colors.black,
-                                                fontFamily: "Twitterchirp_Bold",
-                                                fontSize: 13.0,
+                                                fontFamily: "Twitterchirp",
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w500,
                                                 decoration: TextDecoration.none,
                                               ),
                                             ),

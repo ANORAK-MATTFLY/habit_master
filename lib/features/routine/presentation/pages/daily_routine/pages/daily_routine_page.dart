@@ -16,14 +16,16 @@ import 'package:habit_master/features/routine/presentation/pages/create_habit/bl
 import 'package:habit_master/features/routine/presentation/pages/create_habit/widgets/v1/habit_options.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/widgets/v1/select_when.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habit_cubit.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/tasks_list.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habits_list.dart';
 import 'package:habit_master/shared/bloc/error_cubit.dart';
+import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'package:habit_master/shared/bloc/show_error_cubit.dart';
 import 'package:habit_master/shared/static/dates.dart';
 import 'package:habit_master/shared/static/options.dart';
 import 'package:habit_master/shared/widgets/error.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../../auth/presentation/pages/authentication/page/authentication_panel.dart';
 import '../widgets/v1/expansion_item.dart';
 import '../widgets/v1/progress.dart';
 import '../widgets/v1/chart_and_desc.dart';
@@ -37,15 +39,15 @@ class DailyRoutinePage extends StatefulWidget {
 
 class _DailyRoutinePageState extends State<DailyRoutinePage>
     with SingleTickerProviderStateMixin {
-  bool showCerateHabitPanel = false;
+  bool showCreateHabitPanel = false;
   final TextEditingController taskName = TextEditingController();
   final TextEditingController taskDuration = TextEditingController();
   bool showError = false;
 
   @override
   Widget build(BuildContext context) {
-    getTasks(streamedTasks) =>
-        context.read<HabitListCubit>().updateState(streamedTasks);
+    getHabits(List<Habit> streamedHabits) =>
+        context.read<HabitListCubit>().updateState(streamedHabits);
     final routine = context.read<RoutineCubit>().state!;
 
     final height = MediaQuery.of(context).size.height;
@@ -60,7 +62,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
       floatingActionButton: GestureDetector(
         onTap: () {
           setState(() {
-            showCerateHabitPanel = !showCerateHabitPanel;
+            showCreateHabitPanel = !showCreateHabitPanel;
           });
         },
         child: Container(
@@ -171,8 +173,8 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                       child: Text("An error occurred"),
                     );
                   case ConnectionState.waiting:
-                    final List<Habit> streamedTasks = [];
-                    getTasks(streamedTasks);
+                    final List<Habit> streamedHabits = [];
+                    getHabits(streamedHabits);
                     return Container(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
@@ -237,7 +239,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                     );
                   case ConnectionState.active:
                     final streamedTasks = snapshot.data!;
-                    getTasks(streamedTasks);
+                    getHabits(streamedTasks);
                     return Container(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
@@ -303,7 +305,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                   case ConnectionState.done:
                     {
                       final streamedTasks = snapshot.data!;
-                      getTasks(streamedTasks);
+                      getHabits(streamedTasks);
                       return Container(
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
@@ -371,7 +373,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                 }
               }),
           Visibility(
-            visible: showCerateHabitPanel,
+            visible: showCreateHabitPanel,
             child: ListView(
               children: [
                 Stack(
@@ -675,7 +677,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     .read<HabitListCubit>()
                                     .updateState(habits);
                                 setState(() {
-                                  showCerateHabitPanel = !showCerateHabitPanel;
+                                  showCreateHabitPanel = !showCreateHabitPanel;
                                 });
                               },
                               child: Container(

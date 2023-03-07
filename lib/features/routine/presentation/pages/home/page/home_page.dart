@@ -143,191 +143,166 @@ class _HomePageState extends State<HomePage> {
         width: 200.0,
       ),
     ];
-    final canDisplayOnboardingScreen =
-        BlocProvider.of<OnboardingCubit>(context);
+
     return Scaffold(
-      body: BlocBuilder(
-        bloc: canDisplayOnboardingScreen,
-        builder: (context, state) => Stack(
-          children: [
-            NestedScrollView(
-              floatHeaderSlivers: true,
-              headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                SliverAppBar(
-                  backgroundColor: const Color(0xFF0C051D),
-                  floating: true,
-                  snap: true,
-                  toolbarHeight: 100.0,
-                  actions: <Widget>[
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Stack(
-                        children: [
-                          const Positioned(
-                              right: 35.0,
-                              top: 55.0,
-                              child: SizedBox(
-                                  height: 30, width: 30, child: Circle())),
-                          Container(
-                            padding:
-                                const EdgeInsets.only(top: 50.0, left: 10.0),
-                            width: double.infinity,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "$day, $month $dayNumber",
-                                  style: const TextStyle(
-                                    color: Color(0xB7FFFFFF),
-                                    fontFamily: "Twitterchirp",
-                                    fontSize: 12.0,
-                                  ),
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            backgroundColor: const Color(0xFF0C051D),
+            floating: true,
+            snap: true,
+            toolbarHeight: 100.0,
+            actions: <Widget>[
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Stack(
+                  children: [
+                    const Positioned(
+                        right: 35.0,
+                        top: 55.0,
+                        child:
+                            SizedBox(height: 30, width: 30, child: Circle())),
+                    Container(
+                      padding: const EdgeInsets.only(top: 50.0, left: 10.0),
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "$day, $month $dayNumber",
+                            style: const TextStyle(
+                              color: Color(0xB7FFFFFF),
+                              fontFamily: "Twitterchirp",
+                              fontSize: 12.0,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Habit Masters",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "Twitterchirp_Bold",
+                                  fontSize: 20.0,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                              ),
+                              SizedBox(
+                                width: 200.0,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Text(
-                                      "Habit Masters",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: "Twitterchirp_Bold",
-                                        fontSize: 20.0,
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 30.0),
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(360.0),
+                                        ),
+                                        child: GestureDetector(
+                                          key: const Key('K'),
+                                          onTap: () => context
+                                              .read<OnboardingCubit>()
+                                              .updateState(),
+                                          child: Container(
+                                            height: 30.0,
+                                            width: 30.0,
+                                            color: const Color(0xFF393939)
+                                                .withOpacity(0.9),
+                                            child: Center(
+                                              child: SvgPicture.asset(
+                                                  "assets/svg/search-icon.svg",
+                                                  height: 12,
+                                                  semanticsLabel:
+                                                      'A red up arrow'),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 200.0,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 30.0),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(360.0),
-                                              ),
-                                              child: GestureDetector(
-                                                key: const Key('K'),
-                                                onTap: () => context
-                                                    .read<OnboardingCubit>()
-                                                    .updateState(),
-                                                child: Container(
-                                                  height: 30.0,
-                                                  width: 30.0,
-                                                  color: const Color(0xFF393939)
-                                                      .withOpacity(0.9),
-                                                  child: Center(
-                                                    child: SvgPicture.asset(
-                                                        "assets/svg/search-icon.svg",
-                                                        height: 12,
-                                                        semanticsLabel:
-                                                            'A red up arrow'),
-                                                  ),
-                                                ),
-                                              ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ProfilePage(),
+                                          ),
+                                        );
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(360.0)),
+                                        child: Container(
+                                          height: 30.0,
+                                          width: 30.0,
+                                          color: const Color(0xFF393939)
+                                              .withOpacity(0.9),
+                                          child: Center(
+                                            child: SvgPicture.asset(
+                                              "assets/svg/user-profile-icon.svg",
+                                              height: 12,
+                                              semanticsLabel:
+                                                  'User profile icon',
                                             ),
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const ProfilePage(),
-                                                ),
-                                              );
-                                            },
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(360.0)),
-                                              child: Container(
-                                                height: 30.0,
-                                                width: 30.0,
-                                                color: const Color(0xFF393939)
-                                                    .withOpacity(0.9),
-                                                child: Center(
-                                                  child: SvgPicture.asset(
-                                                    "assets/svg/user-profile-icon.svg",
-                                                    height: 12,
-                                                    semanticsLabel:
-                                                        'User profile icon',
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
-                              ],
-                            ),
+                              )
+                            ],
                           ),
                         ],
                       ),
                     ),
                   ],
                 ),
-              ],
-              body: Stack(
+              ),
+            ],
+          ),
+        ],
+        body: Stack(
+          children: [
+            Container(
+              height: height,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Color(0xFF0C051D),
+              ),
+              child: Stack(
                 children: [
-                  Container(
-                    height: height,
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF0C051D),
-                    ),
-                    child: Stack(
-                      children: [
-                        Center(
-                          child: Container(
-                            height: height,
-                            width: double.infinity,
-                            padding: const EdgeInsets.only(top: 250.0),
-                            child: Container(
-                              height: 200,
-                              width: double.infinity,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage("assets/images/bg.png"),
-                                  alignment: Alignment.center,
-                                  opacity: 0.6,
-                                ),
-                              ),
-                            ),
+                  Center(
+                    child: Container(
+                      height: height,
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(top: 250.0),
+                      child: Container(
+                        height: 200,
+                        width: double.infinity,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/bg.png"),
+                            alignment: Alignment.center,
+                            opacity: 0.6,
                           ),
                         ),
-                        ListView.separated(
-                          itemCount: listOfCard.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final section = listOfCard[index];
-                            return section;
-                          },
-                          separatorBuilder: (BuildContext context, int index) =>
-                              const SizedBox(height: 10.0),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ],
-              ),
-            ),
-            BlocBuilder<OnboardingCubit, bool>(
-              bloc: canDisplayOnboardingScreen,
-              builder: (context, canDisplayOnboardingScreen) => Positioned(
-                top: 0.0,
-                child: Visibility(
-                  visible: canDisplayOnboardingScreen,
-                  child: const AuthenticationPanel(
-                    key: Key('e'),
+                  ListView.separated(
+                    itemCount: listOfCard.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final section = listOfCard[index];
+                      return section;
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(height: 10.0),
                   ),
-                ),
+                ],
               ),
             ),
           ],

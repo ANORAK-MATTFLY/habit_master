@@ -11,7 +11,7 @@ class HabitHistoryRepository implements HabitHistoryInterface {
   final habitHistoryQueries = HabitHistoryQueries();
 
   @override
-  Future<Either<ErrorInfo, bool>> deleteHabitHistoryRecord(
+  Future<Either<Failure, bool>> deleteHabitHistoryRecord(
       String habitHistoryID) {
     return habitHistoryMutations.deleteHabitHistoryRecord(habitHistoryID);
   }
@@ -30,7 +30,7 @@ class HabitHistoryRepository implements HabitHistoryInterface {
   }
 
   @override
-  Future<Either<ErrorInfo, bool>> createHabitHistoryRecord(
+  Future<Either<Failure, bool>> createHabitHistoryRecord(
       HabitHistory habitHistory) {
     return habitHistoryMutations.createHabitHistoryRecord(habitHistory);
   }

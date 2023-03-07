@@ -4,11 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/user_feed/infrastrcture/data/remote_data_source/queries/post_queries.dart';
+import 'package:habit_master/dep_injection.dart';
+import 'package:habit_master/features/auth/api/identity_api.dart';
 import 'package:habit_master/features/user_feed/infrastrcture/model/post_model.dart';
+import 'package:habit_master/features/user_feed/infrastrcture/repository/post_repository.dart';
 import 'package:habit_master/features/user_feed/presentation/user_feed/bloc/cubit/list_post.dart';
-import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/post.dart';
-import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v1/post_post_panel.dart';
+import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v1/post.dart';
+import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v1/post_panel.dart';
+import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 
 class UserFeedPage extends StatefulWidget {
   const UserFeedPage({Key? key}) : super(key: key);
@@ -27,7 +30,15 @@ class _UserFeedPageState extends State<UserFeedPage> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: GestureDetector(
-        onTap: () {
+        onTap: () async {
+          final isAuthenticated =
+              await serviceLocator<IdentityApi>().isAuthenticated();
+          if (!isAuthenticated) {
+            // ignore: use_build_context_synchronously
+            context.read<OnboardingCubit>().updateState();
+            return;
+          }
+
           setState(() {
             showEditPanel = !showEditPanel;
           });
@@ -98,7 +109,7 @@ class _UserFeedPageState extends State<UserFeedPage> {
             width: width,
             height: height,
             child: StreamBuilder<QuerySnapshot<Object?>>(
-                stream: PostQueries().getPosts(),
+                stream: serviceLocator<PostRepository>().postQueries.getPosts(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
@@ -125,7 +136,9 @@ class _UserFeedPageState extends State<UserFeedPage> {
                         left: 20.0, right: 20.0, top: 40, bottom: 40.0),
                     itemBuilder: (BuildContext context, int index) {
                       final Post post = posts[index];
-                      return Center(child: PostWidget(post: post));
+                      return Center(
+                        child: PostWidget(post: post),
+                      );
                     },
                   );
                 }),

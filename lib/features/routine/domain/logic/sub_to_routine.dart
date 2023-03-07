@@ -6,7 +6,7 @@ import 'package:habit_master/features/routine/infrastructure/repository/author_r
 Future<bool> subscribeToRoutine(String routineID) async {
   final authorRepo = serviceLocator<AuthorRepository>();
   final currentUserID =
-      serviceLocator<IdentityApi>().getAuthenticatedUser().uid;
+      serviceLocator<IdentityApi>().getAuthenticatedUser()!.uid;
 
   final Author author = await authorRepo.getAuthorById(currentUserID);
   if (author is String) {
@@ -14,7 +14,7 @@ Future<bool> subscribeToRoutine(String routineID) async {
   }
   final routineMutation = serviceLocator<AuthorRepository>();
   if ((routineID != author.subscribedTo) && (currentUserID != routineID)) {
-    await routineMutation.subscribeToRoutine(routineID, currentUserID);
+    await routineMutation.authorMutations.subscribeToRoutine(routineID);
     return true;
   }
   return false;

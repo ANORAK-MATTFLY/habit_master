@@ -1,4 +1,4 @@
 abstract class RoutineQueriesInterface {
   Future<List<Map<String, Object?>>> getRoutines();
-  Future<List<Map<String, Object?>>> getOneRoutine(String authorID);
+  Future<List<Map<String, Object?>>> getRoutineByID(String authorID);
 }

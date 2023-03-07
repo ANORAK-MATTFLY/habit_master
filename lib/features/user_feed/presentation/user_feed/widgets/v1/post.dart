@@ -1,14 +1,13 @@
 import 'dart:math';
 
 import 'package:blur/blur.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v1/circle_avatar.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_line.dart';
 import 'package:habit_master/features/user_feed/infrastrcture/model/post_model.dart';
+import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v2/like_button.dart';
+import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v2/liked_by_section.dart';
 import 'package:habit_master/shared/static/colors.dart';
-import 'package:habit_master/shared/static/images.dart';
 
 // ignore: must_be_immutable
 class PostWidget extends StatefulWidget {
@@ -194,96 +193,11 @@ class _PostWidgetState extends State<PostWidget> {
                                                     SizedBox(
                                                       height: 60.0,
                                                       width: 180.0,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceEvenly,
-                                                        children: [
-                                                          const Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    top: 20.0),
-                                                            child: Text(
-                                                              "Liked by",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 60.0,
-                                                            width: 100.0,
-                                                            child: Stack(
-                                                              children: [
-                                                                Positioned(
-                                                                  top: 25.0,
-                                                                  left: 10.0,
-                                                                  child:
-                                                                      tinyCircleAvatar(
-                                                                    avatars[random
-                                                                        .nextInt(
-                                                                            avatars.length)],
-                                                                    const [
-                                                                      Color.fromARGB(
-                                                                          255,
-                                                                          254,
-                                                                          169,
-                                                                          255),
-                                                                      Color.fromARGB(
-                                                                          255,
-                                                                          254,
-                                                                          169,
-                                                                          255),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Positioned(
-                                                                  top: 25.0,
-                                                                  left: 30.0,
-                                                                  child:
-                                                                      tinyCircleAvatar(
-                                                                    avatars[random
-                                                                        .nextInt(
-                                                                            avatars.length)],
-                                                                    const [
-                                                                      Color.fromARGB(
-                                                                          255,
-                                                                          169,
-                                                                          218,
-                                                                          255),
-                                                                      Color.fromARGB(
-                                                                          255,
-                                                                          183,
-                                                                          169,
-                                                                          255),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Positioned(
-                                                                    top: 25.0,
-                                                                    left: 50.0,
-                                                                    child: tinyCircleAvatar(
-                                                                        avatars[
-                                                                            random.nextInt(avatars.length)],
-                                                                        const [
-                                                                          Color.fromARGB(
-                                                                              255,
-                                                                              255,
-                                                                              228,
-                                                                              169),
-                                                                          Color.fromARGB(
-                                                                              255,
-                                                                              255,
-                                                                              211,
-                                                                              169),
-                                                                        ])),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
+                                                      child: LikedBySection(
+                                                          post: post),
                                                     ),
                                                     SizedBox(
+                                                        // color: Colors.green,
                                                         height: 60.0,
                                                         width: 100.0,
                                                         child: Row(
@@ -297,35 +211,24 @@ class _PostWidgetState extends State<PostWidget> {
                                                                           .only(
                                                                       top:
                                                                           20.0),
-                                                              child: IconButton(
-                                                                onPressed:
-                                                                    () {},
-                                                                icon:
-                                                                    const Icon(
-                                                                  CupertinoIcons
-                                                                      .hand_thumbsup_fill,
-                                                                  size: 20.0,
-                                                                  color: Colors
-                                                                      .white,
+                                                              child: Container(
+                                                                height: 30.0,
+                                                                width: 100.0,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: color
+                                                                      .withOpacity(
+                                                                          0.1),
+                                                                  borderRadius:
+                                                                      const BorderRadius
+                                                                          .all(
+                                                                    Radius
+                                                                        .circular(
+                                                                            360),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      top:
-                                                                          22.0),
-                                                              child: IconButton(
-                                                                onPressed:
-                                                                    () {},
-                                                                icon:
-                                                                    const Icon(
-                                                                  CupertinoIcons
-                                                                      .hand_thumbsdown_fill,
-                                                                  size: 20.0,
-                                                                  color: Colors
-                                                                      .white,
+                                                                child: LikeIcon(
+                                                                  post: post,
                                                                 ),
                                                               ),
                                                             ),
@@ -360,7 +263,7 @@ class _PostWidgetState extends State<PostWidget> {
                       ),
                       child: Center(
                         child: Text(
-                          "${days[post.createdAt!.toDate().weekday]}, ${post.createdAt!.toDate().hour} : ${post.createdAt!.toDate().minute}, ${post.createdAt!.toDate().year}",
+                          "${days[post.createdAt!.toDate().weekday - 1]}, ${post.createdAt!.toDate().hour} : ${post.createdAt!.toDate().minute}, ${post.createdAt!.toDate().year}",
                           style: const TextStyle(
                             color: Colors.black,
                             fontFamily: "Twitterchirp",

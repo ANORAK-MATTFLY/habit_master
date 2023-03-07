@@ -4,7 +4,7 @@ import 'package:habit_master/features/routine/infrastructure/models/author_model
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
 abstract class RoutineInterface {
-  Future<Either<ErrorInfo, bool>> createRoutine(Author author, int successRate);
+  Future<Either<Failure, bool>> createRoutine(Author author, int successRate);
   Stream<List<Routine>> getRoutines();
   Future<Routine> getOneRoutine(String authorID);
 }

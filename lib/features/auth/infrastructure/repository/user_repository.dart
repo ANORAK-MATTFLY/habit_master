@@ -12,12 +12,26 @@ class UserRepository implements UserRemoteDataInterface {
   }
 
   @override
-  User getAuthenticatedUser() {
-    return UserQueries.getAuthenticatedUser();
+  User? getAuthenticatedUser() {
+    final user = UserQueries.getAuthenticatedUser();
+
+    return user;
   }
 
   @override
   Future<bool> isAuthenticated() {
     return UserQueries.isAuthenticated();
+  }
+
+  @override
+  Future<List<UserAggregate>> getUsers(List userIDs) async {
+    final rawUsersData = await UserQueries().getUsers(userIDs);
+    final List<UserAggregate> users = [];
+    for (var index = 0; index < rawUsersData.docs.length; index++) {
+      final rawUserData = rawUsersData.docs[index];
+      final UserAggregate aggregate = UserAggregate.fromDocument(rawUserData);
+      users.add(aggregate);
+    }
+    return users;
   }
 }
