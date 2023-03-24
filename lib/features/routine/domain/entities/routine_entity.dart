@@ -7,9 +7,9 @@ class RoutineEntity extends Equatable {
   final String? authorProfilePicture;
   final String? description;
   final String? subTitle;
-  final int? isPremium;
   final int? subscribers;
   final int? successRate;
+  final String? type;
   final int? progress;
 
   const RoutineEntity({
@@ -17,10 +17,10 @@ class RoutineEntity extends Equatable {
     this.authorName,
     this.authorProfilePicture,
     this.description,
-    this.isPremium,
     this.subTitle,
     this.subscribers,
     this.successRate,
+    this.type,
     this.progress,
   });
 
@@ -31,10 +31,10 @@ class RoutineEntity extends Equatable {
       authorName!,
       authorProfilePicture!,
       description!,
-      isPremium!,
       subTitle!,
       subscribers!,
       successRate!,
+      type!,
       progress!,
     ];
   }

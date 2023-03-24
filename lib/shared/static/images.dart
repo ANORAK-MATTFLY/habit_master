@@ -14,10 +14,7 @@ final avatars = [
   "assets/images/avatars/av1.jpg",
   "assets/images/avatars/av2.png",
   "assets/images/avatars/av3.jpg",
-  "assets/images/avatars/av4.jpg",
   "assets/images/avatars/av5.jpg",
-  "assets/images/avatars/av6.jpg",
-  "assets/images/avatars/av7.jpg",
   "assets/images/avatars/av8.jpg",
 ];
 

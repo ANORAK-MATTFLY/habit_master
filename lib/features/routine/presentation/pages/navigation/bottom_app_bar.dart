@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:blur/blur.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +7,12 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/page/authentication_panel.dart';
 import 'package:habit_master/features/leader_board/presentation/page/leader_board_page.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/page/home_page.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
+import 'package:stream_isolate/stream_isolate.dart';
 
+import '../../../../../core/isolates/timer_stream.dart';
 import '../../../../user_feed/presentation/user_feed/page/user_feed_page.dart';
 import '../daily_routine/pages/personal_routine.dart';
 
@@ -21,6 +26,9 @@ class SuspendedBottomAppBar extends StatefulWidget {
 class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
   int index = 0;
   double navbarIndicatorPosition = 0;
+  int maxMinute = 40;
+  int secs = 0;
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -34,6 +42,7 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
     ];
     final canDisplayOnboardingScreen =
         BlocProvider.of<OnboardingCubit>(context);
+
     return Scaffold(
       body: Material(
         child: SizedBox(
@@ -327,6 +336,7 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
                   ),
                 ),
               ),
+              // StreamTimerBLoc
             ],
           ),
         ),

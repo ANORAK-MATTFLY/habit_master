@@ -15,7 +15,7 @@ class LocalDatabaseConstantProvider {
       subscribers INT NOT NULL,
       sub_title VARCHAR(255) NOT NULL,
       success_rate INT NOT NULL,
-      is_premium INT NOT NULL, 
+      type VARCHAR(25) NOT NULL,
       progress INT NOT NULL,
       PRIMARY KEY(author_id),
       FOREIGN KEY(author_id) REFERENCES author(id),
@@ -111,9 +111,9 @@ class LocalDatabaseConstantProvider {
 
   static String createRoutine(Routine routine) {
     const attributes =
-        'INSERT INTO routine(author_id, author_name, author_profile_picture, description, is_premium, subscribers, sub_title, success_rate, progress)';
+        'INSERT INTO routine(author_id, author_name, author_profile_picture, description, subscribers, sub_title, success_rate, progress, type)';
     final values =
-        " VALUES('${routine.authorID!}', '${routine.authorName!}', '${routine.authorProfilePicture}', '${routine.description}', ${routine.isPremium}, ${routine.subscribers}, '${routine.subTitle}', ${routine.successRate}, ${routine.progress})";
+        " VALUES('${routine.authorID!}', '${routine.authorName!}', '${routine.authorProfilePicture}', '${routine.description}', ${routine.subscribers}, '${routine.subTitle}', ${routine.successRate}, ${routine.progress}, '${routine.type}')";
     return attributes + values;
   }
 

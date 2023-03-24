@@ -1,13 +1,11 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/core/db/local_db.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/auth/api/identity_api.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/pages/daily_routine_page.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habit_cubit.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
-import 'package:habit_master/shared/static/dates.dart';
 
 import '../../../../../infrastructure/models/routine_model.dart';
 

@@ -8,9 +8,16 @@ import 'package:habit_master/features/leader_board/use_cases/leader_use_case.dar
 import 'package:habit_master/features/routine/application/routine_facade.dart';
 import 'package:habit_master/features/routine/domain/logic/weekly_progress.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/author_queries.dart';
+import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/routine_queries.dart';
+import 'package:habit_master/features/routine/infrastructure/data_sources/remote_data_source/mutations/habit_remote_mutations.dart';
+import 'package:habit_master/features/routine/infrastructure/data_sources/remote_data_source/mutations/routine_remote_mutation.dart';
+import 'package:habit_master/features/routine/infrastructure/data_sources/remote_data_source/queries/habit_remote_queries.dart';
+import 'package:habit_master/features/routine/infrastructure/data_sources/remote_data_source/queries/remote_routine_queries.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/author_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_history_repository.dart';
+import 'package:habit_master/features/routine/infrastructure/repository/habit_remote_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_repository.dart';
+import 'package:habit_master/features/routine/infrastructure/repository/routine_remote_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/routine_repository.dart';
 import 'package:habit_master/features/routine/use_cases/author_use_cases.dart';
 import 'package:habit_master/features/routine/use_cases/habit_history_use_cases.dart';
@@ -33,14 +40,14 @@ Future<void> setup() async {
         authorMutations: AuthorMutations(),
       ),
       habitRepository: HabitRepository(),
-      routineRepository: RoutineRepository(),
+      routineRepository: RoutineRepository(routineQueries: RoutineQueries("")),
     ),
   );
   serviceLocator.registerLazySingleton(
     () => AuthorRepository(authorMutations: AuthorMutations()),
   );
   serviceLocator.registerLazySingleton(
-    () => RoutineRepository(),
+    () => RoutineRepository(routineQueries: RoutineQueries("")),
   );
   serviceLocator.registerLazySingleton(
     () => HabitRepository(),
@@ -97,5 +104,17 @@ Future<void> setup() async {
   );
   serviceLocator.registerLazySingleton(
     () => LeaderUseCase(),
+  );
+  serviceLocator.registerLazySingleton(
+    () => RoutineRemoteRepository(
+      routineRemoteMutations: RoutineRemoteMutations(),
+      remoteRoutineQueries: RemoteRoutineQueries(),
+    ),
+  );
+  serviceLocator.registerLazySingleton(
+    () => HabitRemoteRepository(
+      habitRemoteQueries: HabitRemoteQueries(),
+      habitRemoteMutations: HabitRemoteMutations(),
+    ),
   );
 }

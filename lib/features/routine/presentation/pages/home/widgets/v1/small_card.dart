@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/auth/api/identity_api.dart';
+import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habit_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/pages/daily_routine_page.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
-import 'package:habit_master/shared/features/routine/models/routine.dart';
 import 'dart:math';
 
 import '../../../../../../../shared/static/images.dart';
 
 class SmallCard extends StatefulWidget {
-  const SmallCard({Key? key}) : super(key: key);
+  List<Routine> routines;
+  SmallCard({Key? key, required this.routines}) : super(key: key);
 
   @override
   State<SmallCard> createState() => _SmallCardState();
@@ -21,14 +24,16 @@ class _SmallCardState extends State<SmallCard> {
 
   @override
   Widget build(BuildContext context) {
+    final routines = widget.routines;
     return Wrap(
         alignment: WrapAlignment.center,
         spacing: 30,
         runSpacing: 30,
-        children: celebritiesRoutines.map((routine) {
-          final cardPositionIsOdd = celebritiesRoutines.indexOf(routine).isEven;
+        children: routines.map((routine) {
+          final cardPositionIsOdd = routines.indexOf(routine).isEven;
           return GestureDetector(
             onTap: () async {
+              context.read<RoutineCubit>().updateState(routine);
               final isAuthenticated =
                   await serviceLocator<IdentityApi>().isAuthenticated();
               if (!isAuthenticated) {
@@ -36,6 +41,17 @@ class _SmallCardState extends State<SmallCard> {
                 context.read<OnboardingCubit>().updateState();
                 return;
               }
+
+              // ignore: use_build_context_synchronously
+              context.read<RoutineCubit>().updateState(routine);
+
+              // ignore: use_build_context_synchronously
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const DailyRoutinePage(),
+                ),
+              );
             },
             child: Stack(
               children: [
@@ -144,8 +160,8 @@ class _SmallCardState extends State<SmallCard> {
                                   ),
                                   child: CircleAvatar(
                                     radius: 30.0,
-                                    backgroundImage:
-                                        AssetImage(routine.ownerImage!),
+                                    backgroundImage: AssetImage(
+                                        routine.authorProfilePicture!),
                                     backgroundColor: Colors.transparent,
                                   ),
                                 ),
@@ -155,7 +171,7 @@ class _SmallCardState extends State<SmallCard> {
                         ),
                       ),
                       Text(
-                        "${routine.ownerName!}'s Daily Routine",
+                        "${routine.authorName}'s Daily Routine",
                         style: const TextStyle(
                             color: Colors.white,
                             fontFamily: "Twitterchirp_Bold",

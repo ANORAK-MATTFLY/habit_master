@@ -22,7 +22,7 @@ class LikeIcon extends StatefulWidget {
 class _LikeIconState extends State<LikeIcon> {
   @override
   Widget build(BuildContext context) {
-    final userInfo = serviceLocator<IdentityApi>().getAuthenticatedUser()!;
+    final userInfo = serviceLocator<IdentityApi>().getAuthenticatedUser();
     final post = widget.post;
     Future<bool> onLikeButtonTapped(bool isLiked) async {
       final isAuthenticated =
@@ -34,7 +34,7 @@ class _LikeIconState extends State<LikeIcon> {
       }
 
       /// send your request here
-      PostMutations().like(post.id!, userInfo.uid);
+      PostMutations().like(post.id!, userInfo!.uid);
 
       /// if failed, you can do nothing
       return !isLiked;
@@ -53,7 +53,11 @@ class _LikeIconState extends State<LikeIcon> {
       likeBuilder: (bool isLiked) {
         return Icon(
           Icons.favorite,
-          color: isLiked ? Colors.red : Colors.white,
+          color: userInfo == null
+              ? Colors.white
+              : isLiked
+                  ? Colors.red
+                  : Colors.white,
           size: 15.0,
         );
       },

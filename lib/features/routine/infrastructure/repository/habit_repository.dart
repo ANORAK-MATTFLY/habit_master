@@ -30,7 +30,9 @@ class HabitRepository implements HabitInterface {
   }
 
   @override
-  Stream<List<Habit>> getHabits(String routineID) {
+  Stream<List<Habit>> getHabits(
+    String routineID,
+  ) {
     return HabitQueries(routineID).stream;
   }
 

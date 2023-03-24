@@ -7,8 +7,9 @@ import 'package:habit_master/features/routine/infrastructure/models/author_model
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
 class RoutineRepository implements RoutineInterface {
+  RoutineRepository({required this.routineQueries});
   final RoutinesMutations routinesMutations = RoutinesMutations();
-  final RoutineQueries routineQueries = RoutineQueries();
+  final RoutineQueries routineQueries;
 
   @override
   Future<Either<Failure, bool>> createRoutine(
@@ -17,13 +18,13 @@ class RoutineRepository implements RoutineInterface {
   }
 
   @override
-  Stream<List<Routine>> getRoutines() {
-    return RoutineQueries().stream;
+  Stream<List<Routine>> getRoutines(String routineType) {
+    return RoutineQueries(routineType).stream;
   }
 
   @override
   Future<Routine> getOneRoutine(String authorID) async {
-    final rawRoutineData = await RoutineQueries().getRoutineByID(authorID);
+    final rawRoutineData = await routineQueries.getRoutineByID(authorID);
 
     final Routine routine = Routine.fromJson(rawRoutineData[0]);
     return routine;

@@ -1,0 +1,262 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+
+import '../../features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
+import '../../features/routine/presentation/pages/daily_routine/bloc/bloc_event/time_stream_event.dart';
+
+class DynamicIsland extends StatefulWidget {
+  const DynamicIsland({
+    Key? key,
+    required this.remainingTime,
+  }) : super(key: key);
+
+  final String remainingTime;
+
+  @override
+  State<DynamicIsland> createState() => _DynamicIslandState();
+}
+
+class _DynamicIslandState extends State<DynamicIsland> {
+  bool taped = false;
+  bool showTimer = true;
+  bool showLockIcon = false;
+  bool minimize = false;
+  bool showDynamic = true;
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return Visibility(
+      visible: showDynamic,
+      child: SizedBox(
+        height: 200.0,
+        width: MediaQuery.of(context).size.width,
+        child: Center(
+          child: Stack(
+            children: [
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      taped = !taped;
+                      showLockIcon = !showLockIcon;
+                    });
+                  },
+                  child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 500),
+                      height: 60.0,
+                      width: minimize == true ? 50 : (width - 20),
+                      decoration: BoxDecoration(
+                        // color: Colors.yellow,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(30.0),
+                        ),
+
+                        gradient: minimize == false
+                            ? const LinearGradient(
+                                colors: [
+                                  Color.fromARGB(255, 185, 86, 255),
+                                  Color.fromARGB(255, 255, 185, 209),
+                                ],
+                                begin: Alignment.topRight,
+                                end: Alignment.bottomLeft,
+                                stops: [0.0, 0.8],
+                                tileMode: TileMode.clamp,
+                              )
+                            : const LinearGradient(
+                                colors: [
+                                  Color.fromARGB(233, 26, 26, 26),
+                                  Color.fromARGB(191, 26, 26, 26),
+                                ],
+                                begin: Alignment.topRight,
+                                end: Alignment.bottomLeft,
+                                stops: [
+                                  0.0,
+                                  0.8,
+                                ],
+                                tileMode: TileMode.clamp,
+                              ),
+                      ),
+                      child: Visibility(
+                        visible: minimize,
+                        child: Center(
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                // taped = true;
+                                showTimer = true;
+                                // showLockIcon = false;
+                                minimize = !minimize;
+                              });
+                            },
+                            icon: const Icon(
+                              CupertinoIcons.fullscreen,
+                              size: 20.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      )),
+                ),
+              ),
+              Visibility(
+                visible: showTimer,
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 5.0,
+                    ),
+                    height: 60.0,
+                    width: MediaQuery.of(context).size.width - 20,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          height: 50.0,
+                          width: 200.0,
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30.0),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                widget.remainingTime,
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 171, 255, 173),
+                                  fontFamily: "Twitterchirp",
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w700,
+                                  decoration: TextDecoration.none,
+                                ),
+                              ),
+                              Container(
+                                height: 35.0,
+                                width: 70.0,
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 24, 24, 24),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(30.0),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: SizedBox(
+                                    height: 70.0,
+                                    width: 70.0,
+                                    child: Lottie.asset(
+                                      "assets/animations/timer_animations/timer3.json",
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ).animate().flip(),
+                        Container(
+                          height: 50.0,
+                          width: 120.0,
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30.0),
+                            ),
+                          ),
+                          child: Center(
+                            child: IconButton(
+                              onPressed: () {
+                                showDynamic = false;
+                                context.read<StreamTimerBLoc>().add(
+                                      const TimeStreamEvent(minutes: 0),
+                                    );
+                              },
+                              icon: const Icon(
+                                CupertinoIcons.stop_circle,
+                                color: Colors.red,
+                                size: 30.0,
+                              ),
+                            ),
+                          ),
+                        ).animate().fadeIn(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: taped,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                      height: 40.0,
+                      width: (width - 40),
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 37, 37, 37),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20.0),
+                        ),
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                showDynamic = false;
+                                context.read<StreamTimerBLoc>().add(
+                                      const TimeStreamEvent(minutes: 0),
+                                    );
+                              },
+                              icon: const Icon(
+                                CupertinoIcons.clear,
+                                color: Color.fromARGB(255, 255, 128, 119),
+                                size: 25.0,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  // taped = false;
+                                  taped = false;
+                                  minimize = !minimize;
+                                  showTimer = false;
+                                });
+                              },
+                              icon: const Icon(
+                                CupertinoIcons.fullscreen_exit,
+                                color: Colors.white,
+                                size: 25.0,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showDynamic = false;
+                                context.read<StreamTimerBLoc>().add(
+                                      const TimeStreamEvent(minutes: 0),
+                                    );
+                              },
+                              icon: const Icon(
+                                CupertinoIcons.stop_circle_fill,
+                                color: Colors.white,
+                                size: 25.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

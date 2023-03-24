@@ -19,10 +19,10 @@ class HabitMutations implements HabitMutationsInterface {
   final ExceptionHandlers exceptionHandlers = ExceptionHandlers();
 
   @override
-  Future<Either<Failure, bool>> createHabit(Habit task) async {
+  Future<Either<Failure, bool>> createHabit(Habit habit) async {
     try {
       final database = await LocalDatabase.instance.database;
-      final createTaskQuery = LocalDatabaseConstantProvider.createHabit(task);
+      final createTaskQuery = LocalDatabaseConstantProvider.createHabit(habit);
       await database.rawInsert(createTaskQuery);
       return const Right(true);
     } on DatabaseException catch (error) {
@@ -36,7 +36,9 @@ class HabitMutations implements HabitMutationsInterface {
       final database = await LocalDatabase.instance.database;
       final updateHabit =
           LocalDatabaseConstantProvider.updateHabitDoneAttribute(
-              isDone, habit.id!);
+        isDone,
+        habit.id!,
+      );
 
       await database.rawUpdate(updateHabit);
       return const Right(true);

@@ -4,9 +4,14 @@ import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/bloc/cubit/sign_in_cubit.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/page/authentication_panel.dart';
 import 'package:habit_master/features/routine/domain/logic/prebuilt_data.dart';
+import 'package:habit_master/features/routine/domain/logic/remote_routines_sync.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_author.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/timer_task.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/pages/personal_routine.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v1/expansion_item.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/large_card.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_habit.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/toggle_habit_bloc.dart';
@@ -105,11 +110,31 @@ class MyApp extends StatelessWidget {
           child: const DailyRoutinePage(),
         ),
         BlocProvider(
+          create: (_) => MinutesCubit(),
+          child: const DailyRoutinePage(),
+        ),
+        BlocProvider(
+          create: (_) => MinutesCounterCubit(),
+          child: const DailyRoutinePage(),
+        ),
+        BlocProvider(
           create: (_) => TypeTaskCubit(),
           child: const DailyRoutinePage(),
         ),
         BlocProvider(
           create: (_) => MomentTaskCubit(),
+          child: const DailyRoutinePage(),
+        ),
+        BlocProvider(
+          create: (_) => MomentTaskCubit(),
+          child: const ExpandedItemList(
+              color: Colors.red,
+              progressRatio: const Center(),
+              shimmer: Colors.red,
+              title: ""),
+        ),
+        BlocProvider(
+          create: (_) => TimerControllerCubit(),
           child: const DailyRoutinePage(),
         ),
         BlocProvider(
@@ -135,6 +160,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => ListOfPostCubit(),
           child: const UserFeedPage(),
+        ),
+        BlocProvider(
+          create: (_) => StreamTimerBLoc(),
+          child: const SuspendedBottomAppBar(),
         ),
       ],
       child: MaterialApp(

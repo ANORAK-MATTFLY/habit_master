@@ -6,6 +6,7 @@ import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/routine/domain/logic/input_validation.dart';
 
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
+import 'package:habit_master/features/routine/infrastructure/repository/habit_remote_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_repository.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_event/create_habit.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_habit.dart';
@@ -15,17 +16,19 @@ import 'package:habit_master/features/routine/presentation/pages/create_habit/bl
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/when_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/widgets/v1/habit_options.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/widgets/v1/select_when.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habit_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habits_list.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 import 'package:habit_master/shared/bloc/error_cubit.dart';
-import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'package:habit_master/shared/bloc/show_error_cubit.dart';
 import 'package:habit_master/shared/static/dates.dart';
 import 'package:habit_master/shared/static/options.dart';
+import 'package:habit_master/shared/widgets/dynamic_island.dart';
 import 'package:habit_master/shared/widgets/error.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../../auth/presentation/pages/authentication/page/authentication_panel.dart';
 import '../widgets/v1/expansion_item.dart';
 import '../widgets/v1/progress.dart';
 import '../widgets/v1/chart_and_desc.dart';
@@ -43,12 +46,14 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
   final TextEditingController taskName = TextEditingController();
   final TextEditingController taskDuration = TextEditingController();
   bool showError = false;
+  bool showAppBar = true;
 
   @override
   Widget build(BuildContext context) {
     getHabits(List<Habit> streamedHabits) =>
         context.read<HabitListCubit>().updateState(streamedHabits);
     final routine = context.read<RoutineCubit>().state!;
+    final timerControllerCubit = context.read<TimerControllerCubit>();
 
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -98,69 +103,6 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
             ),
       ),
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: const Color(0x00000000),
-        elevation: 0,
-        leading: Container(
-          height: 30,
-          width: 30,
-          margin: const EdgeInsets.all(10.0),
-          decoration: BoxDecoration(
-            color: const Color(0x42FFFFFF),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(360),
-            ),
-            border: Border.all(
-                color: const Color(0xFFFFFFFF),
-                style: BorderStyle.solid,
-                width: 0.4),
-          ),
-          child: Center(
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              color: Colors.white,
-              iconSize: 12.0,
-            ),
-          ),
-        ),
-        actions: [
-          Container(
-            height: 40.0,
-            width: 40.0,
-            margin: const EdgeInsets.only(top: 15, right: 20),
-            padding: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                borderRadius: const BorderRadius.all(Radius.circular(360))),
-            child: const CircleAvatar(
-              radius: 30.0,
-              backgroundImage: AssetImage("assets/images/elon-musk.png"),
-              backgroundColor: Colors.transparent,
-            ),
-          ),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              padding: const EdgeInsets.all(2.0),
-              margin: const EdgeInsets.only(top: 15, right: 20),
-              height: 40.0,
-              width: 40.0,
-              decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
-                  borderRadius: const BorderRadius.all(Radius.circular(360))),
-              child: const CircleAvatar(
-                radius: 30.0,
-                backgroundImage:
-                    AssetImage("assets/images/3d objects/Polyhedron.png"),
-                backgroundColor: Colors.transparent,
-              ),
-            ),
-          )
-        ],
-      ),
       body: Stack(
         children: [
           StreamBuilder<List<Habit>>(
@@ -179,18 +121,33 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                       color: const Color.fromARGB(255, 7, 3, 15),
-                      child: Stack(
+                      child: Column(
                         children: [
-                          Positioned(
-                            bottom: 0,
+                          Flexible(
+                            flex: 3,
+                            child: Container(
+                              padding: const EdgeInsets.only(top: 90.0),
+                              width: double.infinity,
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(30.0),
+                                    bottomRight: Radius.circular(30.0)),
+                                color: Colors.black,
+                              ),
+                              child: ChartAndDescription(routine: routine),
+                            ),
+                          ),
+                          Flexible(
+                            flex: 2,
                             child: SizedBox(
                               height: 430,
                               width: (MediaQuery.of(context).size.width),
                               child: ListView(
+                                shrinkWrap: true,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 40.0),
+                                    padding:
+                                        const EdgeInsets.only(bottom: 20.0),
                                     child: ExpandedItemList(
                                       title: "Start your Morning Routine",
                                       progressRatio: progress(
@@ -204,7 +161,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                   ),
                                   Padding(
                                     padding:
-                                        const EdgeInsets.only(bottom: 40.0),
+                                        const EdgeInsets.only(bottom: 20.0),
                                     child: ExpandedItemList(
                                       title: "Kickoff your Afternoon!",
                                       progressRatio: progress(
@@ -233,7 +190,6 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                               ),
                             ),
                           ),
-                          ChartAndDescription(routine: routine),
                         ],
                       ),
                     );
@@ -244,18 +200,33 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                       color: const Color.fromARGB(255, 7, 3, 15),
-                      child: Stack(
+                      child: Column(
                         children: [
-                          Positioned(
-                            bottom: 0,
+                          Flexible(
+                            flex: 3,
+                            child: Container(
+                              padding: const EdgeInsets.only(top: 90.0),
+                              width: double.infinity,
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(30.0),
+                                    bottomRight: Radius.circular(30.0)),
+                                color: Colors.black,
+                              ),
+                              child: ChartAndDescription(routine: routine),
+                            ),
+                          ),
+                          Flexible(
+                            flex: 2,
                             child: SizedBox(
                               height: 430,
                               width: (MediaQuery.of(context).size.width),
                               child: ListView(
+                                shrinkWrap: true,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 40.0),
+                                    padding:
+                                        const EdgeInsets.only(bottom: 20.0),
                                     child: ExpandedItemList(
                                       title: "Start your Morning Routine",
                                       progressRatio: progress(
@@ -269,7 +240,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                   ),
                                   Padding(
                                     padding:
-                                        const EdgeInsets.only(bottom: 40.0),
+                                        const EdgeInsets.only(bottom: 20.0),
                                     child: ExpandedItemList(
                                       title: "Kickoff your Afternoon!",
                                       progressRatio: progress(
@@ -298,7 +269,6 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                               ),
                             ),
                           ),
-                          ChartAndDescription(routine: routine),
                         ],
                       ),
                     );
@@ -310,18 +280,33 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
                         color: const Color.fromARGB(255, 7, 3, 15),
-                        child: Stack(
+                        child: Column(
                           children: [
-                            Positioned(
-                              bottom: 0,
+                            Flexible(
+                              flex: 4,
+                              child: Container(
+                                padding: const EdgeInsets.only(top: 90.0),
+                                width: double.infinity,
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(30.0),
+                                      bottomRight: Radius.circular(30.0)),
+                                  color: Colors.black,
+                                ),
+                                child: ChartAndDescription(routine: routine),
+                              ),
+                            ),
+                            Flexible(
+                              flex: 2,
                               child: SizedBox(
                                 height: 430,
                                 width: (MediaQuery.of(context).size.width),
                                 child: ListView(
+                                  shrinkWrap: true,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 40.0),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20.0),
                                       child: ExpandedItemList(
                                         title: "Start your Morning Routine",
                                         progressRatio: progress(
@@ -336,7 +321,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     ),
                                     Padding(
                                       padding:
-                                          const EdgeInsets.only(bottom: 40.0),
+                                          const EdgeInsets.only(bottom: 20.0),
                                       child: ExpandedItemList(
                                         title: "Kickoff your Afternoon!",
                                         progressRatio: progress(
@@ -365,13 +350,46 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                 ),
                               ),
                             ),
-                            ChartAndDescription(routine: routine),
                           ],
                         ),
                       );
                     }
                 }
               }),
+          BlocBuilder<StreamTimerBLoc, Stream<String>?>(
+              buildWhen: (previous, current) {
+            return previous != current;
+          }, builder: (context, state) {
+            if (state == null) {
+              return const Center();
+            }
+            if (timerControllerCubit.state == true) {
+              state.take(0);
+              return Center();
+            }
+            return StreamBuilder<String>(
+                stream:
+                    state.takeWhile((_) => timerControllerCubit.state == false),
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    return const Center();
+                  }
+
+                  if (snapshot.data == "60") {
+                    context.read<MinutesCounterCubit>().updateState();
+                  }
+                  if (context.read<MinutesCounterCubit>().state ==
+                      context.read<MinutesCubit>().state) {
+                    timerControllerCubit.updateState();
+                    return const Center();
+                  }
+
+                  final String remainingTime = snapshot.data!;
+                  return DynamicIsland(
+                      remainingTime:
+                          "${context.read<MinutesCounterCubit>().state} : $remainingTime");
+                });
+          }),
           Visibility(
             visible: showCreateHabitPanel,
             child: ListView(
@@ -663,8 +681,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                   scheduledFor: taskMoment.state.toLowerCase(),
                                   type: taskType.state,
                                   habitName: taskName.text,
-                                  duration:
-                                      "${taskDuration.text}-${taskTimeOption.state}",
+                                  duration: taskDuration.text,
                                   doneOn: "",
                                 );
                                 context.read<CreateHabitBlocLogic>().add(

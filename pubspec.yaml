@@ -35,7 +35,7 @@ dependencies:
 
   # Utils
   uuid: ^3.0.6
-
+  stream_isolate: ^0.1.1
   # Local database
   sqflite: ^2.0.3+1
 
@@ -133,8 +133,6 @@ flutter:
     - assets/images/avatars/av22.png
     - assets/images/avatars/av23.png
 
-
-
     - assets/images/icons/crown.png
     - assets/images/icons/trophy.png
     - assets/svg/search-icon.svg
@@ -146,9 +144,26 @@ flutter:
     - assets/animations/fire animations/fire2.json
     - assets/animations/fire animations/fire3.json
     - assets/animations/fire animations/fire4.json
+    - assets/animations/loading_animation_1.json
+    - assets/animations/loading_2.json
+    - assets/animations/loading_3.json
+    - assets/animations/not_found.json
     - assets/rive_assets/shapes.riv
     - assets/rive_assets/button.riv
     - assets/animations/bg_animation.gif
+    - assets/animations/timer_animations/timer1.json
+    - assets/animations/timer_animations/timer2.json
+    - assets/animations/timer_animations/timer3.json
+    - assets/animations/timer_animations/timer4.json
+    - assets/animations/timer_animations/timer5.json
+    - assets/animations/timer_animations/timer6.json
+    - assets/animations/timer_animations/timer7.json
+    - assets/animations/timer_animations/timer8.json
+    - assets/animations/timer_animations/timer9.json
+    - assets/animations/timer_animations/timer10.json
+    - assets/animations/timer_animations/timer11.json
+    - assets/animations/timer_animations/timer12.json
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

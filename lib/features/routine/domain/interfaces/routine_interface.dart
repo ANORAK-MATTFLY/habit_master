@@ -5,6 +5,6 @@ import 'package:habit_master/features/routine/infrastructure/models/routine_mode
 
 abstract class RoutineInterface {
   Future<Either<Failure, bool>> createRoutine(Author author, int successRate);
-  Stream<List<Routine>> getRoutines();
+  Stream<List<Routine>> getRoutines(String routineType);
   Future<Routine> getOneRoutine(String authorID);
 }

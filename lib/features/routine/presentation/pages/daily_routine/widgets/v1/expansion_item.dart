@@ -1,16 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/dep_injection.dart';
-import 'package:habit_master/features/auth/api/identity_api.dart';
 import 'package:habit_master/features/routine/domain/logic/task_helpers.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc_event/time_stream_event.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habits_list.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/check_box_tile.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v1/circle_avatar.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/progress_graph.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_icon.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_line.dart';
-import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 
 class ExpandedItemList extends StatefulWidget {
   final String title;
@@ -46,6 +49,8 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
     if (widget.title == "Finish your day in style!") {
       tasks = TaskHelpers.getEveningTasks(streamedTasks);
     }
+    final timerControllerCubit = context.read<TimerControllerCubit>();
+
     return ExpansionPanelList(
         animationDuration: const Duration(milliseconds: 800),
         dividerColor: Colors.white,
@@ -154,11 +159,97 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                                 tasks.removeAt(tasks.indexOf(habit));
                               });
                             }),
-                            child: CheckBoxItem(
-                              color: widget.color,
-                              shimmer: widget.shimmer,
-                              habit: habit,
-                            ),
+                            child: habit.type == "check"
+                                ? CheckBoxItem(
+                                    color: widget.color,
+                                    shimmer: widget.shimmer,
+                                    habit: habit,
+                                  )
+                                : Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 15.0,
+                                    ),
+                                    height: 60.0,
+                                    width: double.infinity,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            timerControllerCubit.updateState();
+                                            context
+                                                .read<MinutesCounterCubit>()
+                                                .setMinute(0);
+                                            print(timerControllerCubit.state);
+
+                                            final int duration =
+                                                int.parse(habit.duration!) - 1;
+                                            context
+                                                .read<MinutesCubit>()
+                                                .setMinute(duration);
+
+                                            context.read<StreamTimerBLoc>().add(
+                                                  TimeStreamEvent(
+                                                      minutes: duration),
+                                                );
+                                          },
+                                          child: Container(
+                                            height: 40.0,
+                                            width: 100.0,
+                                            decoration: BoxDecoration(
+                                              color: widget.color,
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(15.0),
+                                              ),
+                                            ),
+                                            child: const Center(
+                                              child: Text("Start"),
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          habit.habitName!,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: "Twitterchirp",
+                                            fontSize: 17.0,
+                                            decoration: TextDecoration.none,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                title: const Text(
+                                                  "Your monthly progression on this task over the month",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontFamily: "Twitterchirp",
+                                                    fontSize: 14.0,
+                                                    decoration:
+                                                        TextDecoration.none,
+                                                  ),
+                                                ),
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 0, 0, 0),
+                                                content: ProgressGraph(
+                                                    habit: habit!),
+                                              ).animate().fadeIn(),
+                                            );
+                                          },
+                                          icon: Icon(
+                                            CupertinoIcons.circle_grid_3x3,
+                                            color: widget.color,
+                                            size: 20.0,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
                           );
                         }).toList(),
                       )),

@@ -6,12 +6,17 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/auth/api/identity_api.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 import 'package:habit_master/features/user_feed/infrastrcture/model/post_model.dart';
 import 'package:habit_master/features/user_feed/infrastrcture/repository/post_repository.dart';
 import 'package:habit_master/features/user_feed/presentation/user_feed/bloc/cubit/list_post.dart';
 import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v1/post.dart';
 import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v1/post_panel.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
+import 'package:habit_master/shared/widgets/dynamic_island.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class UserFeedPage extends StatefulWidget {
   const UserFeedPage({Key? key}) : super(key: key);
@@ -120,6 +125,24 @@ class _UserFeedPageState extends State<UserFeedPage> {
                       ),
                     );
                   }
+                  if (snapshot.connectionState == ConnectionState.none) {
+                    return Center(
+                      child: GradientText(
+                        "Please make sure you have internet connection",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: "Twitterchirp_Bold",
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        colors: const [
+                          Color(0xCBB0D9F1),
+                          Color(0xFF8E6AE4),
+                        ],
+                      ),
+                    );
+                  }
                   final rawPostsData = snapshot.data!.docs;
                   final List<Post> posts = [];
                   for (var i = 0; i < rawPostsData.length; i++) {
@@ -143,6 +166,36 @@ class _UserFeedPageState extends State<UserFeedPage> {
                   );
                 }),
           ),
+          BlocBuilder<StreamTimerBLoc, Stream<String>?>(
+              buildWhen: (previous, current) {
+            return previous != current;
+          }, builder: (context, state) {
+            if (state == null) {
+              return const Center();
+            }
+
+            return StreamBuilder<String>(
+                stream: state,
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    return const Center();
+                  }
+
+                  if (snapshot.data == "59") {
+                    context.read<MinutesCounterCubit>().updateState();
+                  }
+                  if (context.read<MinutesCounterCubit>().state ==
+                      context.read<MinutesCubit>().state) {
+                    context.read<TimerControllerCubit>().updateState();
+                    return const Center();
+                  }
+
+                  final String remainingTime = snapshot.data!;
+                  return DynamicIsland(
+                      remainingTime:
+                          "${context.read<MinutesCounterCubit>().state} : $remainingTime");
+                });
+          }),
           Visibility(
             visible: showEditPanel,
             child: const Center(

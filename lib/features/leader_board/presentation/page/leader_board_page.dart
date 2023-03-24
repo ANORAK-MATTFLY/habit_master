@@ -1,11 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/leader_board/infrastructure/data_sources/remote/queries/leader_queries.dart';
 import 'package:habit_master/features/leader_board/infrastructure/models/leader.dart';
 import 'package:habit_master/features/leader_board/infrastructure/repository/leader_repository.dart';
 import 'package:habit_master/features/leader_board/presentation/widgets/top_leader_card.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
+import 'package:habit_master/shared/widgets/dynamic_island.dart';
+
+import '../../../routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 
 class CompetitionScreen extends StatefulWidget {
   const CompetitionScreen({Key? key}) : super(key: key);
@@ -17,42 +23,82 @@ class CompetitionScreen extends StatefulWidget {
 class _CompetitionScreenState extends State<CompetitionScreen> {
   @override
   Widget build(BuildContext context) {
+    final timerControllerCubit = context.read<TimerControllerCubit>();
+
     return Scaffold(
       backgroundColor: const Color(0xFF0C051D),
       body: SafeArea(
-        child: StreamBuilder<QuerySnapshot<Object?>>(
-          stream: serviceLocator<LeaderQueries>().getLeaders(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const Center();
-            }
+        child: Stack(
+          children: [
+            StreamBuilder<QuerySnapshot<Object?>>(
+              stream: serviceLocator<LeaderQueries>().getLeaders(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Center();
+                }
 
-            if (snapshot.connectionState == ConnectionState.active) {
-              final data = snapshot.data!;
-              final List<Leader> competitors =
-                  serviceLocator<LeaderRepository>().getLeaders(data);
-              return LeaderBoardData(
-                competitors: competitors,
-              );
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CupertinoActivityIndicator(
-                  animating: true,
-                  color: Colors.white,
-                ),
-              );
-            }
-            if (snapshot.connectionState == ConnectionState.done) {
-              final data = snapshot.data!;
-              final List<Leader> competitors =
-                  serviceLocator<LeaderRepository>().getLeaders(data);
-              return LeaderBoardData(
-                competitors: competitors,
-              );
-            }
-            return const Center();
-          },
+                if (snapshot.connectionState == ConnectionState.active) {
+                  final data = snapshot.data!;
+                  final List<Leader> competitors =
+                      serviceLocator<LeaderRepository>().getLeaders(data);
+                  return LeaderBoardData(
+                    competitors: competitors,
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CupertinoActivityIndicator(
+                      animating: true,
+                      color: Colors.white,
+                    ),
+                  );
+                }
+                if (snapshot.data!.docs.isEmpty) {
+                  return const Center();
+                }
+                if (snapshot.connectionState == ConnectionState.done) {
+                  final data = snapshot.data!;
+                  final List<Leader> competitors =
+                      serviceLocator<LeaderRepository>().getLeaders(data);
+                  return LeaderBoardData(
+                    competitors: competitors,
+                  );
+                }
+
+                return const Center();
+              },
+            ),
+            BlocBuilder<StreamTimerBLoc, Stream<String>?>(
+                buildWhen: (previous, current) {
+              return previous != current;
+            }, builder: (context, state) {
+              if (state == null) {
+                return const Center();
+              }
+
+              return StreamBuilder<String>(
+                  stream: state,
+                  builder: (context, snapshot) {
+                    if (snapshot.data == null) {
+                      return const Center();
+                    }
+
+                    if (snapshot.data == "59") {
+                      context.read<MinutesCounterCubit>().updateState();
+                    }
+                    if (context.read<MinutesCounterCubit>().state ==
+                        context.read<MinutesCubit>().state) {
+                      timerControllerCubit.updateState();
+                      return const Center();
+                    }
+
+                    final String remainingTime = snapshot.data!;
+                    return DynamicIsland(
+                        remainingTime:
+                            "${context.read<MinutesCounterCubit>().state} : $remainingTime");
+                  });
+            }),
+          ],
         ),
       ),
     );

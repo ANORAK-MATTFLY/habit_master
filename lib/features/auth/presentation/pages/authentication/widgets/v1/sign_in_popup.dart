@@ -241,23 +241,6 @@ class _SignInPopupState extends State<SignInPopup>
                         Center(
                           child: GestureDetector(
                             onTap: () async {
-                              // final userInfo =
-                              //     IdentityApi().getAuthenticatedUser();
-                              // const Author myAuthor = Author(
-                              //   authorProfilePicture:
-                              //       "assets/images/avatars/av15.png",
-                              //   authorName: "Will",
-                              //   id: ".llksjdfklduid",
-                              //   type: "costumer",
-                              // );
-                              // final resust =
-                              //     await serviceLocator<AuthorUseCases>()
-                              //         .executeCreateAuthor(myAuthor);
-                              // final auth =
-                              //     await serviceLocator<AuthorUseCases>()
-                              //         .executeCheckIfAuthorExist(userInfo!.uid);
-                              // print(auth);
-
                               final loginSucceeded =
                                   await GoogleAuth().loginWithGoogle();
                               if (loginSucceeded == true) {

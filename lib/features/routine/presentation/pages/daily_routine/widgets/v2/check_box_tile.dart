@@ -2,12 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/dep_injection.dart';
-import 'package:habit_master/features/auth/api/identity_api.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/toggle_habit_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_event/toggle_habit.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habits_list.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc_event/time_stream_event.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/progress_graph.dart';
 
 class CheckBoxItem extends StatefulWidget {
@@ -71,10 +70,6 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
       ),
       value: _triggerState,
       onChanged: (bool? value) {
-        final habit = widget.habit!;
-        final customeHabit = Habit(doneOn: widget.habit!.doneOn);
-        final tempList = context.read<HabitListCubit>().state;
-        final habits = context.read<HabitListCubit>().state;
         setState(() {
           _triggerState = !_triggerState;
 

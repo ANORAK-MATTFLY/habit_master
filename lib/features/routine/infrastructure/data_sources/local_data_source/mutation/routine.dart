@@ -23,10 +23,10 @@ class RoutinesMutations implements RoutinesMutationsInterface {
         authorProfilePicture: author.authorProfilePicture!,
         description: "",
         subscribers: 0,
-        isPremium: 1,
         subTitle: "",
         successRate: successRate,
         progress: 0,
+        type: "local",
       );
 
       final command = LocalDatabaseConstantProvider.createRoutine(routine);

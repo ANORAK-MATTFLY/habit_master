@@ -40,6 +40,19 @@ class Habit extends HabitEntity {
     this.isDone,
     this.doneOn,
   });
+  factory Habit.fromDocument(dynamic doc) {
+    return Habit(
+      id: doc["id"],
+      routineID: doc["routine_id"],
+      habitName: doc["habit_name"],
+      type: doc["type"],
+      scheduledFor: doc["scheduled_for"],
+      duration: doc["duration"],
+      expirationDate: doc["expiration_date"],
+      isDone: doc["is_done"],
+      doneOn: doc["done_on"],
+    );
+  }
 
   static Habit fromJson(Map<String, Object?> json) => Habit(
         id: json['id'] as String?,

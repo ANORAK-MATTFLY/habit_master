@@ -5,16 +5,28 @@ import 'package:habit_master/features/routine/domain/interfaces/routine_queries_
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
 class RoutineQueries implements RoutineQueriesInterface {
-  RoutineQueries() {
-    getRoutines().then((rawRoutinesData) {
-      final List<Routine> routines = [];
-      for (var index = 0; index < rawRoutinesData.length; index++) {
-        final rawTask = rawRoutinesData[index];
-        final task = Routine.fromJson(rawTask);
-        routines.add(task);
-        _streamController.sink.add(routines);
-      }
-    });
+  RoutineQueries(String routineType) {
+    if (routineType == "local") {
+      getRoutines().then((rawRoutinesData) {
+        final List<Routine> routines = [];
+        for (var index = 0; index < rawRoutinesData.length; index++) {
+          final rawTask = rawRoutinesData[index];
+          final task = Routine.fromJson(rawTask);
+          routines.add(task);
+          _streamController.sink.add(routines);
+        }
+      });
+    } else {
+      getRemoteRoutines().then((rawRoutinesData) {
+        final List<Routine> routines = [];
+        for (var index = 0; index < rawRoutinesData.length; index++) {
+          final rawTask = rawRoutinesData[index];
+          final task = Routine.fromJson(rawTask);
+          routines.add(task);
+          _streamController.sink.add(routines);
+        }
+      });
+    }
   }
 
   final _streamController = StreamController<List<Routine>>();
@@ -22,7 +34,14 @@ class RoutineQueries implements RoutineQueriesInterface {
   @override
   Future<List<Map<String, Object?>>> getRoutines() async {
     final rawRoutinesData = await LocalDatabase.instance.database.then(
-      (value) => value.query("routine"),
+      (value) => value.rawQuery("SELECT * FROM routine WHERE type = 'local'"),
+    );
+    return rawRoutinesData;
+  }
+
+  Future<List<Map<String, Object?>>> getRemoteRoutines() async {
+    final rawRoutinesData = await LocalDatabase.instance.database.then(
+      (value) => value.rawQuery("SELECT * FROM routine WHERE type = 'remote'"),
     );
     return rawRoutinesData;
   }
