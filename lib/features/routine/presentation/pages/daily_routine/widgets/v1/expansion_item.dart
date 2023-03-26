@@ -9,11 +9,13 @@ import 'package:habit_master/features/routine/presentation/pages/daily_routine/b
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habits_list.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_habit_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/check_box_tile.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v1/circle_avatar.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/progress_graph.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_icon.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_line.dart';
+import 'package:lottie/lottie.dart';
 
 class ExpandedItemList extends StatefulWidget {
   final String title;
@@ -175,40 +177,67 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            timerControllerCubit.updateState();
-                                            context
-                                                .read<MinutesCounterCubit>()
-                                                .setMinute(0);
-                                            print(timerControllerCubit.state);
+                                        habit.isDone == false
+                                            ? GestureDetector(
+                                                onTap: () {
+                                                  timerControllerCubit
+                                                      .updateState();
+                                                  context
+                                                      .read<
+                                                          MinutesCounterCubit>()
+                                                      .setMinute(0);
+                                                  final num = habit.duration!
+                                                      .split("-")[0];
 
-                                            final int duration =
-                                                int.parse(habit.duration!) - 1;
-                                            context
-                                                .read<MinutesCubit>()
-                                                .setMinute(duration);
+                                                  final habitDuration =
+                                                      int.parse(num);
 
-                                            context.read<StreamTimerBLoc>().add(
-                                                  TimeStreamEvent(
-                                                      minutes: duration),
-                                                );
-                                          },
-                                          child: Container(
-                                            height: 40.0,
-                                            width: 100.0,
-                                            decoration: BoxDecoration(
-                                              color: widget.color,
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(15.0),
+                                                  context
+                                                      .read<HabitTimerCubit>()
+                                                      .updateState(habit);
+
+                                                  context
+                                                      .read<MinutesCubit>()
+                                                      .setMinute(habitDuration);
+
+                                                  context
+                                                      .read<StreamTimerBLoc>()
+                                                      .add(
+                                                        TimeStreamEvent(
+                                                            minutes:
+                                                                habitDuration),
+                                                      );
+                                                },
+                                                child: Container(
+                                                  height: 40.0,
+                                                  width: 100.0,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: Color.fromARGB(
+                                                        255, 28, 0, 45),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(15.0),
+                                                    ),
+                                                  ),
+                                                  child: const Center(
+                                                    child: Text("Start"),
+                                                  ),
+                                                ))
+                                            : Container(
+                                                height: 40.0,
+                                                width: 100.0,
+                                                decoration: const BoxDecoration(
+                                                  color: Color.fromARGB(
+                                                      255, 28, 0, 45),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(15.0),
+                                                  ),
+                                                ),
+                                                child: Lottie.asset(
+                                                    "assets/animations/success1.json"),
                                               ),
-                                            ),
-                                            child: const Center(
-                                              child: Text("Start"),
-                                            ),
-                                          ),
-                                        ),
                                         Text(
                                           habit.habitName!,
                                           style: const TextStyle(

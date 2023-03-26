@@ -330,6 +330,7 @@ class _HomePageState extends State<HomePage> {
                             context.read<TimerControllerCubit>().updateState();
                             return const Center();
                           }
+                          print(context.read<MinutesCounterCubit>().state);
 
                           final String remainingTime = snapshot.data!;
                           return DynamicIsland(

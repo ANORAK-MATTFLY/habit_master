@@ -10,6 +10,7 @@ import 'package:habit_master/features/routine/presentation/pages/create_habit/bl
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_habit_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/pages/personal_routine.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v1/expansion_item.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/large_card.dart';
@@ -129,7 +130,15 @@ class MyApp extends StatelessWidget {
           create: (_) => MomentTaskCubit(),
           child: const ExpandedItemList(
               color: Colors.red,
-              progressRatio: const Center(),
+              progressRatio: Center(),
+              shimmer: Colors.red,
+              title: ""),
+        ),
+        BlocProvider(
+          create: (_) => HabitTimerCubit(),
+          child: const ExpandedItemList(
+              color: Colors.red,
+              progressRatio: Center(),
               shimmer: Colors.red,
               title: ""),
         ),

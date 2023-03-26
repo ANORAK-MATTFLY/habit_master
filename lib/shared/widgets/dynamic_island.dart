@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_habit_cubit.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
@@ -25,9 +28,22 @@ class _DynamicIslandState extends State<DynamicIsland> {
   bool showLockIcon = false;
   bool minimize = false;
   bool showDynamic = true;
+  bool showDetails = false;
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final habitTimer = context.read<HabitTimerCubit>();
+
+    final time = habitTimer.state!.duration!.split("-");
+
+    final habitDuration = int.parse(time[0]);
+
+    final percent = ((int.parse(widget.remainingTime.substring(0, 2)) * 100) /
+            habitDuration)
+        .ceil()
+        .toString();
+
+    final ratio = (habitDuration / habitDuration).ceil().toString();
     return Visibility(
       visible: showDynamic,
       child: SizedBox(
@@ -159,31 +175,48 @@ class _DynamicIslandState extends State<DynamicIsland> {
                             ],
                           ),
                         ).animate().flip(),
-                        Container(
-                          height: 50.0,
-                          width: 120.0,
-                          decoration: const BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30.0),
-                            ),
-                          ),
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {
-                                showDynamic = false;
-                                context.read<StreamTimerBLoc>().add(
-                                      const TimeStreamEvent(minutes: 0),
-                                    );
-                              },
-                              icon: const Icon(
-                                CupertinoIcons.stop_circle,
-                                color: Colors.red,
-                                size: 30.0,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              showDetails = !showDetails;
+                            });
+                          },
+                          child: Container(
+                              height: 50.0,
+                              width: 120.0,
+                              decoration: const BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30.0),
+                                ),
                               ),
-                            ),
-                          ),
-                        ).animate().fadeIn(),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "${habitDuration!} Minutes",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "Twitterchirp",
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.none,
+                                    ),
+                                  ),
+                                  Text(
+                                    "$percent %",
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 121, 255, 126),
+                                      fontFamily: "Twitterchirp",
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.none,
+                                    ),
+                                  ),
+                                ],
+                              )).animate().fadeIn(),
+                        ),
                       ],
                     ),
                   ),
@@ -195,7 +228,7 @@ class _DynamicIslandState extends State<DynamicIsland> {
                   alignment: Alignment.bottomCenter,
                   child: Container(
                       height: 40.0,
-                      width: (width - 40),
+                      width: (width - 80),
                       decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 37, 37, 37),
                         borderRadius: BorderRadius.all(
@@ -209,6 +242,13 @@ class _DynamicIslandState extends State<DynamicIsland> {
                           children: [
                             IconButton(
                               onPressed: () {
+                                context
+                                    .read<TimerControllerCubit>()
+                                    .updateState();
+                                context
+                                    .read<MinutesCounterCubit>()
+                                    .setMinute(0);
+
                                 showDynamic = false;
                                 context.read<StreamTimerBLoc>().add(
                                       const TimeStreamEvent(minutes: 0),
@@ -235,17 +275,47 @@ class _DynamicIslandState extends State<DynamicIsland> {
                                 size: 25.0,
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {
-                                showDynamic = false;
-                                context.read<StreamTimerBLoc>().add(
-                                      const TimeStreamEvent(minutes: 0),
-                                    );
-                              },
-                              icon: const Icon(
-                                CupertinoIcons.stop_circle_fill,
+                          ],
+                        ),
+                      )),
+                ),
+              ),
+              Visibility(
+                visible: showDetails,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                      height: 40.0,
+                      width: (width - 40),
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 37, 37, 37),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20.0),
+                        ),
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Total duration: ${habitTimer.state!.duration}",
+                              style: const TextStyle(
                                 color: Colors.white,
-                                size: 25.0,
+                                fontFamily: "Twitterchirp",
+                                fontSize: 13.0,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.none,
+                              ),
+                            ),
+                            Text(
+                              "Steps: $ratio",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontFamily: "Twitterchirp",
+                                fontSize: 13.0,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.none,
                               ),
                             ),
                           ],

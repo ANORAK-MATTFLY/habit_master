@@ -21,6 +21,7 @@ import 'package:habit_master/features/routine/presentation/pages/daily_routine/b
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habits_list.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_habit_cubit.dart';
 import 'package:habit_master/shared/bloc/error_cubit.dart';
 import 'package:habit_master/shared/bloc/show_error_cubit.dart';
 import 'package:habit_master/shared/static/dates.dart';
@@ -365,7 +366,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
             }
             if (timerControllerCubit.state == true) {
               state.take(0);
-              return Center();
+              return const Center();
             }
             return StreamBuilder<String>(
                 stream:
@@ -380,7 +381,9 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                   }
                   if (context.read<MinutesCounterCubit>().state ==
                       context.read<MinutesCubit>().state) {
+                    final Habit habit = context.read<HabitTimerCubit>().state!;
                     timerControllerCubit.updateState();
+                    serviceLocator<HabitRepository>().toggleHabit(habit, true);
                     return const Center();
                   }
 
@@ -619,19 +622,19 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                               labelStyle: TextStyle(
                                                 decorationColor: Colors.white,
                                                 color: Color.fromARGB(
-                                                    255, 140, 140, 140),
+                                                    255, 166, 166, 166),
                                                 fontFamily: "Twitterchirp_bold",
                                                 fontSize: 13.0,
                                                 decoration: TextDecoration.none,
                                                 overflow: TextOverflow.ellipsis,
                                               ),
-                                              labelText: "Time",
+                                              labelText: "Duration",
                                               border: InputBorder.none,
                                             ),
                                           ),
                                         ),
-                                        SelectWhen(
-                                            options: timeOptions,
+                                        const SelectWhen(
+                                            options: ["Minutes"],
                                             title: "time"),
                                       ],
                                     ),
@@ -681,7 +684,8 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                   scheduledFor: taskMoment.state.toLowerCase(),
                                   type: taskType.state,
                                   habitName: taskName.text,
-                                  duration: taskDuration.text,
+                                  duration:
+                                      "${taskDuration.text}-${taskTimeOption.state}",
                                   doneOn: "",
                                 );
                                 context.read<CreateHabitBlocLogic>().add(

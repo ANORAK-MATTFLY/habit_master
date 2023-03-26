@@ -163,6 +163,9 @@ flutter:
     - assets/animations/timer_animations/timer10.json
     - assets/animations/timer_animations/timer11.json
     - assets/animations/timer_animations/timer12.json
+    - assets/animations/success1.json
+    - assets/animations/success2.json
+    - assets/animations/success3.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
