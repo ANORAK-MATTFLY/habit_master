@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/auth/api/identity_api.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minutes_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 import 'package:habit_master/features/user_feed/infrastrcture/model/post_model.dart';
 import 'package:habit_master/features/user_feed/infrastrcture/repository/post_repository.dart';
@@ -16,6 +16,7 @@ import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v
 import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v1/post_panel.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'package:habit_master/shared/widgets/dynamic_island.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class UserFeedPage extends StatefulWidget {
@@ -184,7 +185,7 @@ class _UserFeedPageState extends State<UserFeedPage> {
                   if (snapshot.data == "59") {
                     context.read<MinutesCounterCubit>().updateState();
                   }
-                  if (context.read<MinutesCounterCubit>().state ==
+                  if (context.read<MinutesCounterCubit>().state >=
                       context.read<MinutesCubit>().state) {
                     context.read<TimerControllerCubit>().updateState();
                     return const Center();

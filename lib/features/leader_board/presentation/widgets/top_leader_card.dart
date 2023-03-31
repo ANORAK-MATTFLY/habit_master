@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:habit_master/features/leader_board/infrastructure/models/leader.dart';
 
+import '../../../../shared/logic/text_trimer.dart';
+
 // ignore: must_be_immutable
 class TopLeaderCard extends StatefulWidget {
   Leader leader;
   int index;
   final double height;
   final double width;
+  final double boxH;
+  final double boxW;
+  final double imageH;
+  final double imageW;
   Color color;
   TopLeaderCard({
     Key? key,
@@ -15,6 +21,10 @@ class TopLeaderCard extends StatefulWidget {
     required this.width,
     required this.color,
     required this.index,
+    required this.boxH,
+    required this.boxW,
+    required this.imageH,
+    required this.imageW,
   }) : super(key: key);
 
   @override
@@ -26,6 +36,7 @@ class TopLeaderStateCard extends State<TopLeaderCard> {
   @override
   Widget build(BuildContext context) {
     final leader = widget.leader;
+    final name = textTrimer(leader.leaderName!, 12);
     return SizedBox(
       height: widget.height,
       width: widget.width,
@@ -33,16 +44,16 @@ class TopLeaderStateCard extends State<TopLeaderCard> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            height: 100.0,
-            width: 100.0,
+            height: widget.boxH,
+            width: widget.boxW,
             child: Stack(
               children: [
                 Container(
-                  height: 90.0,
-                  width: 90.0,
+                  height: widget.imageH,
+                  width: widget.imageW,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: const Color.fromARGB(255, 254, 169, 255),
+                      color: widget.color,
                       width: 3.0,
                       style: BorderStyle.solid,
                     ),
@@ -55,8 +66,7 @@ class TopLeaderStateCard extends State<TopLeaderCard> {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color.fromARGB(255, 254, 169, 255)
-                            .withOpacity(0.2),
+                        color: widget.color.withOpacity(0.2),
                         spreadRadius: 5,
                         blurRadius: 20,
                         offset:
@@ -70,9 +80,9 @@ class TopLeaderStateCard extends State<TopLeaderCard> {
                   child: Container(
                       height: 25.0,
                       width: 25.0,
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 254, 169, 255),
-                        borderRadius: BorderRadius.all(
+                      decoration: BoxDecoration(
+                        color: widget.color,
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(360.0),
                         ),
                       ),
@@ -94,7 +104,7 @@ class TopLeaderStateCard extends State<TopLeaderCard> {
             ),
           ),
           Text(
-            leader.leaderName!,
+            name,
             style: const TextStyle(
               color: Colors.white,
               fontFamily: "Twitterchirp_Bold",

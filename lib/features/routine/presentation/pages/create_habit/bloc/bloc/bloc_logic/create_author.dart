@@ -17,7 +17,7 @@ class CreateAuthorBlocLogic extends Bloc<AuthorBlocInterface, AuthorState?> {
       if (authorHasBeenCreated.isRight()) {
         final routineMutations = serviceLocator<RoutineRepository>();
 
-        await routineMutations.createRoutine(author, 0);
+        await routineMutations.createRoutine(author, 0, "remote");
 
         final resultingData =
             AuthorState(authorState: authorHasBeenCreated.isRight());

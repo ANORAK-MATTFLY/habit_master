@@ -19,7 +19,7 @@ class PrebuiltData {
 
         if (authorExist == false) {
           await authorMutations.authorMutations.createAuthor(author);
-          await RoutinesMutations().createRoutine(author, 0);
+          await RoutinesMutations().createRoutine(author, 0, "local");
           final habits = generateTasks(author.id!);
           await HabitMutations().createHabits(habits);
         }

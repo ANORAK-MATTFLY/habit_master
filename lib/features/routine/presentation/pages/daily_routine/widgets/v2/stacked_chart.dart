@@ -29,6 +29,7 @@ class _StackedChartState extends State<StackedChart> {
   @override
   Widget build(BuildContext context) {
     final int totalHabits = context.read<HabitListCubit>().state.length;
+
     return FutureBuilder<List<ChartData>>(
         future: serviceLocator<StatsLogic>()
             .getWeeklyProgress(widget.routine.authorID!, totalHabits),
@@ -124,9 +125,10 @@ class _StackedChartState extends State<StackedChart> {
                 labelAlignment: LabelAlignment.center,
                 labelPlacement: LabelPlacement.betweenTicks,
                 labelStyle: const TextStyle(
-                    color: Colors.white,
-                    fontFamily: "Twitterchirp",
-                    fontSize: 12.0),
+                  color: Colors.white,
+                  fontFamily: "Twitterchirp",
+                  fontSize: 12.0,
+                ),
               ),
             ),
           );

@@ -13,8 +13,8 @@ class RoutineRepository implements RoutineInterface {
 
   @override
   Future<Either<Failure, bool>> createRoutine(
-      Author author, int successRate) async {
-    return await routinesMutations.createRoutine(author, successRate);
+      Author author, int successRate, String type) async {
+    return await routinesMutations.createRoutine(author, successRate, type);
   }
 
   @override

@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/routine/domain/logic/task_helpers.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc_event/time_stream_event.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habits_list.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minutes_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_habit_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/check_box_tile.dart';
@@ -16,6 +17,8 @@ import 'package:habit_master/features/routine/presentation/pages/daily_routine/w
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_icon.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_line.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../../../../infrastructure/repository/habit_repository.dart';
 
 class ExpandedItemList extends StatefulWidget {
   final String title;
@@ -155,6 +158,9 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                               ),
                             ),
                             onDismissed: ((direction) {
+                              serviceLocator<HabitRepository>()
+                                  .habitMutations
+                                  .deleteHabit(habit.id!);
                               setState(() {
                                 streamedTasks
                                     .removeAt(streamedTasks.indexOf(habit));
@@ -211,12 +217,10 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                                                 child: Container(
                                                   height: 40.0,
                                                   width: 100.0,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    color: Color.fromARGB(
-                                                        255, 28, 0, 45),
+                                                  decoration: BoxDecoration(
+                                                    color: widget.color,
                                                     borderRadius:
-                                                        BorderRadius.all(
+                                                        const BorderRadius.all(
                                                       Radius.circular(15.0),
                                                     ),
                                                   ),
@@ -266,8 +270,8 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                                                 backgroundColor:
                                                     const Color.fromARGB(
                                                         255, 0, 0, 0),
-                                                content: ProgressGraph(
-                                                    habit: habit!),
+                                                content:
+                                                    ProgressGraph(habit: habit),
                                               ).animate().fadeIn(),
                                             );
                                           },

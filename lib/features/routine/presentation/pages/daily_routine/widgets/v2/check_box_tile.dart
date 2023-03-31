@@ -5,8 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/toggle_habit_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_event/toggle_habit.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc_event/time_stream_event.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/progress_graph.dart';
 
 class CheckBoxItem extends StatefulWidget {

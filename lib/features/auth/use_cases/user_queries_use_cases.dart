@@ -5,12 +5,6 @@ import 'package:habit_master/features/auth/infrastructure/repository/user_reposi
 class UserQueriesUseCases {
   final UserRepository userRepository = serviceLocator<UserRepository>();
   Future<UserAggregate?> executeGetUserById(String userID) async {
-    // bool hasInternet = await InternetConnectionChecker().hasConnection;
-
-    // if (!hasInternet) {
-    //   return null;
-    // }
-
     final UserAggregate user = await userRepository.getUserById(userID);
     return user;
   }

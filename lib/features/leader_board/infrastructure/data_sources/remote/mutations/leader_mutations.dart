@@ -14,6 +14,7 @@ class LeaderMutations implements LeaderMutationsInterface {
     try {
       await leaderBoardCollection.doc(leader.id!).set(
         {
+          "room_id": leader.leaderRoomID,
           "id": leader.id,
           "leader_name": leader.leaderName,
           "profile_picture": leader.profilePicture,

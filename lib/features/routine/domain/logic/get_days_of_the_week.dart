@@ -4,58 +4,32 @@ class DateTimeManipulation {
   static String todaysDate = Timestamp.now().toDate().toString().split(" ")[0];
   static List<String> getDaysOfTheWeek() {
     final now = Timestamp.now().toDate();
-    final thisYear = now.year;
-    final thisMonth = now.month;
-    final toDay = now.day;
+
     final weekDay = now.weekday;
     const n = 7;
     final List<String> daysOfTheWeek = [];
     if (weekDay == 1) {
-      for (var index = 1; index < n; index++) {
-        final day = "$thisYear-$thisMonth-${toDay + index}";
-        daysOfTheWeek.add(day);
+      for (var index = 1; index <= 7; index++) {
+        final lastDateOfTheWeek = Timestamp.now().toDate().add(
+            Duration(days: (index - Timestamp.now().toDate().weekday).abs()));
+        daysOfTheWeek.add(lastDateOfTheWeek.toString().split(" ")[0]);
       }
     } else {
       final leftSide = (weekDay - 1);
 
-      final rightSide = ((n - weekDay) + 1);
+      final rightSide = ((n - weekDay).abs() + 1);
 
-      for (var index = leftSide; 0 < index; index--) {
-        final day =
-            "$thisYear-${thisMonth.toString().length == 1 ? '0$thisMonth' : thisMonth}-${toDay.toString().length == 1 ? '0${toDay - index}' : toDay - index}";
-        daysOfTheWeek.add(day);
+      for (var index = leftSide; 0 <= index; index--) {
+        final lastDateOfTheWeek =
+            Timestamp.now().toDate().subtract(Duration(days: index));
+        daysOfTheWeek.add(lastDateOfTheWeek.toString().split(" ")[0]);
       }
-      for (var index = 0; index < rightSide; index++) {
-        final day =
-            "$thisYear-${thisMonth.toString().length == 1 ? '0$thisMonth' : thisMonth}-${toDay.toString().length == 1 ? '0${toDay - index}' : toDay + index}";
-        daysOfTheWeek.add(day);
+      for (var index = 1; index < rightSide; index++) {
+        final lastDateOfTheWeek =
+            Timestamp.now().toDate().add(Duration(days: index));
+        daysOfTheWeek.add(lastDateOfTheWeek.toString().split(" ")[0]);
       }
     }
     return daysOfTheWeek;
-  }
-
-  static int getDaysInMonth() {
-    final year = Timestamp.now().toDate().year;
-    final month = Timestamp.now().toDate().month;
-    if (month == DateTime.february) {
-      final bool isLeapYear =
-          (year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0);
-      return isLeapYear ? 29 : 28;
-    }
-    const List<int> daysInMonth = <int>[
-      31,
-      -1,
-      31,
-      30,
-      31,
-      30,
-      31,
-      31,
-      30,
-      31,
-      30,
-      31
-    ];
-    return daysInMonth[month - 1];
   }
 }

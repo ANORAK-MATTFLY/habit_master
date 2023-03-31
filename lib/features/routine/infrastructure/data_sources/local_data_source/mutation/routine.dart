@@ -13,7 +13,7 @@ class RoutinesMutations implements RoutinesMutationsInterface {
 
   @override
   Future<Either<Failure, bool>> createRoutine(
-      Author author, int successRate) async {
+      Author author, int successRate, String type) async {
     try {
       final database = await LocalDatabase.instance.database;
 
@@ -26,7 +26,7 @@ class RoutinesMutations implements RoutinesMutationsInterface {
         subTitle: "",
         successRate: successRate,
         progress: 0,
-        type: "local",
+        type: type,
       );
 
       final command = LocalDatabaseConstantProvider.createRoutine(routine);

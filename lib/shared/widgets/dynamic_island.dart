@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minutes_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_habit_cubit.dart';
 import 'package:lottie/lottie.dart';
@@ -195,7 +195,7 @@ class _DynamicIslandState extends State<DynamicIsland> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text(
-                                    "${habitDuration!} Minutes",
+                                    "$habitDuration Minutes",
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontFamily: "Twitterchirp",

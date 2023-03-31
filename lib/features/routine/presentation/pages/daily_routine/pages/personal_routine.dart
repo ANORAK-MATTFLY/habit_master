@@ -10,7 +10,7 @@ import 'package:habit_master/features/routine/infrastructure/repository/author_r
 import 'package:habit_master/features/routine/infrastructure/repository/routine_repository.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habit_cubit.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minutes_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/pages/daily_routine_page.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/pages/wecome_page.dart';
@@ -346,7 +346,7 @@ class _PersonalRoutinePageState extends State<PersonalRoutinePage> {
                           }
                           if (timerControllerCubit.state == true) {
                             state.take(0);
-                            return Center();
+                            return const Center();
                           }
                           return StreamBuilder<String>(
                               stream: state.takeWhile(
@@ -361,7 +361,7 @@ class _PersonalRoutinePageState extends State<PersonalRoutinePage> {
                                       .read<MinutesCounterCubit>()
                                       .updateState();
                                 }
-                                if (context.read<MinutesCounterCubit>().state ==
+                                if (context.read<MinutesCounterCubit>().state >=
                                     context.read<MinutesCubit>().state) {
                                   timerControllerCubit.updateState();
                                   return const Center();

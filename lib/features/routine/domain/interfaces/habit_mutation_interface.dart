@@ -10,4 +10,5 @@ abstract class HabitMutationsInterface {
   Future<Either<Failure, bool>> updateHabitExpirationDate(
       String habitID, String expirationDate);
   Future<Either<Failure, bool>> createHabits(List<Habit> habits);
+  Future<bool> deleteHabit(String habitID);
 }

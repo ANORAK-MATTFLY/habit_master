@@ -6,10 +6,13 @@ import 'package:habit_master/core/errors/exception_handlers.dart';
 import 'package:habit_master/core/errors/interface/error_model.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/leader_board/domain/logic/leader_board_logic.dart';
+import 'package:habit_master/features/leader_board/infrastructure/data_sources/remote/mutations/leader_room_mutation.dart';
+import 'package:habit_master/features/leader_board/infrastructure/data_sources/remote/queries/leader_room_queries.dart';
 import 'package:habit_master/features/routine/domain/interfaces/habit_mutation_interface.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_history.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_history_repository.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
@@ -68,6 +71,16 @@ class HabitMutations implements HabitMutationsInterface {
         final HabitHistory habitHistory =
             HabitHistory(doneOn: doneDate, habitID: habitID, id: id);
         await HabitHistoryRepository().createHabitHistoryRecord(habitHistory);
+        final internetChecker =
+            await InternetConnectionChecker().connectionStatus;
+
+        if (internetChecker == InternetConnectionStatus.connected) {
+          final leaderRoomExist =
+              await LeaderRoomQueries().checkIfLeaderRoomExist();
+          if (leaderRoomExist == false) {
+            await LeaderRoomMutations().createLeaderRoom();
+          }
+        }
         await serviceLocator<LeaderBoardLogic>()
             .leaderRepository
             .executeUpdateScore(habit.routineID!);
@@ -115,6 +128,17 @@ class HabitMutations implements HabitMutationsInterface {
       return const Right(true);
     } on DatabaseException catch (error) {
       return exceptionHandlers.handleLocalDatabaseError(error, "createHabits");
+    }
+  }
+
+  @override
+  Future<bool> deleteHabit(String habitID) async {
+    try {
+      final database = await LocalDatabase.instance.database;
+      database.rawQuery("DELETE FROM habit WHERE id = '$habitID'");
+      return true;
+    } catch (error) {
+      rethrow;
     }
   }
 }

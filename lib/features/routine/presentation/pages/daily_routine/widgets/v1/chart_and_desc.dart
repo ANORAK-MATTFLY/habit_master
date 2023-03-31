@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:habit_master/features/auth/api/identity_api.dart';
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
-import 'package:habit_master/features/routine/infrastructure/repository/habit_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/routine_remote_repository.dart';
 import 'package:habit_master/shared/static/three_d_objects.dart';
 import 'package:lottie/lottie.dart';
@@ -37,7 +36,7 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
         : widget.routine.authorName!;
     final userID = serviceLocator<IdentityApi>().getAuthenticatedUser()!.uid;
     final routine = widget.routine;
-
+    print(routine.type);
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -54,104 +53,22 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
           child: StackedChart(routine: routine),
         ),
         Positioned(
-          top: 50,
-          child: Container(
-            color: Colors.white.withOpacity(0.0),
-            width: 250.0,
-            height: 250.0,
-          ),
-        ),
-        Positioned(
-          top: 0.0,
-          right: 20.0,
-          child: isTap
-              ? ShowUpAnimation(
-                  animationDuration: const Duration(milliseconds: 190),
-                  curve: Curves.decelerate,
-                  direction: Direction.vertical,
-                  offset: 0.6,
-                  child: SizedBox(
-                    height: 80.0,
-                    width: 200.0,
-                    child: AnimatedAlign(
-                      alignment: Alignment.bottomRight,
-                      duration: const Duration(milliseconds: 1000),
-                      curve: Curves.bounceOut,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 50.0,
-                            width: 150.0,
-                            child: Blur(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10.0),
-                              ),
-                              blur: 5,
-                              colorOpacity: 0.5,
-                              blurColor: Color(0xFF696969),
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30.0,
-                            width: 90.0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                Icon(CupertinoIcons.share,
-                                    color: Colors.white, size: 20.0),
-                                Text(
-                                  "Share",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "Twitterchirp_Bold",
-                                    fontSize: 12.0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              : const Center(),
-        ),
-        Positioned(
           bottom: 0.0,
           child: SizedBox(
             height: 100.0,
             width: MediaQuery.of(context).size.width,
-            // color: Colors.red,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  height: 70.0,
-                  width: 70.0,
-                  decoration: widget.routine.authorProfilePicture!
-                              .startsWith("assets") ==
-                          true
-                      ? BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.contain,
-                            image: AssetImage(
-                                widget.routine.authorProfilePicture!),
-                          ),
-                        )
-                      : BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.contain,
-                            image: NetworkImage(
-                                widget.routine.authorProfilePicture!),
-                          ),
-                        ),
-                ),
+                    height: 70.0,
+                    width: 70.0,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.contain,
+                        image: AssetImage(widget.routine.authorProfilePicture!),
+                      ),
+                    )),
                 Container(
                   padding: const EdgeInsets.only(left: 8.0),
                   height: 90,
@@ -234,8 +151,7 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
                                   ),
                                 ),
                               )
-                            : userID == routine.authorID &&
-                                    routine.type != "remote"
+                            : userID == routine.authorID
                                 ? Container(
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 10.0,

@@ -10,8 +10,7 @@ class StatsLogic {
     final week = DateTimeManipulation.getDaysOfTheWeek();
     final query = serviceLocator<HabitRepository>();
     final List<ChartData> chartData = [];
-
-    for (var index = 0; index < week.length; index++) {
+    for (var index = 0; index < 7; index++) {
       final date = week[index];
       final day = days[index];
       final result = await query.countNumberOfDoneHabits(routineID, date);
@@ -19,7 +18,6 @@ class StatsLogic {
       final percent = (progress * 100) ~/ totalHabits;
       chartData.add(ChartData(day, percent));
     }
-
     return chartData;
   }
 }

@@ -11,6 +11,7 @@ import 'dart:math';
 
 import '../../../../../../../shared/static/images.dart';
 
+// ignore: must_be_immutable
 class SmallCard extends StatefulWidget {
   List<Routine> routines;
   SmallCard({Key? key, required this.routines}) : super(key: key);

@@ -1,14 +1,13 @@
-import 'package:blur/blur.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
 import 'package:habit_master/features/auth/presentation/pages/profile/page/profile_page.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/routine_repository.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minutes_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/small_card.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
@@ -22,7 +21,6 @@ import 'package:intl/intl.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/large_card.dart';
 
 import '../../../../../../shared/widgets/dynamic_island.dart';
-import '../../daily_routine/bloc/bloc_event/time_stream_event.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -32,6 +30,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -223,8 +223,8 @@ class _HomePageState extends State<HomePage> {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
+                                children: const [
+                                  Text(
                                     "Habit Masters",
                                     style: TextStyle(
                                       color: Colors.white,
@@ -234,71 +234,71 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   SizedBox(
                                     width: 200.0,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 30.0),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(360.0),
-                                            ),
-                                            child: GestureDetector(
-                                              key: const Key('K'),
-                                              onTap: () => context
-                                                  .read<OnboardingCubit>()
-                                                  .updateState(),
-                                              child: Container(
-                                                height: 30.0,
-                                                width: 30.0,
-                                                color: const Color(0xFF393939)
-                                                    .withOpacity(0.9),
-                                                child: Center(
-                                                  child: SvgPicture.asset(
-                                                      "assets/svg/search-icon.svg",
-                                                      height: 12,
-                                                      semanticsLabel:
-                                                          'A red up arrow'),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const ProfilePage(),
-                                              ),
-                                            );
-                                          },
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(360.0)),
-                                            child: Container(
-                                              height: 30.0,
-                                              width: 30.0,
-                                              color: const Color(0xFF393939)
-                                                  .withOpacity(0.9),
-                                              child: Center(
-                                                child: SvgPicture.asset(
-                                                  "assets/svg/user-profile-icon.svg",
-                                                  height: 12,
-                                                  semanticsLabel:
-                                                      'User profile icon',
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                    // child: Row(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.center,
+                                    //   children: [
+                                    //     Padding(
+                                    //       padding: const EdgeInsets.only(
+                                    //           right: 30.0),
+                                    //       child: ClipRRect(
+                                    //         borderRadius:
+                                    //             const BorderRadius.all(
+                                    //           Radius.circular(360.0),
+                                    //         ),
+                                    //         child: GestureDetector(
+                                    //           key: const Key('K'),
+                                    //           onTap: () => context
+                                    //               .read<OnboardingCubit>()
+                                    //               .updateState(),
+                                    //           child: Container(
+                                    //             height: 30.0,
+                                    //             width: 30.0,
+                                    //             color: const Color(0xFF393939)
+                                    //                 .withOpacity(0.9),
+                                    //             child: Center(
+                                    //               child: SvgPicture.asset(
+                                    //                   "assets/svg/search-icon.svg",
+                                    //                   height: 12,
+                                    //                   semanticsLabel:
+                                    //                       'A red up arrow'),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //     GestureDetector(
+                                    //       onTap: () {
+                                    //         Navigator.push(
+                                    //           context,
+                                    //           MaterialPageRoute(
+                                    //             builder: (context) =>
+                                    //                 const ProfilePage(),
+                                    //           ),
+                                    //         );
+                                    //       },
+                                    //       child: ClipRRect(
+                                    //         borderRadius:
+                                    //             const BorderRadius.all(
+                                    //                 Radius.circular(360.0)),
+                                    //         child: Container(
+                                    //           height: 30.0,
+                                    //           width: 30.0,
+                                    //           color: const Color(0xFF393939)
+                                    //               .withOpacity(0.9),
+                                    //           child: Center(
+                                    //             child: SvgPicture.asset(
+                                    //               "assets/svg/user-profile-icon.svg",
+                                    //               height: 12,
+                                    //               semanticsLabel:
+                                    //                   'User profile icon',
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //   ],
+                                    // ),
                                   )
                                 ],
                               ),
@@ -325,12 +325,11 @@ class _HomePageState extends State<HomePage> {
                           if (snapshot.data == "59") {
                             context.read<MinutesCounterCubit>().updateState();
                           }
-                          if (context.read<MinutesCounterCubit>().state ==
+                          if (context.read<MinutesCounterCubit>().state >=
                               context.read<MinutesCubit>().state) {
                             context.read<TimerControllerCubit>().updateState();
                             return const Center();
                           }
-                          print(context.read<MinutesCounterCubit>().state);
 
                           final String remainingTime = snapshot.data!;
                           return DynamicIsland(

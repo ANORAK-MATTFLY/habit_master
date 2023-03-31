@@ -8,7 +8,7 @@ import 'package:habit_master/features/leader_board/infrastructure/models/leader.
 import 'package:habit_master/features/leader_board/infrastructure/repository/leader_repository.dart';
 import 'package:habit_master/features/leader_board/presentation/widgets/top_leader_card.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minutes_cubit.dart';
 import 'package:habit_master/shared/widgets/dynamic_island.dart';
 
 import '../../../routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
@@ -37,7 +37,32 @@ class _CompetitionScreenState extends State<CompetitionScreen> {
                   return const Center();
                 }
 
+                if (snapshot.data == null) {
+                  return const Center(
+                    child: CupertinoActivityIndicator(
+                      animating: true,
+                      color: Colors.white,
+                    ),
+                  );
+                }
+
                 if (snapshot.connectionState == ConnectionState.active) {
+                  final N = snapshot.data!.docs.length;
+                  if (N < 2) {
+                    return const Center(
+                      child: Text(
+                        "Not enough competitors for the moment",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "Twitterchirp_Bold",
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    );
+                  }
                   final data = snapshot.data!;
                   final List<Leader> competitors =
                       serviceLocator<LeaderRepository>().getLeaders(data);
@@ -46,17 +71,47 @@ class _CompetitionScreenState extends State<CompetitionScreen> {
                   );
                 }
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CupertinoActivityIndicator(
-                      animating: true,
-                      color: Colors.white,
-                    ),
+                  final N = snapshot.data!.docs.length;
+                  if (N < 2) {
+                    return const Center(
+                      child: Text(
+                        "Not enough competitors for the moment",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "Twitterchirp_Bold",
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    );
+                  }
+                  final data = snapshot.data!;
+                  final List<Leader> competitors =
+                      serviceLocator<LeaderRepository>().getLeaders(data);
+                  return LeaderBoardData(
+                    competitors: competitors,
                   );
                 }
-                if (snapshot.data!.docs.isEmpty) {
-                  return const Center();
-                }
+
                 if (snapshot.connectionState == ConnectionState.done) {
+                  final N = snapshot.data!.docs.length;
+                  if (N < 3) {
+                    return const Center(
+                      child: Text(
+                        "There's not enough competitors for the moment",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "Twitterchirp_Bold",
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    );
+                  }
                   final data = snapshot.data!;
                   final List<Leader> competitors =
                       serviceLocator<LeaderRepository>().getLeaders(data);
@@ -86,7 +141,7 @@ class _CompetitionScreenState extends State<CompetitionScreen> {
                     if (snapshot.data == "59") {
                       context.read<MinutesCounterCubit>().updateState();
                     }
-                    if (context.read<MinutesCounterCubit>().state ==
+                    if (context.read<MinutesCounterCubit>().state >=
                         context.read<MinutesCubit>().state) {
                       timerControllerCubit.updateState();
                       return const Center();
@@ -179,46 +234,71 @@ class _LeaderBoardDataState extends State<LeaderBoardData> {
                     ],
                   ),
                   SizedBox(
-                      height: 200.0,
-                      width: width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: [
-                          competitors.length > 3
-                              ? TopLeaderCard(
-                                  height: 130.0,
-                                  width: 100.0,
-                                  leader: competitors[1],
-                                  color: const Color.fromARGB(
-                                    255,
-                                    0,
-                                    242,
-                                    255,
-                                  ),
-                                  index: 2,
-                                )
-                              : const Center(),
-                          TopLeaderCard(
-                            height: 180.0,
-                            width: 120.0,
-                            leader: competitors[0],
-                            color: const Color.fromARGB(255, 255, 238, 0),
-                            index: 1,
+                    height: 200.0,
+                    width: width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        TopLeaderCard(
+                          height: 120.0,
+                          width: 90.0,
+                          boxH: 90,
+                          boxW: 90,
+                          imageH: 80,
+                          imageW: 80,
+                          leader: competitors[1],
+                          color: const Color.fromARGB(
+                            255,
+                            0,
+                            242,
+                            255,
                           ),
-                          competitors.length > 3
-                              ? TopLeaderCard(
-                                  height: 130.0,
-                                  width: 100.0,
-                                  leader: competitors[2],
-                                  color:
-                                      const Color.fromARGB(255, 254, 169, 255),
-                                  index: 3,
-                                )
-                              : const Center(),
-                        ],
-                      )),
+                          index: 2,
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              height: 30,
+                              width: 30,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage(
+                                      "assets/images/icons/crown.png"),
+                                ),
+                              ),
+                            ),
+                            TopLeaderCard(
+                              height: 130.0,
+                              width: 140.0,
+                              leader: competitors[0],
+                              color: const Color.fromARGB(255, 255, 238, 0),
+                              index: 1,
+                              boxH: 110,
+                              boxW: 100,
+                              imageH: 100,
+                              imageW: 100,
+                            ),
+                          ],
+                        ),
+                        TopLeaderCard(
+                          leader: competitors.length >= 3
+                              ? competitors[2]
+                              : competitors[1],
+                          color: const Color.fromARGB(255, 254, 169, 255),
+                          index: 3,
+                          height: 120.0,
+                          width: 90.0,
+                          boxH: 90,
+                          boxW: 90,
+                          imageH: 80,
+                          imageW: 80,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -252,7 +332,7 @@ class _LeaderBoardDataState extends State<LeaderBoardData> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "You currently rank",
+                          "This are the achievers of the week! ",
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: "Twitterchirp_Bold",
@@ -269,18 +349,7 @@ class _LeaderBoardDataState extends State<LeaderBoardData> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: const [
                               Text(
-                                "18th",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "Twitterchirp_Bold",
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis,
-                                  decoration: TextDecoration.none,
-                                ),
-                              ),
-                              Text(
-                                "1380 pts",
+                                "Good luck!",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: "Twitterchirp_Bold",

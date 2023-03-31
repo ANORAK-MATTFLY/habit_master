@@ -6,7 +6,6 @@ import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/routine/domain/logic/input_validation.dart';
 
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
-import 'package:habit_master/features/routine/infrastructure/repository/habit_remote_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_repository.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_event/create_habit.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_habit.dart';
@@ -19,7 +18,7 @@ import 'package:habit_master/features/routine/presentation/pages/create_habit/wi
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habit_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habits_list.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minitutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minutes_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_habit_cubit.dart';
 import 'package:habit_master/shared/bloc/error_cubit.dart';
@@ -379,7 +378,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                   if (snapshot.data == "60") {
                     context.read<MinutesCounterCubit>().updateState();
                   }
-                  if (context.read<MinutesCounterCubit>().state ==
+                  if (context.read<MinutesCounterCubit>().state >=
                       context.read<MinutesCubit>().state) {
                     final Habit habit = context.read<HabitTimerCubit>().state!;
                     timerControllerCubit.updateState();

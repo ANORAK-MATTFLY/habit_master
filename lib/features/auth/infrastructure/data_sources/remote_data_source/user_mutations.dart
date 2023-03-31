@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:habit_master/core/db/remote_db.dart';
 import 'package:habit_master/features/auth/infrastructure/data_sources/remote_data_source/user_queries.dart';
+import 'package:habit_master/features/auth/infrastructure/model/user_aggregate.dart';
 import 'package:habit_master/features/auth/infrastructure/repository/user_repository.dart';
 import 'package:habit_master/shared/static/images.dart';
 import 'package:username_gen/username_gen.dart';
@@ -17,7 +18,25 @@ class UserMutations {
   final userQueries = UserQueries();
 
   void createNewUser(GoogleSignInAccount currentUser) async {
-    final userDocument = await UserQueries().getUserByID(currentUser.id);
+    final id = FirebaseAuth.instance.currentUser!.uid;
+    final userDocument = await UserQueries().getUserByID(id);
+    // if (userDocument.exists) {
+    //   final user = UserAggregate.fromDocument(userDocument);
+    //   await usersCollection.doc(user.userID).set(
+    //     {
+    //       "id": user.userID,
+    //       "email": user.email,
+    //       "display_name": user.displayName,
+    //       "photo_url": _defaultAvatar,
+    //       "user_device_token": "",
+    //       "@name": user.atUserName,
+    //       "job_title": "",
+    //       "followers": [],
+    //       "following": [],
+    //       "last_seen": Timestamp.now(),
+    //     },
+    //   );
+    // }
     if (!userDocument.exists) {
       insertUser(currentUser);
     }

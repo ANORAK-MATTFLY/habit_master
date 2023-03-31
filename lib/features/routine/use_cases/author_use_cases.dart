@@ -1,5 +1,4 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:habit_master/core/db/local_db.dart';
 import 'package:habit_master/core/errors/interface/error_model.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/mutation/author_mutations.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/mutation/habit.dart';
@@ -34,7 +33,7 @@ class AuthorUseCases {
     if (result.isLeft()) {
       return Left(result.getLeft());
     }
-    await RoutinesMutations().createRoutine(author, 0);
+    await RoutinesMutations().createRoutine(author, 0, "remote");
     final habits = generateTasks(author.id!);
     await HabitMutations().createHabits(habits);
     return Right(result.getRight());

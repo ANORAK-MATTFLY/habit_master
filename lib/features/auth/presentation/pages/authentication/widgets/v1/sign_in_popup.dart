@@ -1,18 +1,18 @@
-import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/auth/api/identity_api.dart';
-import 'package:habit_master/features/auth/presentation/pages/authentication/widgets/v2/sign_in_button.dart';
 import 'package:habit_master/features/leader_board/infrastructure/models/leader.dart';
 import 'package:habit_master/features/leader_board/infrastructure/repository/leader_repository.dart';
+import 'package:habit_master/features/routine/domain/logic/get_days_of_the_week.dart';
 import 'package:habit_master/features/routine/infrastructure/models/author_model.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_event/create_author.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_author.dart';
-import 'package:habit_master/features/routine/use_cases/author_use_cases.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:show_up_animation/show_up_animation.dart';
 
+import '../../../../../../../shared/bloc/auth_cubit.dart';
 import '../../../../../domain/logic/google_auth.dart';
 import '../../bloc/cubit/sign_in_cubit.dart';
 
@@ -65,39 +65,17 @@ class _SignInPopupState extends State<SignInPopup>
         child: Align(
           alignment: Alignment.center,
           child: SizedBox(
-            height: (height - 100.0),
+            height: (height - 140.0),
             width: (width - 30.0),
             child: Stack(
               children: [
                 Align(
                   alignment: Alignment.center,
-                  child: Stack(
-                    children: [
-                      SizedBox(
-                        height: (height - 150.0),
-                        width: (width - 30.0),
-                        child: const Blur(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20.0),
-                          ),
-                          blur: 50,
-                          colorOpacity: 0.0,
-                          blurColor: Colors.white,
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.center,
                   child: Container(
-                    height: (height - 150.0),
+                    height: (height - 200.0),
                     width: (width - 30.0),
                     decoration: const BoxDecoration(
-                      color: Color.fromARGB(168, 255, 255, 255),
+                      color: Color.fromARGB(255, 255, 255, 255),
                       borderRadius: BorderRadius.all(
                         Radius.circular(25.0),
                       ),
@@ -114,9 +92,9 @@ class _SignInPopupState extends State<SignInPopup>
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         const Text(
-                          "Sign in",
+                          "Welcome!",
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Color.fromARGB(255, 0, 231, 208),
                             fontFamily: "Twitterchirp_Bold",
                             fontSize: 30.0,
                             fontWeight: FontWeight.bold,
@@ -124,115 +102,33 @@ class _SignInPopupState extends State<SignInPopup>
                           ),
                         ),
                         SizedBox(
-                          height: 50.0,
+                          height: 40.0,
                           width: (width - 70.0),
-                          child: const Text(
-                            "Access multiple prebuilt habits and time\nmanagement technics. Learn and discover the set of technics we have for you.",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 107, 107, 107),
-                              fontFamily: "Twitterchirp_Bold",
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.clip,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: (MediaQuery.of(context).size.width - 100.0),
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
-                          ),
-                          child: TextFormField(
-                            controller: email,
-                            decoration: InputDecoration(
-                              icon: Container(
-                                height: 40.0,
-                                width: 40.0,
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(5.0),
-                                  ),
-                                  color: Color.fromARGB(27, 59, 15, 206),
-                                ),
-                                child: const Icon(
-                                  Icons.email_outlined,
-                                  color: Color.fromARGB(255, 165, 99, 215),
-                                ),
-                              ),
-                              labelText: "E-mail",
-                              labelStyle: const TextStyle(
-                                color: Color(0xFFB4B4B4),
-                                fontFamily: "Twitterchirp",
-                                fontSize: 12.0,
+                          child: const Center(
+                            child: Text(
+                              "Become a productivity guru",
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 33, 1, 57),
+                                fontFamily: "Twitterchirp_Bold",
+                                fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.none,
+                                overflow: TextOverflow.clip,
                               ),
-                              border: InputBorder.none,
                             ),
                           ),
                         ),
-                        Container(
-                          width: (MediaQuery.of(context).size.width - 100.0),
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
-                          ),
-                          child: TextFormField(
-                            controller: password,
-                            decoration: InputDecoration(
-                              icon: Container(
-                                height: 40.0,
-                                width: 40.0,
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(5.0),
-                                  ),
-                                  color: Color.fromARGB(27, 59, 15, 206),
-                                ),
-                                child: const Icon(
-                                  Icons.password_outlined,
-                                  color: Color.fromARGB(255, 165, 99, 215),
-                                ),
-                              ),
-                              labelText: "Password",
-                              labelStyle: const TextStyle(
-                                color: Color(0xFFB4B4B4),
-                                fontFamily: "Twitterchirp",
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.none,
-                              ),
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                        const SignInButton(),
-                        const Center(
-                          child: Text(
-                            "Or",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 107, 107, 107),
-                              fontFamily: "Twitterchirp_Bold",
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.clip,
-                            ),
-                          ),
-                        ),
+                        SizedBox(
+                            height: 200,
+                            width: double.infinity,
+                            child:
+                                Lottie.asset("assets/animations/guru2.json")),
                         const Center(
                           child: Text(
                             "Sign in with Google",
                             style: TextStyle(
-                              color: Color.fromARGB(255, 107, 107, 107),
-                              fontFamily: "Twitterchirp_Bold",
-                              fontSize: 12.0,
+                              color: Color.fromARGB(255, 45, 45, 45),
+                              fontFamily: "Twitterchirp",
+                              fontSize: 15.0,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.clip,
                             ),
@@ -241,6 +137,7 @@ class _SignInPopupState extends State<SignInPopup>
                         Center(
                           child: GestureDetector(
                             onTap: () async {
+                              context.read<AuthCubit>().updateState(true);
                               final loginSucceeded =
                                   await GoogleAuth().loginWithGoogle();
                               if (loginSucceeded == true) {
@@ -257,7 +154,11 @@ class _SignInPopupState extends State<SignInPopup>
                                     id: userInfo.uid,
                                     type: "costumer",
                                   );
+                                  final leaderRoomID =
+                                      DateTimeManipulation.getDaysOfTheWeek();
+
                                   final Leader leader = Leader(
+                                    leaderRoomID: "$leaderRoomID",
                                     id: user.userID,
                                     leaderName: user.displayName,
                                     profilePicture: user.photoUrl,
@@ -273,11 +174,29 @@ class _SignInPopupState extends State<SignInPopup>
                                         CreateAuthorAction(author: author),
                                       );
                                 }
+                                // ignore: use_build_context_synchronously
+                                context.read<AuthCubit>().updateState(false);
+                                // ignore: use_build_context_synchronously
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  backgroundColor:
+                                      Color.fromARGB(255, 19, 215, 133),
+                                  content: Text(
+                                    "Welcome to Habit Master!",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "Twitterchirp",
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                  duration: Duration(seconds: 3),
+                                ));
                               }
                             },
                             child: Container(
-                              height: 50.0,
-                              width: 200.0,
+                              height: 70.0,
+                              width: 250.0,
                               decoration: const BoxDecoration(
                                 color: Color.fromARGB(255, 255, 255, 255),
                                 borderRadius: BorderRadius.all(
@@ -285,7 +204,7 @@ class _SignInPopupState extends State<SignInPopup>
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    color: Color.fromARGB(255, 159, 159, 159),
                                     spreadRadius: -13,
                                     blurRadius: 30.0,
                                     offset: Offset(
@@ -299,13 +218,13 @@ class _SignInPopupState extends State<SignInPopup>
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(
-                                    width: 35.0,
+                                    width: 50.0,
                                     child:
                                         Image.asset("assets/images/google.png"),
                                   ),
                                   const Text(
                                     "Sign in with Google",
-                                    style: TextStyle(fontSize: 13.0),
+                                    style: TextStyle(fontSize: 17.0),
                                   )
                                 ],
                               ),
