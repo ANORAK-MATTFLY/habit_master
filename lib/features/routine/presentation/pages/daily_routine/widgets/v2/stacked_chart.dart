@@ -5,7 +5,7 @@ import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/routine/domain/logic/weekly_progress.dart';
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 import 'package:habit_master/features/routine/infrastructure/models/weekly_progress_chart_model.dart';
-import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/tasks_list.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habits_list.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 // ignore: must_be_immutable
@@ -29,6 +29,7 @@ class _StackedChartState extends State<StackedChart> {
   @override
   Widget build(BuildContext context) {
     final int totalHabits = context.read<HabitListCubit>().state.length;
+
     return FutureBuilder<List<ChartData>>(
         future: serviceLocator<StatsLogic>()
             .getWeeklyProgress(widget.routine.authorID!, totalHabits),
@@ -124,9 +125,10 @@ class _StackedChartState extends State<StackedChart> {
                 labelAlignment: LabelAlignment.center,
                 labelPlacement: LabelPlacement.betweenTicks,
                 labelStyle: const TextStyle(
-                    color: Colors.white,
-                    fontFamily: "Twitterchirp",
-                    fontSize: 12.0),
+                  color: Colors.white,
+                  fontFamily: "Twitterchirp",
+                  fontSize: 12.0,
+                ),
               ),
             ),
           );

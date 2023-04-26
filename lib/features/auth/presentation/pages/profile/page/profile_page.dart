@@ -1,5 +1,6 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
+import 'package:habit_master/features/auth/domain/logic/google_auth.dart';
 
 import '../widgets/v1/dialog.dart';
 
@@ -117,8 +118,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      openDialog(context, "Change job title",
-                                          "Job Title");
+                                      GoogleAuth().logout();
+                                      GoogleAuth().dispose();
+                                      // openDialog(context, "Change job title",
+                                      //     "Job Title");
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.only(

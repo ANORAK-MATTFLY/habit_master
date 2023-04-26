@@ -1,9 +1,16 @@
+import 'dart:math';
+
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/dep_injection.dart';
+import 'package:habit_master/features/auth/api/identity_api.dart';
+import 'package:habit_master/features/routine/domain/logic/score_logic.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/pages/daily_routine_page.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/habit_cubit.dart';
+import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 
+import '../../../../../../../shared/static/larg_card_colors.dart';
 import '../../../../../infrastructure/models/routine_model.dart';
 
 class LargeCard extends StatefulWidget {
@@ -28,9 +35,19 @@ class _PrebuiltCardState extends State<LargeCard> {
             : routine.authorName!;
         final cardPositionIsOdd = widget.routines.indexOf(routine).isEven;
         return GestureDetector(
-          onTap: () {
+          onTap: () async {
+            final isAuthenticated =
+                await serviceLocator<IdentityApi>().isAuthenticated();
+            if (!isAuthenticated) {
+              // ignore: use_build_context_synchronously
+              context.read<OnboardingCubit>().updateState();
+              return;
+            }
+
+            // ignore: use_build_context_synchronously
             context.read<RoutineCubit>().updateState(routine);
 
+            // ignore: use_build_context_synchronously
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -91,10 +108,8 @@ class _PrebuiltCardState extends State<LargeCard> {
                                 const Color(0xB0246776).withOpacity(0.4),
                                 const Color(0xFF855A9E).withOpacity(0.9),
                               ]
-                            : [
-                                const Color(0xFF207580).withOpacity(0.4),
-                                const Color(0xFF2E75A9).withOpacity(0.9)
-                              ],
+                            : colorCombination[
+                                Random().nextInt(colorCombination.length)],
                         begin: Alignment.topRight,
                         end: Alignment.bottomLeft,
                         stops: const [0.0, 0.8],
@@ -129,12 +144,13 @@ class _PrebuiltCardState extends State<LargeCard> {
                               Positioned(
                                 bottom: -5.0,
                                 child: Container(
-                                  height: 110.0,
-                                  width: 110.0,
+                                  height: 120.0,
+                                  width: 120.0,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(
                                           routine.authorProfilePicture!),
+                                      fit: BoxFit.contain,
                                     ),
                                   ),
                                 ),
@@ -153,7 +169,7 @@ class _PrebuiltCardState extends State<LargeCard> {
                       ),
                       const SizedBox(height: 12.0),
                       const Text(
-                        "Used by 700+ people",
+                        "Join other users on this!",
                         style: TextStyle(
                           fontFamily: "Twitterchirp",
                           color: Color(0xB7FFFFFF),
@@ -163,7 +179,7 @@ class _PrebuiltCardState extends State<LargeCard> {
                       ),
                       const SizedBox(height: 10.0),
                       const Text(
-                        "Recommended for people that work 80+ hours a week.",
+                        "Recommended for people that work 48 hours a week or more.",
                         style: TextStyle(
                           color: Color(0xB7FFFFFF),
                           fontFamily: "Twitterchirp",
@@ -178,17 +194,35 @@ class _PrebuiltCardState extends State<LargeCard> {
                             Radius.circular(40.0),
                           ),
                         ),
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                          child: LinearProgressIndicator(
-                            minHeight: 5.0,
-                            value: routine.progress!.toDouble(),
-                            color: Colors.white,
-                            backgroundColor: const Color(0xFF3B2D73),
-                          ),
-                        ),
+                        child: FutureBuilder<int>(
+                            future: ScoreLogic.getProgress(routine.authorID!),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const ClipRRect(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                  child: LinearProgressIndicator(
+                                    minHeight: 5.0,
+                                    value: 0.1,
+                                    color: Colors.white,
+                                    backgroundColor: Color(0xFF3B2D73),
+                                  ),
+                                );
+                              }
+                              return ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(20),
+                                ),
+                                child: LinearProgressIndicator(
+                                  minHeight: 5.0,
+                                  value:
+                                      ((snapshot.data!.toDouble() * 1) / 100),
+                                  color: Colors.white,
+                                  backgroundColor: const Color(0xFF3B2D73),
+                                ),
+                              );
+                            }),
                       )
                     ],
                   ),

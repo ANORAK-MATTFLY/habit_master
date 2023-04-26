@@ -35,9 +35,12 @@ dependencies:
 
   # Utils
   uuid: ^3.0.6
-
+  stream_isolate: ^0.1.1
   # Local database
   sqflite: ^2.0.3+1
+
+  # Notifications
+  flutter_local_notifications: ^13.0.0
 
   # UI
   google_fonts: ^3.0.1
@@ -67,6 +70,9 @@ dependencies:
   cloud_firestore: ^4.3.1
   flutter_facebook_auth: ^5.0.7
   fpdart: ^0.4.0
+  like_button: ^2.0.5
+  username_gen: ^1.0.4
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   integration_test:
@@ -99,7 +105,6 @@ flutter:
     - assets/images/circle.png
     - assets/images/bill-gate.png
     - assets/images/thomas_frank.png
-    - assets/images/joey_schweitzer.png
     - assets/images/3d objects/Spiral-2.png
     - assets/images/3d objects/Ball-2.png
     - assets/images/3d objects/Cube-2.png
@@ -113,7 +118,6 @@ flutter:
     - assets/images/avatars/av1.jpg
     - assets/images/avatars/av2.png
     - assets/images/avatars/av3.jpg
-    - assets/images/avatars/av4.jpg
     - assets/images/avatars/av5.jpg
     - assets/images/avatars/av6.jpg
     - assets/images/avatars/av7.jpg
@@ -128,8 +132,33 @@ flutter:
     - assets/images/avatars/av19.png
     - assets/images/avatars/av20.png
     - assets/images/avatars/av21.png
-    - assets/images/avatars/av22.png
     - assets/images/avatars/av23.png
+    - assets/images/masters/lewis1.png
+    - assets/images/masters/lewis2.png
+    - assets/images/masters/lewis3.png
+    - assets/images/masters/lewis.png
+    - assets/images/masters/clear.png
+    - assets/images/masters/cuban.png
+    - assets/images/masters/cuban1.png
+    - assets/images/masters/cuban2.png
+    - assets/images/masters/oprah.png
+    - assets/images/masters/oprah1.png
+    - assets/images/masters/oprah2.png
+    - assets/images/masters/cook.png
+    - assets/images/masters/cook1.png
+    - assets/images/masters/cook2.png
+    - assets/images/masters/satya.png
+
+    - assets/images/masters/satya2.png
+    - assets/images/masters/satya1.png
+    - assets/images/masters/jack1.png
+    - assets/images/masters/jack2.png
+    - assets/images/masters/jack.png
+
+
+
+
+
 
 
 
@@ -144,9 +173,35 @@ flutter:
     - assets/animations/fire animations/fire2.json
     - assets/animations/fire animations/fire3.json
     - assets/animations/fire animations/fire4.json
+    - assets/animations/loading_animation_1.json
+    - assets/animations/loading_2.json
+    - assets/animations/loading_3.json
+    - assets/animations/not_found.json
     - assets/rive_assets/shapes.riv
     - assets/rive_assets/button.riv
     - assets/animations/bg_animation.gif
+    - assets/animations/timer_animations/timer1.json
+    - assets/animations/timer_animations/timer2.json
+    - assets/animations/timer_animations/timer3.json
+    - assets/animations/timer_animations/timer4.json
+    - assets/animations/timer_animations/timer5.json
+    - assets/animations/timer_animations/timer6.json
+    - assets/animations/timer_animations/timer7.json
+    - assets/animations/timer_animations/timer8.json
+    - assets/animations/timer_animations/timer9.json
+    - assets/animations/timer_animations/timer10.json
+    - assets/animations/timer_animations/timer11.json
+    - assets/animations/timer_animations/timer12.json
+    - assets/animations/success1.json
+    - assets/animations/success2.json
+    - assets/animations/success3.json
+    - assets/animations/guru1.json
+    - assets/animations/guru2.json
+    - assets/animations/task1.json
+    - assets/animations/task2.json
+    - assets/animations/smile.json
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

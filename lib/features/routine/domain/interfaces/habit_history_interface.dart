@@ -5,9 +5,8 @@ import 'package:habit_master/features/routine/infrastructure/models/habit_histor
 abstract class HabitHistoryInterface {
   Future<List<HabitHistory>> getHabitHistoryRecord(String habitHistoryID);
 
-  Future<Either<ErrorInfo, bool>> createHabitHistoryRecord(
+  Future<Either<Failure, bool>> createHabitHistoryRecord(
       HabitHistory habitHistory);
-  Future<Either<ErrorInfo, bool>> deleteHabitHistoryRecord(
-      String habitHistoryID);
+  Future<Either<Failure, bool>> deleteHabitHistoryRecord(String habitHistoryID);
   Future<HabitHistory> getTodaysHabitHistoryRecord(String habitHistoryID);
 }

@@ -4,11 +4,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_master/features/user_feed/infrastrcture/data/remote_data_source/queries/post_queries.dart';
+import 'package:habit_master/dep_injection.dart';
+import 'package:habit_master/features/auth/api/identity_api.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 import 'package:habit_master/features/user_feed/infrastrcture/model/post_model.dart';
+import 'package:habit_master/features/user_feed/infrastrcture/repository/post_repository.dart';
 import 'package:habit_master/features/user_feed/presentation/user_feed/bloc/cubit/list_post.dart';
-import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/post.dart';
-import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v1/post_post_panel.dart';
+import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v1/post.dart';
+import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v1/post_panel.dart';
+import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
+import 'package:habit_master/shared/widgets/dynamic_island.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class UserFeedPage extends StatefulWidget {
   const UserFeedPage({Key? key}) : super(key: key);
@@ -27,7 +35,15 @@ class _UserFeedPageState extends State<UserFeedPage> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: GestureDetector(
-        onTap: () {
+        onTap: () async {
+          final isAuthenticated =
+              await serviceLocator<IdentityApi>().isAuthenticated();
+          if (!isAuthenticated) {
+            // ignore: use_build_context_synchronously
+            context.read<OnboardingCubit>().updateState();
+            return;
+          }
+
           setState(() {
             showEditPanel = !showEditPanel;
           });
@@ -98,7 +114,7 @@ class _UserFeedPageState extends State<UserFeedPage> {
             width: width,
             height: height,
             child: StreamBuilder<QuerySnapshot<Object?>>(
-                stream: PostQueries().getPosts(),
+                stream: serviceLocator<PostRepository>().postQueries.getPosts(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
@@ -106,6 +122,24 @@ class _UserFeedPageState extends State<UserFeedPage> {
                         animating: true,
                         color: Colors.white,
                         radius: 15.0,
+                      ),
+                    );
+                  }
+                  if (snapshot.connectionState == ConnectionState.none) {
+                    return Center(
+                      child: GradientText(
+                        "Please make sure you have internet connection ",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: "Twitterchirp_Bold",
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        colors: const [
+                          Color(0xCBB0D9F1),
+                          Color(0xFF8E6AE4),
+                        ],
                       ),
                     );
                   }
@@ -125,11 +159,43 @@ class _UserFeedPageState extends State<UserFeedPage> {
                         left: 20.0, right: 20.0, top: 40, bottom: 40.0),
                     itemBuilder: (BuildContext context, int index) {
                       final Post post = posts[index];
-                      return Center(child: PostWidget(post: post));
+                      return Center(
+                        child: PostWidget(post: post),
+                      );
                     },
                   );
                 }),
           ),
+          BlocBuilder<StreamTimerBLoc, Stream<String>?>(
+              buildWhen: (previous, current) {
+            return previous != current;
+          }, builder: (context, state) {
+            if (state == null) {
+              return const Center();
+            }
+
+            return StreamBuilder<String>(
+                stream: state,
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    return const Center();
+                  }
+
+                  if (snapshot.data == "59") {
+                    context.read<MinutesCounterCubit>().updateState();
+                  }
+                  if (context.read<MinutesCounterCubit>().state >=
+                      context.read<MinutesCubit>().state) {
+                    context.read<TimerControllerCubit>().updateState();
+                    return const Center();
+                  }
+
+                  final String remainingTime = snapshot.data!;
+                  return DynamicIsland(
+                      remainingTime:
+                          "${context.read<MinutesCounterCubit>().state} : $remainingTime");
+                });
+          }),
           Visibility(
             visible: showEditPanel,
             child: const Center(

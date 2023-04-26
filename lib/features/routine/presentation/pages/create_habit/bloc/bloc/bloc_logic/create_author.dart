@@ -12,11 +12,12 @@ class CreateAuthorBlocLogic extends Bloc<AuthorBlocInterface, AuthorState?> {
     on<CreateAuthorAction>((event, emit) async {
       final author = event.author;
       final authorMutation = serviceLocator<AuthorRepository>();
-      final authorHasBeenCreated = await authorMutation.createAuthor(author);
+      final authorHasBeenCreated =
+          await authorMutation.authorMutations.createAuthor(author);
       if (authorHasBeenCreated.isRight()) {
         final routineMutations = serviceLocator<RoutineRepository>();
 
-        await routineMutations.createRoutine(author, 0);
+        await routineMutations.createRoutine(author, 0, "remote");
 
         final resultingData =
             AuthorState(authorState: authorHasBeenCreated.isRight());

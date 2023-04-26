@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_master/dep_injection.dart';
-import 'package:habit_master/features/auth/presentation/pages/authentication/page/authentication_panel.dart';
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
-import 'package:habit_master/features/auth/presentation/pages/profile/page/profile_page.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/routine_repository.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minutes_cubit.dart';
+import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/small_card.dart';
-import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
+import 'package:lottie/lottie.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,6 +17,8 @@ import 'package:habit_master/shared/features/routine/widgets/circle.dart';
 import 'package:intl/intl.dart';
 
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/large_card.dart';
+
+import '../../../../../../shared/widgets/dynamic_island.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,6 +28,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -40,7 +46,7 @@ class _HomePageState extends State<HomePage> {
     final getRoutines = serviceLocator<RoutineRepository>();
     final listOfCard = [
       StreamBuilder<List<Routine>>(
-          stream: getRoutines.getRoutines(),
+          stream: getRoutines.getRoutines("local"),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -137,197 +143,241 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      const SmallCard(),
-      const SizedBox(
-        height: 70.0,
-        width: 200.0,
-      ),
-    ];
-    final canDisplayOnboardingScreen =
-        BlocProvider.of<OnboardingCubit>(context);
-    return Scaffold(
-      body: BlocBuilder(
-        bloc: canDisplayOnboardingScreen,
-        builder: (context, state) => Stack(
-          children: [
-            NestedScrollView(
-              floatHeaderSlivers: true,
-              headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                SliverAppBar(
-                  backgroundColor: const Color(0xFF0C051D),
-                  floating: true,
-                  snap: true,
-                  toolbarHeight: 100.0,
-                  actions: <Widget>[
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Stack(
-                        children: [
-                          const Positioned(
-                              right: 35.0,
-                              top: 55.0,
-                              child: SizedBox(
-                                  height: 30, width: 30, child: Circle())),
-                          Container(
-                            padding:
-                                const EdgeInsets.only(top: 50.0, left: 10.0),
-                            width: double.infinity,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "$day, $month $dayNumber",
-                                  style: const TextStyle(
-                                    color: Color(0xB7FFFFFF),
-                                    fontFamily: "Twitterchirp",
-                                    fontSize: 12.0,
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text(
-                                      "Habit Masters",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: "Twitterchirp_Bold",
-                                        fontSize: 20.0,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 200.0,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 30.0),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(360.0),
-                                              ),
-                                              child: GestureDetector(
-                                                key: const Key('K'),
-                                                onTap: () => context
-                                                    .read<OnboardingCubit>()
-                                                    .updateState(),
-                                                child: Container(
-                                                  height: 30.0,
-                                                  width: 30.0,
-                                                  color: const Color(0xFF393939)
-                                                      .withOpacity(0.9),
-                                                  child: Center(
-                                                    child: SvgPicture.asset(
-                                                        "assets/svg/search-icon.svg",
-                                                        height: 12,
-                                                        semanticsLabel:
-                                                            'A red up arrow'),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const ProfilePage(),
-                                                ),
-                                              );
-                                            },
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(360.0)),
-                                              child: Container(
-                                                height: 30.0,
-                                                width: 30.0,
-                                                color: const Color(0xFF393939)
-                                                    .withOpacity(0.9),
-                                                child: Center(
-                                                  child: SvgPicture.asset(
-                                                    "assets/svg/user-profile-icon.svg",
-                                                    height: 12,
-                                                    semanticsLabel:
-                                                        'User profile icon',
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+      StreamBuilder<List<Routine>>(
+          stream: getRoutines.getRoutines("remote"),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text("${snapshot.hasError.toString()}r"),
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.none) {
+              return Center(
+                child: SizedBox(
+                  height: 80.0,
+                  width: 80.0,
+                  child: Lottie.asset(
+                    "assets/animations/not_found.json",
+                  ),
                 ),
-              ],
-              body: Stack(
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.active) {
+              final routines = snapshot.data!;
+              return SmallCard(routines: routines);
+            }
+            if (snapshot.data == null) {
+              return Center(
+                child: SizedBox(
+                  height: 80.0,
+                  width: 80.0,
+                  child: Lottie.asset(
+                    "assets/animations/not_found.json",
+                  ),
+                ),
+              );
+            }
+            final routines = snapshot.data!;
+            return SmallCard(routines: routines);
+          }),
+    ];
+
+    return Scaffold(
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            backgroundColor: const Color(0xFF0C051D),
+            floating: true,
+            snap: true,
+            toolbarHeight: 100.0,
+            actions: <Widget>[
+              Stack(
                 children: [
-                  Container(
-                    height: height,
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF0C051D),
-                    ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
                     child: Stack(
                       children: [
-                        Center(
-                          child: Container(
-                            height: height,
-                            width: double.infinity,
-                            padding: const EdgeInsets.only(top: 250.0),
-                            child: Container(
-                              height: 200,
-                              width: double.infinity,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage("assets/images/bg.png"),
-                                  alignment: Alignment.center,
-                                  opacity: 0.6,
+                        const Positioned(
+                            right: 35.0,
+                            top: 55.0,
+                            child: SizedBox(
+                                height: 30, width: 30, child: Circle())),
+                        Container(
+                          padding: const EdgeInsets.only(top: 50.0, left: 10.0),
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "$day, $month $dayNumber",
+                                style: const TextStyle(
+                                  color: Color(0xB7FFFFFF),
+                                  fontFamily: "Twitterchirp",
+                                  fontSize: 12.0,
                                 ),
                               ),
-                            ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text(
+                                    "Habit Masters",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "Twitterchirp_Bold",
+                                      fontSize: 20.0,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 200.0,
+                                    // child: Row(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.center,
+                                    //   children: [
+                                    //     Padding(
+                                    //       padding: const EdgeInsets.only(
+                                    //           right: 30.0),
+                                    //       child: ClipRRect(
+                                    //         borderRadius:
+                                    //             const BorderRadius.all(
+                                    //           Radius.circular(360.0),
+                                    //         ),
+                                    //         child: GestureDetector(
+                                    //           key: const Key('K'),
+                                    //           onTap: () => context
+                                    //               .read<OnboardingCubit>()
+                                    //               .updateState(),
+                                    //           child: Container(
+                                    //             height: 30.0,
+                                    //             width: 30.0,
+                                    //             color: const Color(0xFF393939)
+                                    //                 .withOpacity(0.9),
+                                    //             child: Center(
+                                    //               child: SvgPicture.asset(
+                                    //                   "assets/svg/search-icon.svg",
+                                    //                   height: 12,
+                                    //                   semanticsLabel:
+                                    //                       'A red up arrow'),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //     GestureDetector(
+                                    //       onTap: () {
+                                    //         Navigator.push(
+                                    //           context,
+                                    //           MaterialPageRoute(
+                                    //             builder: (context) =>
+                                    //                 const ProfilePage(),
+                                    //           ),
+                                    //         );
+                                    //       },
+                                    //       child: ClipRRect(
+                                    //         borderRadius:
+                                    //             const BorderRadius.all(
+                                    //                 Radius.circular(360.0)),
+                                    //         child: Container(
+                                    //           height: 30.0,
+                                    //           width: 30.0,
+                                    //           color: const Color(0xFF393939)
+                                    //               .withOpacity(0.9),
+                                    //           child: Center(
+                                    //             child: SvgPicture.asset(
+                                    //               "assets/svg/user-profile-icon.svg",
+                                    //               height: 12,
+                                    //               semanticsLabel:
+                                    //                   'User profile icon',
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //   ],
+                                    // ),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
-                        ListView.separated(
-                          itemCount: listOfCard.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final section = listOfCard[index];
-                            return section;
-                          },
-                          separatorBuilder: (BuildContext context, int index) =>
-                              const SizedBox(height: 10.0),
                         ),
                       ],
                     ),
                   ),
+                  BlocBuilder<StreamTimerBLoc, Stream<String>?>(
+                      buildWhen: (previous, current) {
+                    return previous != current;
+                  }, builder: (context, state) {
+                    if (state == null) {
+                      return const Center();
+                    }
+                    return StreamBuilder<String>(
+                        stream: state,
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null) {
+                            return const Center();
+                          }
+
+                          if (snapshot.data == "59") {
+                            context.read<MinutesCounterCubit>().updateState();
+                          }
+                          if (context.read<MinutesCounterCubit>().state >=
+                              context.read<MinutesCubit>().state) {
+                            context.read<TimerControllerCubit>().updateState();
+                            return const Center();
+                          }
+
+                          final String remainingTime = snapshot.data!;
+                          return DynamicIsland(
+                              remainingTime:
+                                  "${context.read<MinutesCounterCubit>().state} : $remainingTime");
+                        });
+                  }),
                 ],
               ),
-            ),
-            BlocBuilder<OnboardingCubit, bool>(
-              bloc: canDisplayOnboardingScreen,
-              builder: (context, canDisplayOnboardingScreen) => Positioned(
-                top: 0.0,
-                child: Visibility(
-                  visible: canDisplayOnboardingScreen,
-                  child: const AuthenticationPanel(
-                    key: Key('e'),
+            ],
+          ),
+        ],
+        body: Stack(
+          children: [
+            Container(
+              height: height,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Color(0xFF0C051D),
+              ),
+              child: Stack(
+                children: [
+                  Center(
+                    child: Container(
+                      height: height,
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(top: 250.0),
+                      child: Container(
+                        height: 200,
+                        width: double.infinity,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/bg.png"),
+                            alignment: Alignment.center,
+                            opacity: 0.6,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  ListView.separated(
+                    itemCount: listOfCard.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final section = listOfCard[index];
+                      return section;
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(height: 10.0),
+                  ),
+                ],
               ),
             ),
           ],

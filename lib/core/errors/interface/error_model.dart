@@ -1,6 +1,6 @@
-class ErrorInfo {
+class Failure {
   final String? errorMessage;
   final String? errorType;
   final String? errorSource;
-  ErrorInfo({required this.errorMessage, this.errorType, this.errorSource});
+  Failure({required this.errorMessage, this.errorType, this.errorSource});
 }

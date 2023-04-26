@@ -67,9 +67,10 @@ class _CheckBoxItemState extends State<CheckBoxItem> {
         ),
       ),
       value: _triggerState,
-      onChanged: (bool? value) async {
+      onChanged: (bool? value) {
         setState(() {
           _triggerState = !_triggerState;
+
           context.read<HabitBlocLogic>().add(
                 ToggleHabitAction(habit: widget.habit!),
               );
