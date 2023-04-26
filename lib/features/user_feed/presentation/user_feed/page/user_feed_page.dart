@@ -128,7 +128,7 @@ class _UserFeedPageState extends State<UserFeedPage> {
                   if (snapshot.connectionState == ConnectionState.none) {
                     return Center(
                       child: GradientText(
-                        "Please make sure you have internet connection",
+                        "Please make sure you have internet connection ",
                         style: const TextStyle(
                           color: Colors.white,
                           fontFamily: "Twitterchirp_Bold",
