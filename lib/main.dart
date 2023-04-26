@@ -32,6 +32,7 @@ import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'package:habit_master/shared/bloc/show_error_cubit.dart';
 import 'package:habit_master/shared/logic/reminder.dart';
 import 'package:habit_master/shared/notifications.dart';
+import 'package:habit_master/shared/widgets/page_router.dart';
 import 'package:sqflite/sqflite.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
@@ -43,6 +44,7 @@ import 'shared/bloc/auth_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   flutterLocalNotificationsPlugin
@@ -51,7 +53,6 @@ void main() async {
       ?.requestPermission();
 
   Reminder().sendReminder();
-
   await setup();
   PrebuiltData().createPrebuiltData();
   openDatabase(
@@ -207,13 +208,10 @@ class _MyAppState extends State<MyApp> {
           child: const AuthenticationPanel(),
         ),
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Habits Master',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const SuspendedBottomAppBar(),
+        home: PageRouter(),
       ),
     );
   }

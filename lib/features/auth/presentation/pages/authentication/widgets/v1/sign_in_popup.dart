@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_master/core/db/remote_db.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/auth/api/identity_api.dart';
 import 'package:habit_master/features/leader_board/infrastructure/models/leader.dart';
@@ -8,6 +9,7 @@ import 'package:habit_master/features/routine/domain/logic/get_days_of_the_week.
 import 'package:habit_master/features/routine/infrastructure/models/author_model.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_event/create_author.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_author.dart';
+import 'package:habit_master/shared/logic/permission.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:show_up_animation/show_up_animation.dart';
@@ -168,6 +170,17 @@ class _SignInPopupState extends State<SignInPopup>
                                   await serviceLocator<LeaderRepository>()
                                       .leaderMutations
                                       .createLeaderDocument(leader);
+
+                                  final id = serviceLocator<IdentityApi>()
+                                      .getAuthenticatedUser()!
+                                      .uid;
+                                  final permission = await RemoteDatabase
+                                      .permissionCollection
+                                      .doc(id)
+                                      .get();
+                                  if (permission.exists == false) {
+                                    await PermissionLogic().setPermission();
+                                  }
 
                                   // ignore: use_build_context_synchronously
                                   context.read<CreateAuthorBlocLogic>().add(

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:blur/blur.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -9,7 +8,6 @@ import 'package:habit_master/features/routine/infrastructure/models/routine_mode
 import 'package:habit_master/features/routine/infrastructure/repository/routine_remote_repository.dart';
 import 'package:habit_master/shared/static/three_d_objects.dart';
 import 'package:lottie/lottie.dart';
-import 'package:show_up_animation/show_up_animation.dart';
 
 import '../../../../../../../dep_injection.dart';
 import '../v2/stacked_chart.dart';
@@ -36,7 +34,6 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
         : widget.routine.authorName!;
     final userID = serviceLocator<IdentityApi>().getAuthenticatedUser()!.uid;
     final routine = widget.routine;
-    print(routine.type);
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -92,8 +89,7 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
                             .withOpacity(0.2),
                         spreadRadius: 8,
                         blurRadius: 30,
-                        offset:
-                            const Offset(2, 9), // changes position of shadow
+                        offset: const Offset(2, 9),
                       ),
                     ],
                   ),
@@ -105,8 +101,10 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.contain,
-                            image: AssetImage(threeDObjects[
-                                random.nextInt(threeDObjects.length)]),
+                            image: AssetImage(
+                              threeDObjects[
+                                  random.nextInt(threeDObjects.length)],
+                            ),
                           ),
                         ),
                       ),
@@ -262,14 +260,13 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
                                     padding: const EdgeInsets.all(10.0),
                                     child: Center(
                                         child: Text(
-                                      "$authorName's Daily Routine has a success rate of 12%. So be focused and good luck!",
+                                      "Hi! 👋 I'm $authorName and welcome to my daily routine!",
                                       style: const TextStyle(
                                         color:
                                             Color.fromARGB(255, 213, 213, 213),
                                         fontFamily: "Twitterchirp",
                                         fontSize: 13.0,
                                         fontWeight: FontWeight.w600,
-                                        // overflow: TextOverflow.ellipsis,
                                       ),
                                     )),
                                   ),

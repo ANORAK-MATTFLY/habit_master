@@ -2,24 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:habit_master/core/db/local_db.dart';
 import 'package:habit_master/core/db/db_constants.dart';
-import 'package:habit_master/core/errors/exception_handlers.dart';
+
 import 'package:habit_master/core/errors/interface/error_model.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/leader_board/domain/logic/leader_board_logic.dart';
-import 'package:habit_master/features/leader_board/infrastructure/data_sources/remote/mutations/leader_room_mutation.dart';
-import 'package:habit_master/features/leader_board/infrastructure/data_sources/remote/queries/leader_room_queries.dart';
 import 'package:habit_master/features/routine/domain/interfaces/habit_mutation_interface.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_history.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_history_repository.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
 
 class HabitMutations implements HabitMutationsInterface {
   final uuid = const Uuid();
-  final ExceptionHandlers exceptionHandlers = ExceptionHandlers();
 
   @override
   Future<Either<Failure, bool>> createHabit(Habit habit) async {
@@ -28,8 +24,8 @@ class HabitMutations implements HabitMutationsInterface {
       final createTaskQuery = LocalDatabaseConstantProvider.createHabit(habit);
       await database.rawInsert(createTaskQuery);
       return const Right(true);
-    } on DatabaseException catch (error) {
-      return exceptionHandlers.handleLocalDatabaseError(error, "createHabit");
+    } catch (error) {
+      rethrow;
     }
   }
 
@@ -45,8 +41,8 @@ class HabitMutations implements HabitMutationsInterface {
 
       await database.rawUpdate(updateHabit);
       return const Right(true);
-    } on DatabaseException catch (error) {
-      return exceptionHandlers.handleLocalDatabaseError(error, "toggleHabit");
+    } catch (error) {
+      rethrow;
     }
   }
 
@@ -71,16 +67,7 @@ class HabitMutations implements HabitMutationsInterface {
         final HabitHistory habitHistory =
             HabitHistory(doneOn: doneDate, habitID: habitID, id: id);
         await HabitHistoryRepository().createHabitHistoryRecord(habitHistory);
-        final internetChecker =
-            await InternetConnectionChecker().connectionStatus;
 
-        if (internetChecker == InternetConnectionStatus.connected) {
-          final leaderRoomExist =
-              await LeaderRoomQueries().checkIfLeaderRoomExist();
-          if (leaderRoomExist == false) {
-            await LeaderRoomMutations().createLeaderRoom();
-          }
-        }
         await serviceLocator<LeaderBoardLogic>()
             .leaderRepository
             .executeUpdateScore(habit.routineID!);
@@ -110,9 +97,8 @@ class HabitMutations implements HabitMutationsInterface {
           expirationDate, habitID);
       await database.rawUpdate(query);
       return const Right(true);
-    } on DatabaseException catch (error) {
-      return exceptionHandlers.handleLocalDatabaseError(
-          error, "updateHabitExpirationDate");
+    } catch (error) {
+      rethrow;
     }
   }
 
@@ -120,14 +106,20 @@ class HabitMutations implements HabitMutationsInterface {
   Future<Either<Failure, bool>> createHabits(List<Habit> habits) async {
     try {
       final database = await LocalDatabase.instance.database;
+      final habitData = await database.query(
+          "SELECT * FROM habit WHERE routine_id = ${habits[0].routineID}");
+      // ignore: unnecessary_null_comparison
+      if (habitData == null) {
+        return const Right(false);
+      }
       for (int index = 0; index < habits.length; index++) {
         final Habit habit = habits[index];
         final insertHabit = LocalDatabaseConstantProvider.createHabit(habit);
         await database.rawInsert(insertHabit);
       }
       return const Right(true);
-    } on DatabaseException catch (error) {
-      return exceptionHandlers.handleLocalDatabaseError(error, "createHabits");
+    } catch (error) {
+      rethrow;
     }
   }
 

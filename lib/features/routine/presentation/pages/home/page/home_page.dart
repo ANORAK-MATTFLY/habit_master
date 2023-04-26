@@ -4,13 +4,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
-import 'package:habit_master/features/auth/presentation/pages/profile/page/profile_page.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/routine_repository.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minutes_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/small_card.dart';
-import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'package:lottie/lottie.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/material.dart';

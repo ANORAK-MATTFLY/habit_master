@@ -9,6 +9,7 @@ import 'package:habit_master/features/routine/application/routine_facade.dart';
 import 'package:habit_master/features/routine/domain/logic/weekly_progress.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/author_queries.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/routine_queries.dart';
+import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/score_queries.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/remote_data_source/mutations/habit_remote_mutations.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/remote_data_source/mutations/routine_remote_mutation.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/remote_data_source/queries/habit_remote_queries.dart';
@@ -19,6 +20,7 @@ import 'package:habit_master/features/routine/infrastructure/repository/habit_re
 import 'package:habit_master/features/routine/infrastructure/repository/habit_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/routine_remote_repository.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/routine_repository.dart';
+import 'package:habit_master/features/routine/infrastructure/repository/score_repository.dart';
 import 'package:habit_master/features/routine/use_cases/author_use_cases.dart';
 import 'package:habit_master/features/routine/use_cases/habit_history_use_cases.dart';
 import 'package:habit_master/features/routine/use_cases/leader_use_cases.dart';
@@ -30,6 +32,7 @@ import 'package:habit_master/features/user_feed/infrastrcture/repository/post_re
 
 import 'features/auth/infrastructure/repository/user_repository.dart';
 import 'features/routine/infrastructure/data_sources/local_data_source/mutation/author_mutations.dart';
+import 'features/routine/infrastructure/data_sources/local_data_source/mutation/score_mutations.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -42,6 +45,11 @@ Future<void> setup() async {
       habitRepository: HabitRepository(),
       routineRepository: RoutineRepository(routineQueries: RoutineQueries("")),
     ),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => ScoreRepository(
+        scoreMutations: ScoreMutations(), scoreQueries: ScoreQueries()),
   );
   serviceLocator.registerLazySingleton(
     () => AuthorRepository(authorMutations: AuthorMutations()),

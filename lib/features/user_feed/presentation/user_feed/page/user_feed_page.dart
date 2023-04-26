@@ -16,7 +16,6 @@ import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v
 import 'package:habit_master/features/user_feed/presentation/user_feed/widgets/v1/post_panel.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'package:habit_master/shared/widgets/dynamic_island.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class UserFeedPage extends StatefulWidget {

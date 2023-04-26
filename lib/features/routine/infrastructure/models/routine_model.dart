@@ -77,16 +77,3 @@ class Routine extends RoutineEntity {
         "description": description,
       };
 }
-
-const habitsNames = [
-  "Elon musk's daily routine",
-  "Bill Gate's daily routine",
-  "Thomas daily routine",
-  "Thomas daily routine",
-  "Joey's daily routine",
-  "Joey's daily routine",
-];
-
-const habitsDescription = [
-  "With success rate of 20% this routine will drastically increase your productivity, but remember consistency is the key, so good look!"
-];

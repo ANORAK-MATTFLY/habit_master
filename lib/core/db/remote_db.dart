@@ -13,4 +13,7 @@ class RemoteDatabase {
       FirebaseFirestore.instance.collection("community_habits");
   static CollectionReference leaderRoomCollection =
       FirebaseFirestore.instance.collection("leader_room");
+
+  static CollectionReference permissionCollection =
+      FirebaseFirestore.instance.collection("permissions");
 }

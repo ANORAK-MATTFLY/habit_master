@@ -7,7 +7,6 @@ import 'package:habit_master/features/auth/presentation/pages/authentication/pag
 import 'package:habit_master/features/leader_board/presentation/page/leader_board_page.dart';
 import 'package:habit_master/features/routine/presentation/pages/home/page/home_page.dart';
 import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../../../../user_feed/presentation/user_feed/page/user_feed_page.dart';
 import '../daily_routine/pages/personal_routine.dart';
@@ -38,7 +37,7 @@ class _SuspendedBottomAppBarState extends State<SuspendedBottomAppBar> {
     ];
     final canDisplayOnboardingScreen =
         BlocProvider.of<OnboardingCubit>(context);
-
+    // PermissionLogic().invalidatePermission();
     return Scaffold(
       body: Material(
         child: SizedBox(

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_history.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
+import 'package:habit_master/features/routine/infrastructure/models/score_model.dart';
+import 'package:habit_master/shared/models/permission_model.dart';
 
 import '../../features/routine/infrastructure/models/author_model.dart';
 import '../../features/routine/infrastructure/models/routine_model.dart';
@@ -53,8 +55,25 @@ class LocalDatabaseConstantProvider {
       FOREIGN KEY(habit_id) REFERENCES habit(habit_id)
     )''';
 
+  static const createPermissionTable = '''CREATE TABLE permission(
+      id VARCHAR(255) NOT NULL,
+      is_free_plan INT NOT NULL,
+      expiration_date VARCHAR(20),
+      PRIMARY KEY(id)
+    )''';
+
+  static const createScoreTable = '''CREATE TABLE score(
+    user_id VARCHAR(255) NOT NULL,
+    score INT NOT NULL,
+    scored_on VARCHAR(15) NOT NULL
+  )''';
+
   static getHabitHistory(String habitID) {
     return "SELECT * FROM habit_history WHERE habit_id = '$habitID'";
+  }
+
+  static getScore(String userID, String scoredOn) {
+    return "SELECT * FROM score WHERE user_id = '$userID' AND scored_on = '$scoredOn'";
   }
 
   static String getCurrentUserFromCache(String userID) {
@@ -63,22 +82,6 @@ class LocalDatabaseConstantProvider {
 
   static getTodaysHabitHistory(String habitID, String doneOn) {
     return "SELECT * FROM habit_history WHERE habit_id = '$habitID' AND done_on = '$doneOn'";
-  }
-
-  static deleteHabitHistory(String habitID) {
-    final todayDate = Timestamp.now().toDate().toString().split(" ")[0];
-    return "DELETE FROM habit_history WHERE done_on = '$todayDate' AND habit_id = '$habitID'";
-  }
-
-  static updateHabitHistory(String habitID, String doneOn) {
-    return "UPDATE habit_history SET done_on = '$doneOn' WHERE habit_id = '$habitID'";
-  }
-
-  static String createHabitHistory(HabitHistory habitHistory) {
-    const attributes = 'INSERT INTO habit_history(id, habit_id, done_on)';
-    final values =
-        " VALUES('${habitHistory.id}', '${habitHistory.habitID}', '${habitHistory.doneOn}' )";
-    return attributes + values;
   }
 
   static getAuthorById(String authorID) {
@@ -93,11 +96,30 @@ class LocalDatabaseConstantProvider {
     return "SELECT * FROM habit WHERE routine_id = '$routineID'";
   }
 
+  static deleteHabitHistory(String habitID) {
+    final todayDate = Timestamp.now().toDate().toString().split(" ")[0];
+    return "DELETE FROM habit_history WHERE done_on = '$todayDate' AND habit_id = '$habitID'";
+  }
+
+  static String createHabitHistory(HabitHistory habitHistory) {
+    const attributes = 'INSERT INTO habit_history(id, habit_id, done_on)';
+    final values =
+        " VALUES('${habitHistory.id}', '${habitHistory.habitID}', '${habitHistory.doneOn}' )";
+    return attributes + values;
+  }
+
   static String createAuthor(Author author) {
     const attributes =
         'INSERT INTO author(id, author_name, author_profile_picture, type, subscribed_to)';
     final values =
         " VALUES('${author.id}', '${author.authorName}', '${author.authorProfilePicture}', '${author.type}', '${author.subscribedTo}' )";
+    return attributes + values;
+  }
+
+  static String createScore(Score score) {
+    const attributes = 'INSERT INTO score(user_id, score, scored_on)';
+    final values =
+        " VALUES('${score.userID}', ${score.score}, '${score.scoredOn}')";
     return attributes + values;
   }
 
@@ -117,11 +139,27 @@ class LocalDatabaseConstantProvider {
     return attributes + values;
   }
 
+  static String createPermission(Permission permission) {
+    const attributes =
+        "INSERT INTO permission(id, is_free_plan, expiration_date)";
+    final values =
+        "VALUES('${permission.id}', '${permission.isFreePlan}', '${permission.expirationDate}')";
+    return attributes + values;
+  }
+
   static updateHabitDoneAttribute(bool isDone, String habitID) {
     return "UPDATE habit SET is_done = $isDone WHERE id = '$habitID'";
   }
 
+  static updateScore(String userID, int score, String scoreOn) {
+    return "UPDATE score SET score = $score WHERE user_id = '$userID' AND scored_on = '$scoreOn'";
+  }
+
   static updateExpirationDate(String expirationDate, String habitID) {
     return "UPDATE habit SET expiration_date = '$expirationDate' WHERE id = '$habitID'";
+  }
+
+  static updateHabitHistory(String habitID, String doneOn) {
+    return "UPDATE habit_history SET done_on = '$doneOn' WHERE habit_id = '$habitID'";
   }
 }

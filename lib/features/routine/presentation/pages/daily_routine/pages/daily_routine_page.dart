@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/routine/domain/logic/input_validation.dart';
+import 'package:habit_master/features/routine/domain/logic/score_logic.dart';
 
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_repository.dart';
@@ -47,6 +48,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
   final TextEditingController taskDuration = TextEditingController();
   bool showError = false;
   bool showAppBar = true;
+  bool canClose = false;
 
   @override
   Widget build(BuildContext context) {
@@ -62,45 +64,70 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
     final taskMoment = context.read<MomentTaskCubit>();
     final taskTimeOption = context.read<TimeOptionCubit>();
     final showErrorPanel = context.read<ShowErrorCubit>();
+    ScoreLogic().createScore(routine.authorID!);
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 7, 3, 15),
       floatingActionButton: GestureDetector(
         onTap: () {
           setState(() {
             showCreateHabitPanel = !showCreateHabitPanel;
+            canClose = !canClose;
           });
         },
-        child: Container(
-          height: 40.0,
-          width: 40,
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 216, 143, 255),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10.0),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color:
-                    const Color.fromARGB(255, 216, 143, 255).withOpacity(0.3),
-                spreadRadius: 5,
-                blurRadius: 20.0,
-                offset: const Offset(0, 3), // changes position of shadow
-              ),
-            ],
-          ),
-          child: Center(
-            child: const Icon(
-              CupertinoIcons.add,
-              size: 20.0,
-            ).animate().slideY(
-                  begin: -1,
-                  duration: const Duration(milliseconds: 500),
+        child: routine.type == "remote"
+            ? const Center()
+            : Container(
+                height: 40.0,
+                width: 40,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 216, 143, 255),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10.0),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color.fromARGB(255, 216, 143, 255)
+                          .withOpacity(0.3),
+                      spreadRadius: 5,
+                      blurRadius: 20.0,
+                      offset: const Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
                 ),
-          ),
-        ).animate().slideY(
-              begin: -0.3,
-              duration: const Duration(milliseconds: 800),
-            ),
+                child: canClose == true
+                    ? Center(
+                        child: const Icon(
+                          CupertinoIcons.add,
+                          size: 20.0,
+                        ).animate().slideY(
+                              begin: -1,
+                              duration: const Duration(milliseconds: 500),
+                            ),
+                      )
+                    : canClose == false
+                        ? Center(
+                            child: const Icon(
+                              CupertinoIcons.clear,
+                              size: 17.0,
+                            ).animate().slideY(
+                                  begin: -1,
+                                  duration: const Duration(milliseconds: 700),
+                                ),
+                          )
+                        : Center(
+                            child: const Icon(
+                              CupertinoIcons.clear,
+                              size: 17.0,
+                            ).animate().slideY(
+                                  begin: -1,
+                                  duration: const Duration(milliseconds: 700),
+                                ),
+                          ),
+              ).animate().slideY(
+                  begin: -0.3,
+                  duration: const Duration(milliseconds: 800),
+                ),
       ),
       extendBodyBehindAppBar: true,
       body: Stack(
@@ -681,7 +708,9 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                   routineID: routine.authorID,
                                   isDone: false,
                                   scheduledFor: taskMoment.state.toLowerCase(),
-                                  type: taskType.state,
+                                  type: taskType.state == typeOptions[0]
+                                      ? "check"
+                                      : "timer",
                                   habitName: taskName.text,
                                   duration:
                                       "${taskDuration.text}-${taskTimeOption.state}",

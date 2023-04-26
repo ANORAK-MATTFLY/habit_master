@@ -105,7 +105,6 @@ flutter:
     - assets/images/circle.png
     - assets/images/bill-gate.png
     - assets/images/thomas_frank.png
-    - assets/images/joey_schweitzer.png
     - assets/images/3d objects/Spiral-2.png
     - assets/images/3d objects/Ball-2.png
     - assets/images/3d objects/Cube-2.png
@@ -134,6 +133,34 @@ flutter:
     - assets/images/avatars/av20.png
     - assets/images/avatars/av21.png
     - assets/images/avatars/av23.png
+    - assets/images/masters/lewis1.png
+    - assets/images/masters/lewis2.png
+    - assets/images/masters/lewis3.png
+    - assets/images/masters/lewis.png
+    - assets/images/masters/clear.png
+    - assets/images/masters/cuban.png
+    - assets/images/masters/cuban1.png
+    - assets/images/masters/cuban2.png
+    - assets/images/masters/oprah.png
+    - assets/images/masters/oprah1.png
+    - assets/images/masters/oprah2.png
+    - assets/images/masters/cook.png
+    - assets/images/masters/cook1.png
+    - assets/images/masters/cook2.png
+    - assets/images/masters/satya.png
+
+    - assets/images/masters/satya2.png
+    - assets/images/masters/satya1.png
+    - assets/images/masters/jack1.png
+    - assets/images/masters/jack2.png
+    - assets/images/masters/jack.png
+
+
+
+
+
+
+
 
     - assets/images/icons/crown.png
     - assets/images/icons/trophy.png
@@ -170,6 +197,10 @@ flutter:
     - assets/animations/success3.json
     - assets/animations/guru1.json
     - assets/animations/guru2.json
+    - assets/animations/task1.json
+    - assets/animations/task2.json
+    - assets/animations/smile.json
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
