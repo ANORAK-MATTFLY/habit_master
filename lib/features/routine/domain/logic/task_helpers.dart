@@ -34,4 +34,33 @@ class TaskHelpers {
     }
     return eveningTasks;
   }
+
+  List<List<int>> getRatio(List<Habit> habits) {
+    final List<Habit> morningHabits = [];
+    final List<Habit> afternoonHabits = [];
+    final List<Habit> eveningHabits = [];
+    for (var index = 0; index < getMorningTasks(habits).length; index++) {
+      final habit = getMorningTasks(habits)[index];
+      if (habit.isDone == true) {
+        morningHabits.add(habit);
+      }
+    }
+    for (var index = 0; index < getAfternoonTasks(habits).length; index++) {
+      final habit = getAfternoonTasks(habits)[index];
+      if (habit.isDone == true) {
+        afternoonHabits.add(habit);
+      }
+    }
+    for (var index = 0; index < getEveningTasks(habits).length; index++) {
+      final habit = getEveningTasks(habits)[index];
+      if (habit.isDone == true) {
+        eveningHabits.add(habit);
+      }
+    }
+    return [
+      [morningHabits.length, getMorningTasks(habits).length],
+      [afternoonHabits.length, getAfternoonTasks(habits).length],
+      [eveningHabits.length, getEveningTasks(habits).length],
+    ];
+  }
 }

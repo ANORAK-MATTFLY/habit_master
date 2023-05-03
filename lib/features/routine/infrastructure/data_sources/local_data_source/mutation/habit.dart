@@ -106,16 +106,16 @@ class HabitMutations implements HabitMutationsInterface {
   Future<Either<Failure, bool>> createHabits(List<Habit> habits) async {
     try {
       final database = await LocalDatabase.instance.database;
-      final habitData = await database.query(
-          "SELECT * FROM habit WHERE routine_id = ${habits[0].routineID}");
-      // ignore: unnecessary_null_comparison
-      if (habitData == null) {
-        return const Right(false);
-      }
+
       for (int index = 0; index < habits.length; index++) {
         final Habit habit = habits[index];
-        final insertHabit = LocalDatabaseConstantProvider.createHabit(habit);
-        await database.rawInsert(insertHabit);
+        final habitData = await database.rawQuery(
+            "SELECT * FROM habit WHERE routine_id = '${habit.routineID}' AND habit_name = '${habit.habitName}'");
+        // ignore: unnecessary_null_comparison
+        if (habitData.isEmpty) {
+          final insertHabit = LocalDatabaseConstantProvider.createHabit(habit);
+          await database.rawInsert(insertHabit);
+        }
       }
       return const Right(true);
     } catch (error) {

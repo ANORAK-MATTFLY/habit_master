@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -18,6 +20,7 @@ import 'package:habit_master/features/routine/presentation/pages/daily_routine/w
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/widgets/v2/side_line.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../../../../../shared/static/images.dart';
 import '../../../../../infrastructure/repository/habit_repository.dart';
 
 class ExpandedItemList extends StatefulWidget {
@@ -96,7 +99,7 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                         Positioned(
                           left: 10.0,
                           child: tinyCircleAvatar(
-                            "assets/images/avatars/av8.jpg",
+                            avatars[Random().nextInt(avatars.length)],
                             const [
                               Color.fromARGB(255, 254, 169, 255),
                               Color.fromARGB(255, 254, 169, 255),
@@ -106,7 +109,7 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                         Positioned(
                           left: 30.0,
                           child: tinyCircleAvatar(
-                            "assets/images/avatars/av5.jpg",
+                            avatars[Random().nextInt(avatars.length)],
                             const [
                               Color.fromARGB(255, 169, 218, 255),
                               Color.fromARGB(255, 183, 169, 255),
@@ -116,10 +119,11 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                         Positioned(
                             left: 50.0,
                             child: tinyCircleAvatar(
-                                "assets/images/avatars/av1.jpg", const [
-                              Color.fromARGB(255, 255, 228, 169),
-                              Color.fromARGB(255, 255, 211, 169),
-                            ])),
+                                avatars[Random().nextInt(avatars.length)],
+                                const [
+                                  Color.fromARGB(255, 255, 228, 169),
+                                  Color.fromARGB(255, 255, 211, 169),
+                                ])),
                       ],
                     ),
                   ],
@@ -173,116 +177,136 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                                     shimmer: widget.shimmer,
                                     habit: habit,
                                   )
-                                : Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0,
-                                    ),
-                                    height: 60.0,
-                                    width: double.infinity,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        habit.isDone == false
-                                            ? GestureDetector(
-                                                onTap: () {
-                                                  timerControllerCubit
-                                                      .updateState();
-                                                  context
-                                                      .read<
-                                                          MinutesCounterCubit>()
-                                                      .setMinute(0);
-                                                  final num = habit.duration!
-                                                      .split("-")[0];
-
-                                                  final habitDuration =
-                                                      int.parse(num);
-
-                                                  context
-                                                      .read<HabitTimerCubit>()
-                                                      .updateState(habit);
-
-                                                  context
-                                                      .read<MinutesCubit>()
-                                                      .setMinute(habitDuration);
-
-                                                  context
-                                                      .read<StreamTimerBLoc>()
-                                                      .add(
-                                                        TimeStreamEvent(
-                                                            minutes:
-                                                                habitDuration),
-                                                      );
-                                                },
-                                                child: Container(
-                                                  height: 40.0,
-                                                  width: 100.0,
-                                                  decoration: BoxDecoration(
-                                                    color: widget.color,
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                      Radius.circular(15.0),
-                                                    ),
-                                                  ),
-                                                  child: const Center(
-                                                    child: Text("Start"),
-                                                  ),
-                                                ))
-                                            : Container(
-                                                height: 40.0,
-                                                width: 100.0,
-                                                decoration: const BoxDecoration(
-                                                  color: Color.fromARGB(
-                                                      255, 28, 0, 45),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(15.0),
-                                                  ),
-                                                ),
-                                                child: Lottie.asset(
-                                                    "assets/animations/success1.json"),
-                                              ),
-                                        Text(
-                                          habit.habitName!,
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: "Twitterchirp",
-                                            fontSize: 17.0,
-                                            decoration: TextDecoration.none,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
+                                : habit.type == "timer"
+                                    ? Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 15.0,
                                         ),
-                                        IconButton(
-                                          onPressed: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) => AlertDialog(
-                                                title: const Text(
-                                                  "Your monthly progression on this task over the month",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontFamily: "Twitterchirp",
-                                                    fontSize: 14.0,
+                                        height: 60.0,
+                                        width: double.infinity,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            habit.isDone == false
+                                                ? GestureDetector(
+                                                    onTap: () {
+                                                      timerControllerCubit
+                                                          .updateState();
+                                                      context
+                                                          .read<
+                                                              MinutesCounterCubit>()
+                                                          .setMinute(0);
+                                                      final num = habit
+                                                          .duration!
+                                                          .split("-")[0];
+
+                                                      final habitDuration =
+                                                          int.parse(num);
+
+                                                      context
+                                                          .read<
+                                                              HabitTimerCubit>()
+                                                          .updateState(habit);
+
+                                                      context
+                                                          .read<MinutesCubit>()
+                                                          .setMinute(
+                                                              habitDuration);
+
+                                                      context
+                                                          .read<
+                                                              StreamTimerBLoc>()
+                                                          .add(
+                                                            TimeStreamEvent(
+                                                                minutes:
+                                                                    habitDuration),
+                                                          );
+                                                    },
+                                                    child: Container(
+                                                      height: 40.0,
+                                                      width: 100.0,
+                                                      decoration: BoxDecoration(
+                                                        color: widget.color,
+                                                        borderRadius:
+                                                            const BorderRadius
+                                                                .all(
+                                                          Radius.circular(15.0),
+                                                        ),
+                                                      ),
+                                                      child: const Center(
+                                                        child: Text("Start"),
+                                                      ),
+                                                    ))
+                                                : Container(
+                                                    height: 40.0,
+                                                    width: 100.0,
                                                     decoration:
-                                                        TextDecoration.none,
+                                                        const BoxDecoration(
+                                                      color: Color.fromARGB(
+                                                          255, 28, 0, 45),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                        Radius.circular(15.0),
+                                                      ),
+                                                    ),
+                                                    child: Lottie.asset(
+                                                        "assets/animations/success1.json"),
                                                   ),
+                                            SizedBox(
+                                              height: 20.0,
+                                              width: 150.0,
+                                              child: Text(
+                                                habit.habitName!,
+                                                style: const TextStyle(
+                                                  color: Colors.blue,
+                                                  fontFamily: "Twitterchirp",
+                                                  fontSize: 17.0,
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
-                                                backgroundColor:
-                                                    const Color.fromARGB(
-                                                        255, 0, 0, 0),
-                                                content:
-                                                    ProgressGraph(habit: habit),
-                                              ).animate().fadeIn(),
-                                            );
-                                          },
-                                          icon: Icon(
-                                            CupertinoIcons.circle_grid_3x3,
-                                            color: widget.color,
-                                            size: 20.0,
-                                          ),
-                                        ),
-                                      ],
-                                    )),
+                                              ),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      AlertDialog(
+                                                    title: const Text(
+                                                      "Your monthly progression on this task over the month",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontFamily:
+                                                            "Twitterchirp",
+                                                        fontSize: 14.0,
+                                                        decoration:
+                                                            TextDecoration.none,
+                                                      ),
+                                                    ),
+                                                    backgroundColor:
+                                                        const Color.fromARGB(
+                                                            255, 0, 0, 0),
+                                                    content: ProgressGraph(
+                                                        habit: habit),
+                                                  ).animate().fadeIn(),
+                                                );
+                                              },
+                                              icon: Icon(
+                                                CupertinoIcons.circle_grid_3x3,
+                                                color: widget.color,
+                                                size: 20.0,
+                                              ),
+                                            ),
+                                          ],
+                                        ))
+                                    : Container(
+                                        height: 100.0,
+                                        width: 200.0,
+                                        color: Colors.white,
+                                      ),
                           );
                         }).toList(),
                       )),
@@ -296,7 +320,6 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
         expansionCallback: (index, isOpen) {
           setState(() {
             _isOpen[index] = !isOpen;
-            // ExpendCubit
           });
         });
   }

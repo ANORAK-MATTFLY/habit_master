@@ -3,6 +3,7 @@ import 'package:habit_master/features/routine/infrastructure/models/habit_histor
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/infrastructure/models/score_model.dart';
 import 'package:habit_master/shared/models/permission_model.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../features/routine/infrastructure/models/author_model.dart';
 import '../../features/routine/infrastructure/models/routine_model.dart';
@@ -96,6 +97,10 @@ class LocalDatabaseConstantProvider {
     return "SELECT * FROM habit WHERE routine_id = '$routineID'";
   }
 
+  static getCelebsRoutine() {
+    return "SELECT * FROM author WHERE type = 'celebs'";
+  }
+
   static deleteHabitHistory(String habitID) {
     final todayDate = Timestamp.now().toDate().toString().split(" ")[0];
     return "DELETE FROM habit_history WHERE done_on = '$todayDate' AND habit_id = '$habitID'";
@@ -124,10 +129,11 @@ class LocalDatabaseConstantProvider {
   }
 
   static String createHabit(Habit habit) {
+    const uuid = Uuid();
     const attributes =
         'INSERT INTO habit(id, routine_id, habit_name, type, scheduled_for, duration, expiration_date, is_done, done_on)';
     final values =
-        " VALUES('${habit.id}', '${habit.routineID}', '${habit.habitName}', '${habit.type}', '${habit.scheduledFor}', '${habit.duration}', '${habit.expirationDate}', ${habit.isDone}, '${habit.doneOn}')";
+        " VALUES('${habit.id}-${uuid.v4()}', '${habit.routineID}', '${habit.habitName}', '${habit.type}', '${habit.scheduledFor}', '${habit.duration}', '${habit.expirationDate}', ${habit.isDone}, '${habit.doneOn}')";
     return attributes + values;
   }
 

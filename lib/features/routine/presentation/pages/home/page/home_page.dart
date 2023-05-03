@@ -143,6 +143,34 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      Container(
+        margin: const EdgeInsets.only(left: 40.0, right: 200.0),
+        height: 40.0,
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(208, 6, 12, 20),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(13.0),
+          ),
+          border: Border.all(
+              color: const Color.fromARGB(255, 199, 156, 255), width: 1.5),
+        ),
+        child: Center(
+          child: GradientText(
+            "Community",
+            style: const TextStyle(
+              color: Colors.white,
+              fontFamily: "Twitterchirp_Bold",
+              fontSize: 13.0,
+              fontWeight: FontWeight.bold,
+              overflow: TextOverflow.ellipsis,
+            ),
+            colors: const [
+              Color.fromARGB(255, 176, 217, 241),
+              Color.fromARGB(255, 195, 169, 255),
+            ],
+          ),
+        ),
+      ),
       StreamBuilder<List<Routine>>(
           stream: getRoutines.getRoutines("remote"),
           builder: (context, snapshot) {

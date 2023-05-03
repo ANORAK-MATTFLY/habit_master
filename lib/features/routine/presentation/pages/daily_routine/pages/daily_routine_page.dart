@@ -30,6 +30,7 @@ import 'package:habit_master/shared/widgets/dynamic_island.dart';
 import 'package:habit_master/shared/widgets/error.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../domain/logic/task_helpers.dart';
 import '../widgets/v1/expansion_item.dart';
 import '../widgets/v1/progress.dart';
 import '../widgets/v1/chart_and_desc.dart';
@@ -98,7 +99,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                 child: canClose == true
                     ? Center(
                         child: const Icon(
-                          CupertinoIcons.add,
+                          CupertinoIcons.clear,
                           size: 20.0,
                         ).animate().slideY(
                               begin: -1,
@@ -108,7 +109,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                     : canClose == false
                         ? Center(
                             child: const Icon(
-                              CupertinoIcons.clear,
+                              CupertinoIcons.add,
                               size: 17.0,
                             ).animate().slideY(
                                   begin: -1,
@@ -117,7 +118,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                           )
                         : Center(
                             child: const Icon(
-                              CupertinoIcons.clear,
+                              CupertinoIcons.add,
                               size: 17.0,
                             ).animate().slideY(
                                   begin: -1,
@@ -144,6 +145,8 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                   case ConnectionState.waiting:
                     final List<Habit> streamedHabits = [];
                     getHabits(streamedHabits);
+                    final habits = context.read<HabitListCubit>().state;
+                    final ratios = TaskHelpers().getRatio(habits);
                     return Container(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
@@ -178,7 +181,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     child: ExpandedItemList(
                                       title: "Start your Morning Routine",
                                       progressRatio: progress(
-                                        "0/3",
+                                        "${ratios[0][0]}/${ratios[0][1]}",
                                         const Color.fromARGB(255, 255, 230, 0),
                                       ),
                                       shimmer: Colors.white.withOpacity(0.2),
@@ -192,7 +195,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     child: ExpandedItemList(
                                       title: "Kickoff your Afternoon!",
                                       progressRatio: progress(
-                                        "0/4",
+                                        "${ratios[1][0]}/${ratios[1][1]}",
                                         const Color.fromARGB(
                                             255, 246, 149, 255),
                                       ),
@@ -205,7 +208,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                   ExpandedItemList(
                                     title: "Finish your day in style!",
                                     progressRatio: progress(
-                                      "0/3",
+                                      "${ratios[2][0]}/${ratios[2][1]}",
                                       const Color.fromARGB(255, 0, 255, 247),
                                     ),
                                     color:
@@ -223,6 +226,8 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                   case ConnectionState.active:
                     final streamedTasks = snapshot.data!;
                     getHabits(streamedTasks);
+                    final habits = context.read<HabitListCubit>().state;
+                    final ratios = TaskHelpers().getRatio(habits);
                     return Container(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
@@ -257,7 +262,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     child: ExpandedItemList(
                                       title: "Start your Morning Routine",
                                       progressRatio: progress(
-                                        "0/3",
+                                        "${ratios[0][0]}/${ratios[0][1]}",
                                         const Color.fromARGB(255, 255, 230, 0),
                                       ),
                                       shimmer: Colors.white.withOpacity(0.2),
@@ -271,7 +276,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     child: ExpandedItemList(
                                       title: "Kickoff your Afternoon!",
                                       progressRatio: progress(
-                                        "0/4",
+                                        "${ratios[1][0]}/${ratios[1][1]}",
                                         const Color.fromARGB(
                                             255, 246, 149, 255),
                                       ),
@@ -284,7 +289,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                   ExpandedItemList(
                                     title: "Finish your day in style!",
                                     progressRatio: progress(
-                                      "0/3",
+                                      "${ratios[2][0]}/${ratios[2][1]}",
                                       const Color.fromARGB(255, 0, 255, 247),
                                     ),
                                     color:
@@ -303,6 +308,8 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                     {
                       final streamedTasks = snapshot.data!;
                       getHabits(streamedTasks);
+                      final habits = context.read<HabitListCubit>().state;
+                      final ratios = TaskHelpers().getRatio(habits);
                       return Container(
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
@@ -337,7 +344,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                       child: ExpandedItemList(
                                         title: "Start your Morning Routine",
                                         progressRatio: progress(
-                                          "0/3",
+                                          "${ratios[0][0]}/${ratios[0][1]}",
                                           const Color.fromARGB(
                                               255, 255, 230, 0),
                                         ),
@@ -352,7 +359,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                       child: ExpandedItemList(
                                         title: "Kickoff your Afternoon!",
                                         progressRatio: progress(
-                                          "0/4",
+                                          "${ratios[1][0]}/${ratios[1][1]}",
                                           const Color.fromARGB(
                                               255, 246, 149, 255),
                                         ),
@@ -365,7 +372,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     ExpandedItemList(
                                       title: "Finish your day in style!",
                                       progressRatio: progress(
-                                        "0/3",
+                                        "${ratios[2][0]}/${ratios[2][1]}",
                                         const Color.fromARGB(255, 0, 255, 247),
                                       ),
                                       color: const Color.fromARGB(
@@ -727,6 +734,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                     .updateState(habits);
                                 setState(() {
                                   showCreateHabitPanel = !showCreateHabitPanel;
+                                  canClose = false;
                                 });
                               },
                               child: Container(

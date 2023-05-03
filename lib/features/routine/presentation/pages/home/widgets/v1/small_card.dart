@@ -180,7 +180,7 @@ class _SmallCardState extends State<SmallCard> {
                       ),
                       const SizedBox(height: 12.0),
                       const Text(
-                        "8 habits - 12 tasks a day",
+                        "Community's daily routine",
                         style: TextStyle(
                           fontFamily: "Twitterchirp",
                           color: Color(0xB7FFFFFF),
