@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:habit_master/dep_injection.dart';
+import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/routine_queries.dart';
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
-import 'package:habit_master/features/routine/infrastructure/repository/routine_repository.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minutes_cubit.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/timer_controller_cubit.dart';
@@ -43,10 +42,9 @@ class _HomePageState extends State<HomePage> {
 
     final day = DateFormat('EEEE').format(today).toUpperCase();
     final dayNumber = today.day;
-    final getRoutines = serviceLocator<RoutineRepository>();
     final listOfCard = [
-      StreamBuilder<List<Routine>>(
-          stream: getRoutines.getRoutines("local"),
+      FutureBuilder<List<Routine>>(
+          future: RoutineQueries().getRoutinesData("local"),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -59,12 +57,9 @@ class _HomePageState extends State<HomePage> {
                       animating: true, color: Colors.white),
                 );
               case ConnectionState.active:
-                final List<Routine> routines = snapshot.data!;
-
-                return Container(
-                  height: 310.0,
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  child: LargeCard(routines: routines),
+                return const Center(
+                  child: CupertinoActivityIndicator(
+                      animating: true, color: Colors.white),
                 );
               case ConnectionState.done:
                 {
@@ -171,15 +166,10 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      StreamBuilder<List<Routine>>(
-          stream: getRoutines.getRoutines("remote"),
+      FutureBuilder<List<Routine>>(
+          future: RoutineQueries().getRoutinesData("remote"),
           builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Center(
-                child: Text("${snapshot.hasError.toString()}r"),
-              );
-            }
-            if (snapshot.connectionState == ConnectionState.none) {
+            if (snapshot.hasError || snapshot.data == null) {
               return Center(
                 child: SizedBox(
                   height: 80.0,
@@ -190,23 +180,25 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             }
-            if (snapshot.connectionState == ConnectionState.active) {
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: Lottie.asset("assets/animations/loading_3.json"),
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.done) {
               final routines = snapshot.data!;
               return SmallCard(routines: routines);
             }
-            if (snapshot.data == null) {
-              return Center(
-                child: SizedBox(
-                  height: 80.0,
-                  width: 80.0,
-                  child: Lottie.asset(
-                    "assets/animations/not_found.json",
-                  ),
+            return Center(
+              child: SizedBox(
+                height: 80.0,
+                width: 80.0,
+                child: Lottie.asset(
+                  "assets/animations/not_found.json",
                 ),
-              );
-            }
-            final routines = snapshot.data!;
-            return SmallCard(routines: routines);
+              ),
+            );
           }),
     ];
 

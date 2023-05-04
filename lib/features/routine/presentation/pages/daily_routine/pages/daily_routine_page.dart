@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -5,7 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/routine/domain/logic/input_validation.dart';
 import 'package:habit_master/features/routine/domain/logic/score_logic.dart';
-
+// ignore: depend_on_referenced_packages
+import 'package:http/http.dart' as http;
+// ignore: depend_on_referenced_packages
+import 'package:path_provider/path_provider.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_repository.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_event/create_habit.dart';
@@ -28,6 +34,8 @@ import 'package:habit_master/shared/static/dates.dart';
 import 'package:habit_master/shared/static/options.dart';
 import 'package:habit_master/shared/widgets/dynamic_island.dart';
 import 'package:habit_master/shared/widgets/error.dart';
+import 'package:lottie/lottie.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../domain/logic/task_helpers.dart';
@@ -50,12 +58,14 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
   bool showError = false;
   bool showAppBar = true;
   bool canClose = false;
+  bool showShareModal = false;
 
   @override
   Widget build(BuildContext context) {
     getHabits(List<Habit> streamedHabits) =>
         context.read<HabitListCubit>().updateState(streamedHabits);
     final routine = context.read<RoutineCubit>().state!;
+
     final timerControllerCubit = context.read<TimerControllerCubit>();
 
     final height = MediaQuery.of(context).size.height;
@@ -794,6 +804,122 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                   ],
                 ),
               ],
+            ),
+          ),
+          Center(
+            child: Visibility(
+              visible: Timestamp.now().toDate().hour == 10 &&
+                  showShareModal == false &&
+                  Timestamp.now().toDate().minute < 30,
+              child: SizedBox(
+                height: 320.0,
+                width: (width - 40),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 300.0,
+                      width: (width - 40),
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 119, 255, 255),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15.0),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text(
+                            "Share your progress on social media",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: "Twitterchirp",
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.none,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 140.0,
+                            width: 140.0,
+                            child:
+                                Lottie.asset("assets/animations/social.json"),
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              const String imageUrl =
+                                  "https://firebasestorage.googleapis.com/v0/b/habit-master-api.appspot.com/o/illustration.png?alt=media&token=3b8962c2-1c50-4009-bab4-5e5328db89e7";
+                              final url = Uri.parse(imageUrl);
+                              final response = await http.get(url);
+                              final bytes = response.bodyBytes;
+                              final temp = await getTemporaryDirectory();
+                              final path = '${temp.path}/illustration.png';
+                              File(path).writeAsBytesSync(bytes);
+
+                              // ignore: deprecated_member_use
+                              Share.shareFiles(
+                                [path],
+                                text:
+                                    "I've been following ${routine.authorName}'s daily routine this week! Join me and get into the 1% club! 💪",
+                              );
+                            },
+                            child: Container(
+                              height: 50.0,
+                              width: 200.0,
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 255, 191, 107),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15.0),
+                                ),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  "Share",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: "Twitterchirp",
+                                    fontSize: 17.0,
+                                    fontWeight: FontWeight.w500,
+                                    decoration: TextDecoration.none,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 3.0,
+                      right: 3.0,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            showShareModal = true;
+                          });
+                        },
+                        child: Container(
+                          height: 30.0,
+                          width: 30,
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(360.0),
+                            ),
+                          ),
+                          child: const Center(
+                              child: Icon(
+                            CupertinoIcons.clear,
+                            color: Colors.white,
+                            size: 15.0,
+                          )),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
           ),
         ],

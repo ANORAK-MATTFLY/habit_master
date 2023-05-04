@@ -36,6 +36,7 @@ import 'package:habit_master/shared/widgets/page_router.dart';
 import 'package:sqflite/sqflite.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
+import 'features/routine/presentation/pages/daily_routine/bloc/cubit/progress_status.dart';
 import 'features/routine/presentation/pages/home/page/home_page.dart';
 import 'features/routine/presentation/pages/navigation/bottom_app_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -206,6 +207,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (_) => AuthCubit(),
           child: const AuthenticationPanel(),
+        ),
+        BlocProvider(
+          create: (_) => ProgressStatus(),
+          child: const LargeCard(routines: []),
         ),
       ],
       child: const MaterialApp(

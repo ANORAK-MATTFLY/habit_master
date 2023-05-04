@@ -210,6 +210,7 @@ class _PrebuiltCardState extends State<LargeCard> {
                                   ),
                                 );
                               }
+
                               return ClipRRect(
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(20),

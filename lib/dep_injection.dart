@@ -43,7 +43,7 @@ Future<void> setup() async {
         authorMutations: AuthorMutations(),
       ),
       habitRepository: HabitRepository(),
-      routineRepository: RoutineRepository(routineQueries: RoutineQueries("")),
+      routineRepository: RoutineRepository(routineQueries: RoutineQueries()),
     ),
   );
 
@@ -55,7 +55,7 @@ Future<void> setup() async {
     () => AuthorRepository(authorMutations: AuthorMutations()),
   );
   serviceLocator.registerLazySingleton(
-    () => RoutineRepository(routineQueries: RoutineQueries("")),
+    () => RoutineRepository(routineQueries: RoutineQueries()),
   );
   serviceLocator.registerLazySingleton(
     () => HabitRepository(),

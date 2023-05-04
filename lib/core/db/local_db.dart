@@ -13,7 +13,7 @@ class LocalDatabase {
 
   Future<Database> get database async {
     if (_localDatabase != null) return _localDatabase!;
-    _localDatabase = await _initDB("habits_local_database252.db");
+    _localDatabase = await _initDB("habits_local_database254.db");
     return _localDatabase!;
   }
 

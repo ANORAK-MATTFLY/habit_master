@@ -21,7 +21,8 @@
         "syncfusion",
         "Twitterchirp",
         "VARCHAR",
-        "vsync"
+        "vsync",
+        "wecome"
     ],
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs":"active"

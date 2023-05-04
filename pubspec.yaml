@@ -36,6 +36,8 @@ dependencies:
   # Utils
   uuid: ^3.0.6
   stream_isolate: ^0.1.1
+  share_plus: ^6.3.4
+
   # Local database
   sqflite: ^2.0.3+1
 
@@ -156,6 +158,7 @@ flutter:
     - assets/images/masters/jack.png
     - assets/images/celebs/mbj.png
     - assets/images/celebs/mbj1.png
+    - assets/images/illustration.png
 
 
 
@@ -204,6 +207,8 @@ flutter:
     - assets/animations/task1.json
     - assets/animations/task2.json
     - assets/animations/smile.json
+    - assets/animations/social.json
+
 
 
 

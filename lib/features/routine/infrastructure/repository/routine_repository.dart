@@ -18,8 +18,8 @@ class RoutineRepository implements RoutineInterface {
   }
 
   @override
-  Stream<List<Routine>> getRoutines(String routineType) {
-    return RoutineQueries(routineType).stream;
+  Future<List<Routine>> getRoutines(String routineType) {
+    return RoutineQueries().getRoutinesData(routineType);
   }
 
   @override

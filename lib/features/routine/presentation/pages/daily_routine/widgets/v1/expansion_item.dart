@@ -259,7 +259,7 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                                               child: Text(
                                                 habit.habitName!,
                                                 style: const TextStyle(
-                                                  color: Colors.blue,
+                                                  color: Colors.white,
                                                   fontFamily: "Twitterchirp",
                                                   fontSize: 17.0,
                                                   decoration:

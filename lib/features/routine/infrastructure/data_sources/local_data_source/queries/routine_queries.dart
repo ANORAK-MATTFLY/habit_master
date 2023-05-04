@@ -5,28 +5,26 @@ import 'package:habit_master/features/routine/domain/interfaces/routine_queries_
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
 class RoutineQueries implements RoutineQueriesInterface {
-  RoutineQueries(String routineType) {
+  @override
+  Future<List<Routine>> getRoutinesData(String routineType) async {
     if (routineType == "local") {
-      getRoutines().then((rawRoutinesData) {
-        final List<Routine> routines = [];
-        for (var index = 0; index < rawRoutinesData.length; index++) {
-          final rawTask = rawRoutinesData[index];
-          final task = Routine.fromJson(rawTask);
-          routines.add(task);
-          _streamController.sink.add(routines);
-        }
-      });
-    } else {
-      getRemoteRoutines().then((rawRoutinesData) {
-        final List<Routine> routines = [];
-        for (var index = 0; index < rawRoutinesData.length; index++) {
-          final rawTask = rawRoutinesData[index];
-          final task = Routine.fromJson(rawTask);
-          routines.add(task);
-          _streamController.sink.add(routines);
-        }
-      });
+      final rawRoutinesData = await getRoutines();
+      final List<Routine> routines = [];
+      for (var index = 0; index < rawRoutinesData.length; index++) {
+        final rawTask = rawRoutinesData[index];
+        final task = Routine.fromJson(rawTask);
+        routines.add(task);
+      }
+      return routines;
     }
+    final rawRoutinesData = await getRemoteRoutines();
+    final List<Routine> routines = [];
+    for (var index = 0; index < rawRoutinesData.length; index++) {
+      final rawTask = rawRoutinesData[index];
+      final task = Routine.fromJson(rawTask);
+      routines.add(task);
+    }
+    return routines;
   }
 
   final _streamController = StreamController<List<Routine>>();

@@ -45,7 +45,7 @@ class _PersonalRoutinePageState extends State<PersonalRoutinePage> {
                 future: authorRepo.getAuthorById(userInfo.uid),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return const ShimmerLoader();
+                    return const WelcomePage();
                   }
 
                   if (snapshot.hasData) {
