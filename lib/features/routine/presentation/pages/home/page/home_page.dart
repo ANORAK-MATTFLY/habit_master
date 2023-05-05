@@ -127,12 +127,12 @@ class _HomePageState extends State<HomePage> {
                       style: BorderStyle.solid,
                       width: 0.4),
                 ),
-                child: Center(
-                  child: SvgPicture.asset("assets/svg/link.svg",
-                      height: 12,
-                      color: const Color(0xFF807E7E),
-                      semanticsLabel: 'A red up arrow'),
-                ),
+                // child: Center(
+                //   child: SvgPicture.asset("assets/svg/link.svg",
+                //       height: 12,
+                //       color: const Color(0xFF807E7E),
+                //       semanticsLabel: 'A red up arrow'),
+                // ),
               ),
             ),
           ),

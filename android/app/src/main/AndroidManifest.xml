@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.habit_master">
    <application
-        android:label="habit_master"
+        android:label="Habit Master"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
