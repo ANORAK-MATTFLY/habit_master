@@ -10,7 +10,7 @@ import '../../infrastructure/repository/author_repository.dart';
 class PrebuiltData {
   final authorQueries = serviceLocator<AuthorRepository>();
   final authorMutations = serviceLocator<AuthorRepository>();
-  Future createPrebuiltData() async {
+  Future<bool> createPrebuiltData() async {
     try {
       for (var index = 0; index < predefinedAuthors.length; index++) {
         final author = predefinedAuthors[index];

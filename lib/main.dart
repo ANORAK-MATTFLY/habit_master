@@ -32,6 +32,7 @@ import 'package:habit_master/shared/bloc/onboarding_cubit.dart';
 import 'package:habit_master/shared/bloc/show_error_cubit.dart';
 import 'package:habit_master/shared/logic/reminder.dart';
 import 'package:habit_master/shared/notifications.dart';
+import 'package:habit_master/shared/widgets/loading_page.dart';
 import 'package:habit_master/shared/widgets/page_router.dart';
 import 'package:sqflite/sqflite.dart';
 // ignore: depend_on_referenced_packages
@@ -55,7 +56,7 @@ void main() async {
 
   Reminder().sendReminder();
   await setup();
-  PrebuiltData().createPrebuiltData();
+
   openDatabase(
     // Set the path to the database. Note: Using the `join` function from the
     // `path` package is best practice to ensure the path is correctly
@@ -216,7 +217,7 @@ class _MyAppState extends State<MyApp> {
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Habits Master',
-        home: PageRouter(),
+        home: LoadingPage(),
       ),
     );
   }
