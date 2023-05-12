@@ -65,7 +65,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         compileSdkVersion 33
-        applicationId "com.softwareTools.habitMaster"
+        applicationId "com.example.habit_master"
         // minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
