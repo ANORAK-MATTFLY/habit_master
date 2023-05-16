@@ -68,8 +68,8 @@ android {
         applicationId "com.example.habit_master"
         // minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 2434
+        versionName "13.4.0"
         buildToolsVersion "23.0.1"
         multiDexEnabled true
     }
