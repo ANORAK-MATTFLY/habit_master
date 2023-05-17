@@ -7,28 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1060347675950:android:49d4dec24aff71eb0166bf",
+        "mobilesdk_app_id": "1:1060347675950:android:a8d6d36387bcc8ef0166bf",
         "android_client_info": {
-          "package_name": "com.example.habit_master"
+          "package_name": "com.softwareTools.habitMaster"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "1060347675950-356pb5sd4da24112ndn1do8k1neonvvc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.habit_master",
-            "certificate_hash": "ce6a087e5ab91f7616d1f51e45b6c0a7d9449e24"
-          }
-        },
-        {
-          "client_id": "1060347675950-tk8u119sbt1a0vjkukfkd7gmr7tvhnb2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.habit_master",
-            "certificate_hash": "0fcf24ca490ae4b8926c89b6ab94dd618b0c5711"
-          }
-        },
         {
           "client_id": "1060347675950-reqm2tev19sbpm233vb33tmcsreejsqp.apps.googleusercontent.com",
           "client_type": 3
@@ -47,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "1060347675950-cvr7o4deu8bvn28eos1mh91ksvejb3em.apps.googleusercontent.com",
+              "client_id": "1060347675950-b74lglssr7cal407879ihaghol241sac.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.habitMaster"
+                "bundle_id": "com.softwareTools.habitMaster"
               }
             }
           ]

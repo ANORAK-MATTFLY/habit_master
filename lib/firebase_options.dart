@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAPlojMDV8YTe2U9AsPKwjLwW87NnBhbi0',
-    appId: '1:1060347675950:android:49d4dec24aff71eb0166bf',
+    appId: '1:1060347675950:android:a8d6d36387bcc8ef0166bf',
     messagingSenderId: '1060347675950',
     projectId: 'habit-master-api',
     storageBucket: 'habit-master-api.appspot.com',
@@ -59,11 +59,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyD02c-mB_GZX3MDkau8uq65zaTUH9hYkos',
-    appId: '1:1060347675950:ios:8d64d59dfe96822a0166bf',
+    appId: '1:1060347675950:ios:f48d65a6f121dbc90166bf',
     messagingSenderId: '1060347675950',
     projectId: 'habit-master-api',
     storageBucket: 'habit-master-api.appspot.com',
-    iosClientId: '1060347675950-cvr7o4deu8bvn28eos1mh91ksvejb3em.apps.googleusercontent.com',
-    iosBundleId: 'com.example.habitMaster',
+    androidClientId: '1060347675950-356pb5sd4da24112ndn1do8k1neonvvc.apps.googleusercontent.com',
+    iosClientId: '1060347675950-b74lglssr7cal407879ihaghol241sac.apps.googleusercontent.com',
+    iosBundleId: 'com.softwareTools.habitMaster',
   );
 }
