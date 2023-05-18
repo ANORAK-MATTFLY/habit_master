@@ -809,8 +809,11 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
           Center(
             child: Visibility(
               visible: Timestamp.now().toDate().hour == 10 &&
-                  showShareModal == false &&
-                  Timestamp.now().toDate().minute < 30,
+                      showShareModal == false &&
+                      Timestamp.now().toDate().minute < 30 ||
+                  Timestamp.now().toDate().hour == 8 &&
+                      showShareModal == false &&
+                      Timestamp.now().toDate().minute < 30,
               child: SizedBox(
                 height: 320.0,
                 width: (width - 40),
@@ -860,7 +863,9 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                               Share.shareFiles(
                                 [path],
                                 text:
-                                    "I've been following ${routine.authorName}'s daily routine this week! Join me and get into the 1% club! 💪",
+                                    "I've been following ${routine.authorName}'s daily routine this week! Join me and become a productivity guru! 💪, \n https://play.google.com/store/apps/details?id=com.softwareTools.habitMaster",
+                                subject:
+                                    "You've been invited to download Habit Master!",
                               );
                             },
                             child: Container(

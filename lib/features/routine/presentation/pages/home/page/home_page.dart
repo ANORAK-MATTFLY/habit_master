@@ -16,6 +16,7 @@ import 'package:habit_master/shared/features/routine/widgets/circle.dart';
 import 'package:intl/intl.dart';
 
 import 'package:habit_master/features/routine/presentation/pages/home/widgets/v1/large_card.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../../shared/widgets/dynamic_island.dart';
 
@@ -73,49 +74,54 @@ class _HomePageState extends State<HomePage> {
                 }
             }
           }),
-      GestureDetector(
-        onTap: () async {},
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-          height: 70,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(20.0),
-            ),
-            boxShadow: [
-              BoxShadow(
-                  color: Color.fromARGB(145, 0, 0, 0),
-                  blurRadius: 9,
-                  spreadRadius: 9)
-            ],
-            color: Color.fromARGB(221, 6, 12, 20),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10.0),
+        height: 70,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(20.0),
           ),
-          child: Center(
-            child: ListTile(
-              title: GradientText(
-                "CAN YOU PLEASE GIVE US A FEEDBACK?",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontFamily: "Twitterchirp_Bold",
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.bold,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                colors: const [
-                  Color(0xCBB0D9F1),
-                  Color(0xFF8E6AE4),
-                ],
+          boxShadow: [
+            BoxShadow(
+                color: Color.fromARGB(145, 0, 0, 0),
+                blurRadius: 9,
+                spreadRadius: 9)
+          ],
+          color: Color.fromARGB(221, 6, 12, 20),
+        ),
+        child: Center(
+          child: ListTile(
+            title: GradientText(
+              "CAN YOU PLEASE GIVE US A FEEDBACK?",
+              style: const TextStyle(
+                color: Colors.white,
+                fontFamily: "Twitterchirp_Bold",
+                fontSize: 12.0,
+                fontWeight: FontWeight.bold,
+                overflow: TextOverflow.ellipsis,
               ),
-              subtitle: const Text(
-                " By doing so you will help us improve the app.",
-                style: TextStyle(
-                  color: Color(0xB7B9B8B8),
-                  fontFamily: "Twitterchirp",
-                  fontSize: 10.0,
-                  overflow: TextOverflow.clip,
-                ),
+              colors: const [
+                Color(0xCBB0D9F1),
+                Color(0xFF8E6AE4),
+              ],
+            ),
+            subtitle: const Text(
+              " By doing so you will help us improve the app.",
+              style: TextStyle(
+                color: Color(0xB7B9B8B8),
+                fontFamily: "Twitterchirp",
+                fontSize: 10.0,
+                overflow: TextOverflow.clip,
               ),
-              trailing: Container(
+            ),
+            trailing: GestureDetector(
+              onTap: () async {
+                final String appLink =
+                    "https://play.google.com/store/apps/details?id=com.softwareTools.habitMaster";
+                final Uri _url = Uri.parse(appLink);
+                await launchUrl(_url);
+              },
+              child: Container(
                 height: 35.0,
                 width: 35.0,
                 decoration: BoxDecoration(
@@ -127,12 +133,12 @@ class _HomePageState extends State<HomePage> {
                       style: BorderStyle.solid,
                       width: 0.4),
                 ),
-                // child: Center(
-                //   child: SvgPicture.asset("assets/svg/link.svg",
-                //       height: 12,
-                //       color: const Color(0xFF807E7E),
-                //       semanticsLabel: 'A red up arrow'),
-                // ),
+                child: Center(
+                  child: SvgPicture.asset("assets/svg/link.svg",
+                      height: 12,
+                      color: const Color(0xFF807E7E),
+                      semanticsLabel: 'A red up arrow'),
+                ),
               ),
             ),
           ),

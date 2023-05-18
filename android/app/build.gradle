@@ -69,8 +69,8 @@ android {
         // minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode 2434
-        versionName "13.4.0"
-        buildToolsVersion "23.0.1"
+        versionName "13.5.0"
+        buildToolsVersion "23.0.2"
         multiDexEnabled true
     }
 
