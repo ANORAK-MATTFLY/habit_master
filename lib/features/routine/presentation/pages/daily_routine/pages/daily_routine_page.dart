@@ -851,7 +851,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                           GestureDetector(
                             onTap: () async {
                               const String imageUrl =
-                                  "https://firebasestorage.googleapis.com/v0/b/habit-master-api.appspot.com/o/illustration.png?alt=media&token=3b8962c2-1c50-4009-bab4-5e5328db89e7";
+                                  "https://firebasestorage.googleapis.com/v0/b/habit-master-api.appspot.com/o/showcase.png?alt=media&token=03146ad6-545f-465a-b00b-9ef9c37f671a";
                               final url = Uri.parse(imageUrl);
                               final response = await http.get(url);
                               final bytes = response.bodyBytes;
