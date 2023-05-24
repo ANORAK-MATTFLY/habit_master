@@ -3,6 +3,7 @@ import 'package:habit_master/features/routine/infrastructure/data_sources/local_
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/mutation/routine.dart';
 import 'package:habit_master/features/routine/infrastructure/models/author_model.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../../../../dep_injection.dart';
 import '../../infrastructure/repository/author_repository.dart';
@@ -32,7 +33,13 @@ class PrebuiltData {
           await HabitMutations().createHabits(elon);
         }
       }
-      await RemoteRoutinesSynchronization().syncRemoteRoutines();
+
+      final internetChecker =
+          await InternetConnectionChecker().connectionStatus;
+
+      if (internetChecker == InternetConnectionStatus.connected) {
+        await RemoteRoutinesSynchronization().syncRemoteRoutines();
+      }
       return true;
     } catch (e) {
       rethrow;

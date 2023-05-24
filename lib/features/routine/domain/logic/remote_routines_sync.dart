@@ -20,7 +20,7 @@ class RemoteRoutinesSynchronization {
 
       final routineAlreadyExist = localRoutine.isEmpty;
 
-      if (routineAlreadyExist == false) {
+      if (routineAlreadyExist == true) {
         final command = LocalDatabaseConstantProvider.createRoutine(routine);
         await database.rawInsert(command);
       }
