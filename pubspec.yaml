@@ -18,7 +18,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 2.0.0+8
 
 environment:
-  sdk: ">=2.16.2 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -39,7 +39,8 @@ dependencies:
   share_plus: ^6.3.4
 
   # Local database
-  sqflite: ^2.0.3+1
+  # sqflite: ^2.0.3+1
+  sqflite: ^2.2.8+4
 
   # Notifications
   flutter_local_notifications: ^13.0.0
@@ -67,11 +68,11 @@ dependencies:
   cupertino_icons: ^1.0.5
   equatable: ^2.0.5
   get_it: ^7.2.0
-  firebase_core: ^2.4.1
-  firebase_auth: ^4.2.5
-  google_sign_in: ^5.4.4
-  cloud_firestore: ^4.3.1
-  flutter_facebook_auth: ^5.0.7
+  firebase_core: ^2.0.0
+  firebase_auth: ^4.0.0
+  # google_sign_in: ^4.0.1
+  google_sign_in: ^6.1.1
+  cloud_firestore: ^4.0.0
   fpdart: ^0.4.0
   like_button: ^2.0.5
   username_gen: ^1.0.4

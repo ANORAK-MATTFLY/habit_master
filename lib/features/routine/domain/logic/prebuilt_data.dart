@@ -21,7 +21,6 @@ class PrebuiltData {
           await authorMutations.authorMutations.createAuthor(author);
           await RoutinesMutations().createRoutine(author, 0, "local");
 
-          await HabitMutations().createHabits(elon);
           await HabitMutations().createHabits(billGate);
           await HabitMutations().createHabits(jamesClear);
           await HabitMutations().createHabits(cuban);
@@ -30,6 +29,7 @@ class PrebuiltData {
           await HabitMutations().createHabits(oprah);
           await HabitMutations().createHabits(timCook);
           await HabitMutations().createHabits(satya);
+          await HabitMutations().createHabits(elon);
         }
       }
       await RemoteRoutinesSynchronization().syncRemoteRoutines();

@@ -113,7 +113,8 @@ class HabitMutations implements HabitMutationsInterface {
             "SELECT * FROM habit WHERE routine_id = '${habit.routineID}' AND habit_name = '${habit.habitName}'");
         // ignore: unnecessary_null_comparison
         if (habitData.isEmpty) {
-          final insertHabit = LocalDatabaseConstantProvider.createHabit(habit);
+          final insertHabit =
+              await LocalDatabaseConstantProvider.createHabit(habit);
           await database.rawInsert(insertHabit);
         }
       }

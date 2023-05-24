@@ -41,7 +41,7 @@ class LocalDatabaseConstantProvider {
       type VARCHAR(255) NOT NULL,
       scheduled_for VARCHAR(20) NOT NULL,
       duration VARCHAR(20),
-      is_done BOOLEAN NOT NULL,
+      is_done BOOLEAN NOT NULL CHECK (is_done IN (0, 1)),
       expiration_date VARCHAR(50),
       done_on VARCHAR(20),
       PRIMARY KEY(id),
@@ -133,7 +133,7 @@ class LocalDatabaseConstantProvider {
     const attributes =
         'INSERT INTO habit(id, routine_id, habit_name, type, scheduled_for, duration, expiration_date, is_done, done_on)';
     final values =
-        " VALUES('${habit.id}-${uuid.v4()}', '${habit.routineID}', '${habit.habitName}', '${habit.type}', '${habit.scheduledFor}', '${habit.duration}', '${habit.expirationDate}', ${habit.isDone}, '${habit.doneOn}')";
+        " VALUES('${habit.id}-${uuid.v4()}', '${habit.routineID}', '${habit.habitName}', '${habit.type}', '${habit.scheduledFor}', '${habit.duration}', '${habit.expirationDate}', ${habit.isDone == true ? 1 : 0}, '${habit.doneOn}')";
     return attributes + values;
   }
 
@@ -154,7 +154,7 @@ class LocalDatabaseConstantProvider {
   }
 
   static updateHabitDoneAttribute(bool isDone, String habitID) {
-    return "UPDATE habit SET is_done = $isDone WHERE id = '$habitID'";
+    return "UPDATE habit SET is_done = ${isDone == true ? 1 : 0} WHERE id = '$habitID'";
   }
 
   static updateScore(String userID, int score, String scoreOn) {

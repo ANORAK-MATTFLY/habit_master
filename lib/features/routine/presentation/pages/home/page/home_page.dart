@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:habit_master/features/routine/domain/logic/prebuilt_data.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/routine_queries.dart';
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
@@ -74,70 +75,75 @@ class _HomePageState extends State<HomePage> {
                 }
             }
           }),
-      Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10.0),
-        height: 70,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20.0),
+      GestureDetector(
+        onTap: () {
+          PrebuiltData().createPrebuiltData();
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+          height: 70,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20.0),
+            ),
+            boxShadow: [
+              BoxShadow(
+                  color: Color.fromARGB(145, 0, 0, 0),
+                  blurRadius: 9,
+                  spreadRadius: 9)
+            ],
+            color: Color.fromARGB(221, 6, 12, 20),
           ),
-          boxShadow: [
-            BoxShadow(
-                color: Color.fromARGB(145, 0, 0, 0),
-                blurRadius: 9,
-                spreadRadius: 9)
-          ],
-          color: Color.fromARGB(221, 6, 12, 20),
-        ),
-        child: Center(
-          child: ListTile(
-            title: GradientText(
-              "CAN YOU PLEASE GIVE US A FEEDBACK?",
-              style: const TextStyle(
-                color: Colors.white,
-                fontFamily: "Twitterchirp_Bold",
-                fontSize: 12.0,
-                fontWeight: FontWeight.bold,
-                overflow: TextOverflow.ellipsis,
-              ),
-              colors: const [
-                Color(0xCBB0D9F1),
-                Color(0xFF8E6AE4),
-              ],
-            ),
-            subtitle: const Text(
-              " By doing so you will help us improve the app.",
-              style: TextStyle(
-                color: Color(0xB7B9B8B8),
-                fontFamily: "Twitterchirp",
-                fontSize: 10.0,
-                overflow: TextOverflow.clip,
-              ),
-            ),
-            trailing: GestureDetector(
-              onTap: () async {
-                final String appLink =
-                    "https://play.google.com/store/apps/details?id=com.softwareTools.habitMaster";
-                final Uri _url = Uri.parse(appLink);
-                await launchUrl(_url);
-              },
-              child: Container(
-                height: 35.0,
-                width: 35.0,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(360.0),
-                  ),
-                  border: Border.all(
-                      color: const Color(0xFF3F3F3F),
-                      style: BorderStyle.solid,
-                      width: 0.4),
+          child: Center(
+            child: ListTile(
+              title: GradientText(
+                "CAN YOU PLEASE GIVE US A FEEDBACK?",
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Twitterchirp_Bold",
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.bold,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                child: Center(
-                  child: SvgPicture.asset("assets/svg/link.svg",
-                      height: 12,
-                      color: const Color(0xFF807E7E),
-                      semanticsLabel: 'A red up arrow'),
+                colors: const [
+                  Color(0xCBB0D9F1),
+                  Color(0xFF8E6AE4),
+                ],
+              ),
+              subtitle: const Text(
+                " By doing so you will help us improve the app.",
+                style: TextStyle(
+                  color: Color(0xB7B9B8B8),
+                  fontFamily: "Twitterchirp",
+                  fontSize: 10.0,
+                  overflow: TextOverflow.clip,
+                ),
+              ),
+              trailing: GestureDetector(
+                onTap: () async {
+                  final String appLink =
+                      "https://play.google.com/store/apps/details?id=com.softwareTools.habitMaster";
+                  final Uri _url = Uri.parse(appLink);
+                  await launchUrl(_url);
+                },
+                child: Container(
+                  height: 35.0,
+                  width: 35.0,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(360.0),
+                    ),
+                    border: Border.all(
+                        color: const Color(0xFF3F3F3F),
+                        style: BorderStyle.solid,
+                        width: 0.4),
+                  ),
+                  child: Center(
+                    child: SvgPicture.asset("assets/svg/link.svg",
+                        height: 12,
+                        color: const Color(0xFF807E7E),
+                        semanticsLabel: 'A red up arrow'),
+                  ),
                 ),
               ),
             ),
