@@ -76,6 +76,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
     final taskTimeOption = context.read<TimeOptionCubit>();
     final showErrorPanel = context.read<ShowErrorCubit>();
     ScoreLogic().createScore(routine.authorID!);
+    print(routine.type);
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 7, 3, 15),
