@@ -192,7 +192,7 @@ final List<Habit> billGate = [
     routineID: "Bill GateBill GateBill GateBill GateBill GateBill Gate",
     habitName: "Wake up at 6:30.",
     type: "check",
-    isDone: true,
+    isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
   ),
