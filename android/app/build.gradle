@@ -67,9 +67,9 @@ android {
         applicationId "com.softwareTools.habitMaster"
         // minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 2438
-        versionName "13.2.0"
-        buildToolsVersion "23.0.2"
+        versionCode 2469
+        versionName "13.3.0"
+        buildToolsVersion "24.4.2"
         multiDexEnabled true
     }
 
