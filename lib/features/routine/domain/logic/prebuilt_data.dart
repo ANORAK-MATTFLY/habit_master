@@ -34,12 +34,7 @@ class PrebuiltData {
         }
       }
 
-      final internetChecker =
-          await InternetConnectionChecker().connectionStatus;
-
-      if (internetChecker == InternetConnectionStatus.connected) {
-        await RemoteRoutinesSynchronization().syncRemoteRoutines();
-      }
+      await RemoteRoutinesSynchronization().syncRemoteRoutines();
       return true;
     } catch (e) {
       rethrow;
