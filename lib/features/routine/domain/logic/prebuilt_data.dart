@@ -3,7 +3,6 @@ import 'package:habit_master/features/routine/infrastructure/data_sources/local_
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/mutation/routine.dart';
 import 'package:habit_master/features/routine/infrastructure/models/author_model.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../../../../dep_injection.dart';
 import '../../infrastructure/repository/author_repository.dart';
@@ -13,6 +12,11 @@ class PrebuiltData {
   final authorMutations = serviceLocator<AuthorRepository>();
   Future<bool> createPrebuiltData() async {
     try {
+      final lastExist =
+          await authorQueries.checkIfAuthorExist(elon[0].routineID!);
+      if (lastExist == true) {
+        return true;
+      }
       for (var index = 0; index < predefinedAuthors.length; index++) {
         final author = predefinedAuthors[index];
 
@@ -23,6 +27,7 @@ class PrebuiltData {
           await RoutinesMutations().createRoutine(author, 0, "local");
 
           await HabitMutations().createHabits(billGate);
+
           await HabitMutations().createHabits(jamesClear);
           await HabitMutations().createHabits(cuban);
           await HabitMutations().createHabits(jack);
