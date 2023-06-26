@@ -11,11 +11,44 @@ import 'package:habit_master/features/routine/infrastructure/repository/habit_re
 import 'package:habit_master/shared/static/dates.dart';
 
 class HabitQueries implements HabitQueriesInterface {
-  HabitQueries(String habitID) {
-    getHabitsData(habitID).then((rawHabitsData) async {
-      final List<Habit> habits = [];
-      for (var index = 0; index < rawHabitsData.length; index++) {
-        final rawHabit = rawHabitsData[index];
+  HabitQueries(String habitID, String habitType) {
+    final List<Habit> habits = [];
+
+    if (habitType == "local") {
+      getHabitsData(habitID).then((rawHabitsData) async {
+        for (var index = 0; index < rawHabitsData.length; index++) {
+          final rawHabit = rawHabitsData[index];
+          final habit = Habit.fromJson(rawHabit);
+          final hasExpired =
+              DateTime.now().isAfter(DateTime.parse(habit.expirationDate!));
+
+          final currentUserID =
+              serviceLocator<IdentityApi>().getAuthenticatedUser()!.uid;
+          if (habit.routineID == currentUserID) {
+            final habitExist = await serviceLocator<HabitRemoteRepository>()
+                .habitRemoteQueries
+                .checkIfHabitExist(habit.id!);
+            if (habitExist == false) {
+              await serviceLocator<HabitRemoteRepository>()
+                  .habitRemoteMutations
+                  .uploadPersonalHabit(habit);
+            }
+          }
+
+          if (hasExpired == true) {
+            await HabitMutations()
+                .updateHabitExpirationDate(habit.id!, expirationDate);
+            HabitMutations().toggleHabit(habit, false);
+          }
+
+          habits.add(habit);
+          _streamController.sink.add(habits);
+        }
+      });
+    }
+    getRemoteHabitType(habitID).then((rawHabits) async {
+      for (var index = 0; index < rawHabits.length; index++) {
+        final rawHabit = rawHabits[index];
         final habit = Habit.fromJson(rawHabit);
         final hasExpired =
             DateTime.now().isAfter(DateTime.parse(habit.expirationDate!));
@@ -55,6 +88,16 @@ class HabitQueries implements HabitQueriesInterface {
       return value.rawQuery(query);
     });
     return data;
+  }
+
+  Future<List<Map<String, Object?>>> getRemoteHabitType(
+      String routineID) async {
+    final database = await LocalDatabase.instance.database;
+
+    final query =
+        "SELECT * FROM habit WHERE routine_id = '$routineID' AND habit_type = 'remote'";
+    final rawHabits = await database.rawQuery(query);
+    return rawHabits;
   }
 
   @override

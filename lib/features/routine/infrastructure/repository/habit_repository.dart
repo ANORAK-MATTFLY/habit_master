@@ -1,5 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:habit_master/core/errors/interface/error_model.dart';
+import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/routine/domain/interfaces/habit_interface.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/mutation/habit.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/habit_queries.dart';
@@ -30,10 +31,8 @@ class HabitRepository implements HabitInterface {
   }
 
   @override
-  Stream<List<Habit>> getHabits(
-    String routineID,
-  ) {
-    return HabitQueries(routineID).stream;
+  Stream<List<Habit>> getHabits(String routineID, String habitType) {
+    return HabitQueries(routineID, habitType).stream;
   }
 
   @override
@@ -45,13 +44,15 @@ class HabitRepository implements HabitInterface {
   @override
   Future<List<Map<String, Object?>>> countNumberOfDoneHabits(
       String routineID, String doneOn) {
-    return HabitQueries('').countNumberOfDoneHabits(routineID, doneOn);
+    return serviceLocator<HabitQueries>()
+        .countNumberOfDoneHabits(routineID, doneOn);
   }
 
   @override
-  Future<Habit> getHabitById(String habitID) async {
+  Future<Habit> getHabitById(String habitID, String habitType) async {
     final List<Habit> habits = [];
-    final rawHabitData = await HabitQueries(habitID).getHabitById(habitID);
+    final rawHabitData =
+        await HabitQueries(habitID, habitType).getHabitById(habitID);
     final Habit habit = Habit.fromJson(rawHabitData[0]);
     habits.add(habit);
     return habits[0];

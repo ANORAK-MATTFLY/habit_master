@@ -4,8 +4,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_master/dep_injection.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/bloc/cubit/sign_in_cubit.dart';
 import 'package:habit_master/features/auth/presentation/pages/authentication/page/authentication_panel.dart';
-import 'package:habit_master/features/routine/domain/logic/prebuilt_data.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/bloc/bloc_logic/create_author.dart';
+import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/morning_progress.dart';
 import 'package:habit_master/features/routine/presentation/pages/create_habit/bloc/cubit/timer_task.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/bloc/timer_bloc.dart';
 import 'package:habit_master/features/routine/presentation/pages/daily_routine/bloc/cubit/minutes_cubit.dart';
@@ -33,7 +33,6 @@ import 'package:habit_master/shared/bloc/show_error_cubit.dart';
 import 'package:habit_master/shared/logic/reminder.dart';
 import 'package:habit_master/shared/notifications.dart';
 import 'package:habit_master/shared/widgets/loading_page.dart';
-import 'package:habit_master/shared/widgets/page_router.dart';
 import 'package:sqflite/sqflite.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
@@ -117,7 +116,11 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (_) => HabitBlocLogic(),
-          child: const CheckBoxItem(color: null, shimmer: null, habit: null),
+          child: const CheckBoxItem(
+            color: null,
+            shimmer: null,
+            habit: null,
+          ),
         ),
         BlocProvider(
           create: (_) => TimeOptionCubit(),
@@ -211,6 +214,10 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (_) => ProgressStatus(),
+          child: const LargeCard(routines: []),
+        ),
+        BlocProvider(
+          create: (_) => MorningProgressCubit(),
           child: const LargeCard(routines: []),
         ),
       ],

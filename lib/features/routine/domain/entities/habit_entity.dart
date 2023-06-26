@@ -10,6 +10,7 @@ class HabitEntity extends Equatable {
   final String? duration;
   final String? expirationDate;
   final bool? isDone;
+  final String? habitType;
 
   const HabitEntity({
     this.id,
@@ -20,6 +21,7 @@ class HabitEntity extends Equatable {
     this.duration,
     this.expirationDate,
     this.isDone,
+    this.habitType,
   });
 
   @override
@@ -33,6 +35,7 @@ class HabitEntity extends Equatable {
       duration!,
       expirationDate!,
       isDone!,
+      habitType!,
     ];
   }
 }

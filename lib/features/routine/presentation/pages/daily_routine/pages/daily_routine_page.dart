@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_master/dep_injection.dart';
+import 'package:habit_master/features/auth/api/identity_api.dart';
 import 'package:habit_master/features/routine/domain/logic/input_validation.dart';
 import 'package:habit_master/features/routine/domain/logic/score_logic.dart';
 // ignore: depend_on_referenced_packages
@@ -76,7 +77,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
     final taskTimeOption = context.read<TimeOptionCubit>();
     final showErrorPanel = context.read<ShowErrorCubit>();
     ScoreLogic().createScore(routine.authorID!);
-    print(routine.type);
+    print(routine.authorID);
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 7, 3, 15),
@@ -146,7 +147,7 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
         children: [
           StreamBuilder<List<Habit>>(
               stream: serviceLocator<HabitRepository>()
-                  .getHabits(routine.authorID!),
+                  .getHabits(routine.authorID!, routine.type!),
               builder: (context, snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
@@ -721,19 +722,20 @@ class _DailyRoutinePageState extends State<DailyRoutinePage>
                                 }
                                 const uuid = Uuid();
                                 final habit = Habit(
-                                  id: uuid.v1(),
-                                  expirationDate: expirationDate,
-                                  routineID: routine.authorID,
-                                  isDone: false,
-                                  scheduledFor: taskMoment.state.toLowerCase(),
-                                  type: taskType.state == typeOptions[0]
-                                      ? "check"
-                                      : "timer",
-                                  habitName: taskName.text,
-                                  duration:
-                                      "${taskDuration.text}-${taskTimeOption.state}",
-                                  doneOn: "",
-                                );
+                                    id: uuid.v1(),
+                                    expirationDate: expirationDate,
+                                    routineID: routine.authorID,
+                                    isDone: false,
+                                    scheduledFor:
+                                        taskMoment.state.toLowerCase(),
+                                    type: taskType.state == typeOptions[0]
+                                        ? "check"
+                                        : "timer",
+                                    habitName: taskName.text,
+                                    duration:
+                                        "${taskDuration.text}-${taskTimeOption.state}",
+                                    doneOn: "",
+                                    habitType: "local");
                                 context.read<CreateHabitBlocLogic>().add(
                                       CreateHabitAction(habit: habit),
                                     );

@@ -44,6 +44,7 @@ class LocalDatabaseConstantProvider {
       is_done BOOLEAN NOT NULL CHECK (is_done IN (0, 1)),
       expiration_date VARCHAR(50),
       done_on VARCHAR(20),
+      habit_type VARCHAR(20),
       PRIMARY KEY(id),
       FOREIGN KEY(routine_id) REFERENCES habit(author_id)
     )''';
@@ -94,7 +95,7 @@ class LocalDatabaseConstantProvider {
   }
 
   static getHabits(String routineID) {
-    return "SELECT * FROM habit WHERE routine_id = '$routineID'";
+    return "SELECT * FROM habit WHERE routine_id = '$routineID' AND habit_type = 'local'";
   }
 
   static getCelebsRoutine() {
@@ -131,9 +132,9 @@ class LocalDatabaseConstantProvider {
   static String createHabit(Habit habit) {
     const uuid = Uuid();
     const attributes =
-        'INSERT INTO habit(id, routine_id, habit_name, type, scheduled_for, duration, expiration_date, is_done, done_on)';
+        'INSERT INTO habit(id, routine_id, habit_name, type, scheduled_for, duration, expiration_date, is_done, done_on, habit_type)';
     final values =
-        " VALUES('${habit.id}-${uuid.v4()}', '${habit.routineID}', '${habit.habitName}', '${habit.type}', '${habit.scheduledFor}', '${habit.duration}', '${habit.expirationDate}', ${habit.isDone == true ? 1 : 0}, '${habit.doneOn}')";
+        " VALUES('${habit.id}-${uuid.v4()}', '${habit.routineID}', '${habit.habitName}', '${habit.type}', '${habit.scheduledFor}', '${habit.duration}', '${habit.expirationDate}', ${habit.isDone == true ? 1 : 0}, '${habit.doneOn}', '${habit.habitType}')";
     return attributes + values;
   }
 

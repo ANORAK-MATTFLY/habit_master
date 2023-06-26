@@ -31,6 +31,9 @@ class Habit extends HabitEntity {
   // ignore: overridden_fields
   final bool? isDone;
 
+  // ignore: overridden_fields
+  final String? habitType;
+
   const Habit({
     this.id,
     this.routineID,
@@ -41,6 +44,7 @@ class Habit extends HabitEntity {
     this.expirationDate,
     this.isDone,
     this.doneOn,
+    this.habitType,
   });
   factory Habit.fromDocument(dynamic doc) {
     return Habit(
@@ -53,6 +57,7 @@ class Habit extends HabitEntity {
       expirationDate: doc["expiration_date"],
       isDone: doc["is_done"],
       doneOn: doc["done_on"],
+      habitType: doc["habit_type"],
     );
   }
 
@@ -66,6 +71,7 @@ class Habit extends HabitEntity {
         expirationDate: json['expiration_date'] as String?,
         isDone: json['is_done'] == 1 ? true : false,
         doneOn: json['done_on'] as String?,
+        habitType: json['habit_type'] as String?,
       );
 }
 
@@ -82,6 +88,7 @@ final List<Habit> elon = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -93,6 +100,7 @@ final List<Habit> elon = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -104,6 +112,7 @@ final List<Habit> elon = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -115,6 +124,7 @@ final List<Habit> elon = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -126,6 +136,7 @@ final List<Habit> elon = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -137,6 +148,7 @@ final List<Habit> elon = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -148,6 +160,7 @@ final List<Habit> elon = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -159,6 +172,7 @@ final List<Habit> elon = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -170,6 +184,7 @@ final List<Habit> elon = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -181,6 +196,7 @@ final List<Habit> elon = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
 ];
 
@@ -195,6 +211,7 @@ final List<Habit> billGate = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -206,6 +223,7 @@ final List<Habit> billGate = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -217,6 +235,7 @@ final List<Habit> billGate = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -228,6 +247,7 @@ final List<Habit> billGate = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -239,6 +259,7 @@ final List<Habit> billGate = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -250,6 +271,7 @@ final List<Habit> billGate = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -261,6 +283,7 @@ final List<Habit> billGate = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -272,6 +295,7 @@ final List<Habit> billGate = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -283,6 +307,7 @@ final List<Habit> billGate = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
 ];
 
@@ -297,6 +322,7 @@ final List<Habit> lewis = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -308,6 +334,7 @@ final List<Habit> lewis = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -319,6 +346,7 @@ final List<Habit> lewis = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -330,6 +358,7 @@ final List<Habit> lewis = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -341,6 +370,7 @@ final List<Habit> lewis = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -352,6 +382,7 @@ final List<Habit> lewis = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -363,6 +394,7 @@ final List<Habit> lewis = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -374,6 +406,7 @@ final List<Habit> lewis = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -385,6 +418,7 @@ final List<Habit> lewis = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -396,6 +430,7 @@ final List<Habit> lewis = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -407,6 +442,7 @@ final List<Habit> lewis = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -418,6 +454,7 @@ final List<Habit> lewis = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
 ];
 
@@ -433,6 +470,7 @@ final List<Habit> jamesClear = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -445,6 +483,7 @@ final List<Habit> jamesClear = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -457,6 +496,7 @@ final List<Habit> jamesClear = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -469,6 +509,7 @@ final List<Habit> jamesClear = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -481,6 +522,7 @@ final List<Habit> jamesClear = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -493,6 +535,7 @@ final List<Habit> jamesClear = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -505,6 +548,7 @@ final List<Habit> jamesClear = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -517,6 +561,7 @@ final List<Habit> jamesClear = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -529,6 +574,7 @@ final List<Habit> jamesClear = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -541,6 +587,7 @@ final List<Habit> jamesClear = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -553,6 +600,7 @@ final List<Habit> jamesClear = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
 ];
 
@@ -568,6 +616,7 @@ final List<Habit> cuban = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -580,6 +629,7 @@ final List<Habit> cuban = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -592,6 +642,7 @@ final List<Habit> cuban = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -604,6 +655,7 @@ final List<Habit> cuban = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -616,6 +668,7 @@ final List<Habit> cuban = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -628,6 +681,7 @@ final List<Habit> cuban = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -640,6 +694,7 @@ final List<Habit> cuban = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -652,6 +707,7 @@ final List<Habit> cuban = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -664,6 +720,7 @@ final List<Habit> cuban = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -676,6 +733,7 @@ final List<Habit> cuban = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -688,6 +746,7 @@ final List<Habit> cuban = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
 ];
 
@@ -702,6 +761,7 @@ final List<Habit> oprah = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -713,6 +773,7 @@ final List<Habit> oprah = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -724,6 +785,7 @@ final List<Habit> oprah = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -735,6 +797,7 @@ final List<Habit> oprah = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -746,6 +809,7 @@ final List<Habit> oprah = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -757,6 +821,7 @@ final List<Habit> oprah = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -768,6 +833,7 @@ final List<Habit> oprah = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -779,6 +845,7 @@ final List<Habit> oprah = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -790,6 +857,7 @@ final List<Habit> oprah = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -801,6 +869,7 @@ final List<Habit> oprah = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
 ];
 
@@ -815,6 +884,7 @@ final List<Habit> timCook = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -826,6 +896,7 @@ final List<Habit> timCook = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -837,6 +908,7 @@ final List<Habit> timCook = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -848,6 +920,7 @@ final List<Habit> timCook = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -859,6 +932,7 @@ final List<Habit> timCook = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -870,6 +944,7 @@ final List<Habit> timCook = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -881,6 +956,7 @@ final List<Habit> timCook = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -892,6 +968,7 @@ final List<Habit> timCook = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -903,6 +980,7 @@ final List<Habit> timCook = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -914,6 +992,7 @@ final List<Habit> timCook = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -925,6 +1004,7 @@ final List<Habit> timCook = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
 ];
 
@@ -940,6 +1020,7 @@ final List<Habit> satya = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -952,6 +1033,7 @@ final List<Habit> satya = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -964,6 +1046,7 @@ final List<Habit> satya = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -976,6 +1059,7 @@ final List<Habit> satya = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -988,6 +1072,7 @@ final List<Habit> satya = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -1000,6 +1085,7 @@ final List<Habit> satya = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -1012,6 +1098,7 @@ final List<Habit> satya = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -1024,6 +1111,7 @@ final List<Habit> satya = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
 ];
 
@@ -1038,6 +1126,7 @@ final List<Habit> jack = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -1049,6 +1138,7 @@ final List<Habit> jack = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -1060,6 +1150,7 @@ final List<Habit> jack = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -1071,6 +1162,7 @@ final List<Habit> jack = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -1082,6 +1174,7 @@ final List<Habit> jack = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -1093,6 +1186,7 @@ final List<Habit> jack = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -1104,6 +1198,7 @@ final List<Habit> jack = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -1115,6 +1210,7 @@ final List<Habit> jack = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -1126,6 +1222,7 @@ final List<Habit> jack = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
   Habit(
     id: "${uuid.v1()}-${DateTime.now().microsecond.toString()}-",
@@ -1137,5 +1234,6 @@ final List<Habit> jack = [
     isDone: false,
     expirationDate: expirationDate,
     doneOn: "",
+    habitType: "local",
   ),
 ];

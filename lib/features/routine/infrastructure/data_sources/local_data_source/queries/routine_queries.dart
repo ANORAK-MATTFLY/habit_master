@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:habit_master/core/db/local_db.dart';
+
 import 'package:habit_master/features/routine/domain/interfaces/routine_queries_interface.dart';
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 
@@ -10,10 +11,12 @@ class RoutineQueries implements RoutineQueriesInterface {
     if (routineType == "local") {
       final rawRoutinesData = await getRoutines();
       final List<Routine> routines = [];
+
       for (var index = 0; index < rawRoutinesData.length; index++) {
         final rawTask = rawRoutinesData[index];
-        final task = Routine.fromJson(rawTask);
-        routines.add(task);
+        final routine = Routine.fromJson(rawTask);
+
+        routines.add(routine);
       }
       return routines;
     }
@@ -21,8 +24,9 @@ class RoutineQueries implements RoutineQueriesInterface {
     final List<Routine> routines = [];
     for (var index = 0; index < rawRoutinesData.length; index++) {
       final rawTask = rawRoutinesData[index];
-      final task = Routine.fromJson(rawTask);
-      routines.add(task);
+      final routine = Routine.fromJson(rawTask);
+
+      routines.add(routine);
     }
     return routines;
   }

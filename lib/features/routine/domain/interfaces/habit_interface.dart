@@ -8,10 +8,10 @@ abstract class HabitInterface {
   Future<Either<Failure, bool>> updateHabitExpirationDate(
       String habitID, String expirationDate);
   Future<Either<Failure, bool>> toggleHabit(Habit habit, bool isDone);
-  Stream<List<Habit>> getHabits(String routineID);
+  Stream<List<Habit>> getHabits(String routineID, String habitType);
   Future<Either<Failure, bool>> updateHabitDoneDate(
       Habit habit, bool isAlreadySet);
   Future<List<Map<String, Object?>>> countNumberOfDoneHabits(
       String routineID, String doneOn);
-  Future<Habit> getHabitById(String habitID);
+  Future<Habit> getHabitById(String habitID, String habitType);
 }

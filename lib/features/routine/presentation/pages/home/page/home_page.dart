@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:habit_master/core/db/db_constants.dart';
+import 'package:habit_master/core/db/local_db.dart';
 import 'package:habit_master/features/routine/domain/logic/prebuilt_data.dart';
 import 'package:habit_master/features/routine/infrastructure/data_sources/local_data_source/queries/routine_queries.dart';
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
@@ -76,8 +78,14 @@ class _HomePageState extends State<HomePage> {
             }
           }),
       GestureDetector(
-        onTap: () {
-          PrebuiltData().createPrebuiltData();
+        onTap: () async {
+          // PrebuiltData().createPrebuiltData();
+          // oJhwCqcn8ISA2K9Rl5gvVsyjLVG2
+          final database = await LocalDatabase.instance.database;
+          final query = LocalDatabaseConstantProvider.getHabits(
+              "O8oaQAXmDQPRuZ2N9aTiby5JQNx2");
+          final habit = await database.rawQuery(query);
+          print(habit.length);
         },
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -200,6 +208,7 @@ class _HomePageState extends State<HomePage> {
             }
             if (snapshot.connectionState == ConnectionState.done) {
               final routines = snapshot.data!;
+              print(routines);
               return SmallCard(routines: routines);
             }
             return Center(

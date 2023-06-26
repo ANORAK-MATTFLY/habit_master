@@ -16,6 +16,7 @@ class HabitRemoteMutations {
         "expiration_date": habit.expirationDate,
         "type": habit.type,
         "is_done": habit.isDone,
+        "habit_type": "remote",
         "scheduled_for": habit.scheduledFor,
       });
       return true;

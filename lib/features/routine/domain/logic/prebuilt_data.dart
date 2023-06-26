@@ -12,11 +12,6 @@ class PrebuiltData {
   final authorMutations = serviceLocator<AuthorRepository>();
   Future<bool> createPrebuiltData() async {
     try {
-      final lastExist =
-          await authorQueries.checkIfAuthorExist(elon[0].routineID!);
-      if (lastExist == true) {
-        return true;
-      }
       for (var index = 0; index < predefinedAuthors.length; index++) {
         final author = predefinedAuthors[index];
 
@@ -39,7 +34,7 @@ class PrebuiltData {
         }
       }
 
-      await RemoteRoutinesSynchronization().syncRemoteRoutines();
+      RemoteRoutinesSynchronization().syncRemoteRoutines();
       return true;
     } catch (e) {
       rethrow;

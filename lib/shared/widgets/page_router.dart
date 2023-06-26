@@ -20,9 +20,9 @@ class _PageRouterState extends State<PageRouter> {
 
     return FutureBuilder<Permission>(
       future: PermissionLogic().getPermission(),
-      builder: (context, snapshot) {
-        if (snapshot.data != null) {
-          if (snapshot.data!.isFreePlan == 0) {
+      builder: (context, permissionSnapshot) {
+        if (permissionSnapshot.data != null) {
+          if (permissionSnapshot.data!.isFreePlan == 0) {
             return Material(
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
