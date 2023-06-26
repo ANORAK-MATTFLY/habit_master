@@ -19,7 +19,7 @@ class PermissionLogic {
         final id = serviceLocator<IdentityApi>().getAuthenticatedUser()!.uid;
 
         final expirationDate =
-            Timestamp.now().toDate().add(const Duration(seconds: 5));
+            Timestamp.now().toDate().add(const Duration(days: 90));
         await permissionCollection.doc(id).set({
           "id": "1234",
           "is_free_plan": 1,
