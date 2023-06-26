@@ -40,4 +40,8 @@ class HabitRemoteRepository {
       rethrow;
     }
   }
+
+  deleteHabit(String habitID) {
+    return HabitRemoteMutations().deleteHabit(habitID);
+  }
 }

@@ -11,6 +11,7 @@ import 'package:habit_master/features/routine/domain/logic/input_validation.dart
 import 'package:habit_master/features/routine/domain/logic/score_logic.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart';
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
@@ -40,6 +41,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../domain/logic/task_helpers.dart';
+import '../../../../infrastructure/repository/habit_remote_repository.dart';
 import '../widgets/v1/expansion_item.dart';
 import '../widgets/v1/progress.dart';
 import '../widgets/v1/chart_and_desc.dart';

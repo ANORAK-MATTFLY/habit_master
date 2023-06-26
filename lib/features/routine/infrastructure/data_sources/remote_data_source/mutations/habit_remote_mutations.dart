@@ -24,4 +24,12 @@ class HabitRemoteMutations {
       rethrow;
     }
   }
+
+  Future<void> deleteHabit(String habitID) async {
+    try {
+      await _communityHabitsCollection.doc(habitID).delete();
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

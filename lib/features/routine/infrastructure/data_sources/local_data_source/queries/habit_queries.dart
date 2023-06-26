@@ -9,6 +9,7 @@ import 'package:habit_master/features/routine/infrastructure/data_sources/local_
 import 'package:habit_master/features/routine/infrastructure/models/habit_model.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/habit_remote_repository.dart';
 import 'package:habit_master/shared/static/dates.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class HabitQueries implements HabitQueriesInterface {
   HabitQueries(String habitID, String habitType) {
@@ -21,19 +22,6 @@ class HabitQueries implements HabitQueriesInterface {
           final habit = Habit.fromJson(rawHabit);
           final hasExpired =
               DateTime.now().isAfter(DateTime.parse(habit.expirationDate!));
-
-          final currentUserID =
-              serviceLocator<IdentityApi>().getAuthenticatedUser()!.uid;
-          if (habit.routineID == currentUserID) {
-            final habitExist = await serviceLocator<HabitRemoteRepository>()
-                .habitRemoteQueries
-                .checkIfHabitExist(habit.id!);
-            if (habitExist == false) {
-              await serviceLocator<HabitRemoteRepository>()
-                  .habitRemoteMutations
-                  .uploadPersonalHabit(habit);
-            }
-          }
 
           if (hasExpired == true) {
             await HabitMutations()
@@ -52,19 +40,6 @@ class HabitQueries implements HabitQueriesInterface {
         final habit = Habit.fromJson(rawHabit);
         final hasExpired =
             DateTime.now().isAfter(DateTime.parse(habit.expirationDate!));
-
-        final currentUserID =
-            serviceLocator<IdentityApi>().getAuthenticatedUser()!.uid;
-        if (habit.routineID == currentUserID) {
-          final habitExist = await serviceLocator<HabitRemoteRepository>()
-              .habitRemoteQueries
-              .checkIfHabitExist(habit.id!);
-          if (habitExist == false) {
-            await serviceLocator<HabitRemoteRepository>()
-                .habitRemoteMutations
-                .uploadPersonalHabit(habit);
-          }
-        }
 
         if (hasExpired == true) {
           await HabitMutations()

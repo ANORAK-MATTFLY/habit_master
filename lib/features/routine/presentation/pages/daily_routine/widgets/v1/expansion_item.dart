@@ -21,6 +21,7 @@ import 'package:habit_master/features/routine/presentation/pages/daily_routine/w
 import 'package:lottie/lottie.dart';
 
 import '../../../../../../../shared/static/images.dart';
+import '../../../../../infrastructure/repository/habit_remote_repository.dart';
 import '../../../../../infrastructure/repository/habit_repository.dart';
 
 class ExpandedItemList extends StatefulWidget {
@@ -165,6 +166,9 @@ class _ExpandedItemListState extends State<ExpandedItemList> {
                               serviceLocator<HabitRepository>()
                                   .habitMutations
                                   .deleteHabit(habit.id!);
+                              serviceLocator<HabitRemoteRepository>()
+                                  .deleteHabit(habit.id!);
+
                               setState(() {
                                 streamedTasks
                                     .removeAt(streamedTasks.indexOf(habit));

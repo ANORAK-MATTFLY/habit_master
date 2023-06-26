@@ -6,6 +6,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:habit_master/features/auth/api/identity_api.dart';
 import 'package:habit_master/features/routine/infrastructure/models/routine_model.dart';
 import 'package:habit_master/features/routine/infrastructure/repository/routine_remote_repository.dart';
+import 'package:habit_master/shared/static/hints.dart';
 import 'package:habit_master/shared/static/three_d_objects.dart';
 import 'package:lottie/lottie.dart';
 
@@ -260,7 +261,7 @@ class _ChartAndDescriptionState extends State<ChartAndDescription> {
                                     padding: const EdgeInsets.all(10.0),
                                     child: Center(
                                         child: Text(
-                                      "Hi! 👋 I'm $authorName and welcome to my daily routine!",
+                                      showHint(authorName),
                                       style: const TextStyle(
                                         color:
                                             Color.fromARGB(255, 213, 213, 213),
